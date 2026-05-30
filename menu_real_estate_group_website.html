@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Real Estate Group | Complete Property Solutions</title>
+  <meta name="description" content="Menu Real Estate Group provides real estate, construction, investment, and marketing solutions for clients who want to build, grow, and succeed." />
+  <style>
+    :root {
+      --navy: #071d33;
+      --navy-soft: #0d2c4b;
+      --gold: #c8922f;
+      --gold-soft: #f4e2bd;
+      --white: #ffffff;
+      --text: #263344;
+      --muted: #6b7280;
+      --bg: #f7f7f5;
+      --shadow: 0 18px 50px rgba(7, 29, 51, 0.14);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: min(1180px, 92%); margin: auto; }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(7, 29, 51, 0.08);
+    }
+    .nav {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; font-weight: 900; color: var(--navy); }
+    .mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--navy), var(--gold));
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -4px;
+    }
+    .brand small { display: block; color: var(--gold); font-size: 11px; letter-spacing: 3px; }
+    .links { display: flex; gap: 24px; align-items: center; color: var(--navy); font-weight: 700; font-size: 14px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 900;
+      transition: 0.25s ease;
+    }
+    .btn-primary { background: var(--gold); color: var(--white); box-shadow: 0 12px 30px rgba(200, 146, 47, 0.35); }
+    .btn-dark { background: var(--navy); color: var(--white); }
+    .btn:hover { transform: translateY(-3px); }
+
+    .hero {
+      padding: 138px 0 80px;
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      background:
+        radial-gradient(circle at top right, rgba(200,146,47,0.16), transparent 32%),
+        linear-gradient(110deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.88) 44%, rgba(7,29,51,.1) 100%),
+        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85') center/cover;
+    }
+    .hero-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 42px; align-items: center; }
+    .eyebrow { color: var(--gold); font-weight: 900; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { font-size: clamp(44px, 7vw, 86px); line-height: 0.95; color: var(--navy); letter-spacing: -3px; margin-bottom: 22px; }
+    h1 span, h2 span { color: var(--gold); }
+    .hero p { max-width: 610px; font-size: 18px; color: #344256; margin-bottom: 30px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow: var(--shadow);
+      border-radius: 34px;
+      padding: 28px;
+    }
+    .hero-card img { border-radius: 26px; height: 430px; width: 100%; object-fit: cover; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+    .stat { background: var(--navy); color: var(--white); border-radius: 18px; padding: 18px; text-align: center; }
+    .stat strong { display: block; font-size: 26px; color: var(--gold); }
+
+    section { padding: 88px 0; }
+    .section-title { text-align: center; max-width: 760px; margin: 0 auto 44px; }
+    .section-title h2 { color: var(--navy); font-size: clamp(34px, 5vw, 54px); line-height: 1; margin-bottom: 14px; letter-spacing: -2px; }
+    .section-title p { color: var(--muted); font-size: 17px; }
+
+    .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(7, 29, 51, 0.06);
+      min-height: 360px;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before { content: ""; position: absolute; inset: 0 0 auto auto; width: 120px; height: 120px; background: var(--gold-soft); border-radius: 0 0 0 100%; opacity: .7; }
+    .service-card:nth-child(even)::before { background: rgba(7,29,51,.1); }
+    .icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 32px;
+      margin-bottom: 22px;
+      position: relative;
+    }
+    .service-card:nth-child(even) .icon { background: var(--gold); }
+    .service-card h3 { color: var(--navy); font-size: 22px; line-height: 1.1; margin-bottom: 18px; position: relative; }
+    .service-card h3 span { color: var(--gold); }
+    .service-card li { list-style: none; margin: 10px 0; color: #354052; font-weight: 600; font-size: 14px; }
+    .service-card li::before { content: "✓"; color: var(--gold); font-weight: 900; margin-right: 10px; }
+
+    .about { background: var(--navy); color: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+    .about h2 { font-size: clamp(34px, 5vw, 56px); line-height: 1; margin-bottom: 20px; }
+    .about h2 span { color: var(--gold); }
+    .about p { color: #d7dde7; margin-bottom: 24px; }
+    .values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .value { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; padding: 18px; }
+    .value strong { color: var(--gold); display: block; margin-bottom: 6px; }
+    .about-img { border-radius: 34px; overflow: hidden; box-shadow: 0 26px 60px rgba(0,0,0,.28); }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .project { background: var(--white); border-radius: 28px; overflow: hidden; box-shadow: var(--shadow); }
+    .project img { height: 260px; width: 100%; object-fit: cover; }
+    .project-body { padding: 24px; }
+    .project h3 { color: var(--navy); margin-bottom: 8px; }
+    .project p { color: var(--muted); font-size: 14px; }
+
+    .cta {
+      background: linear-gradient(135deg, var(--navy), #0b365f);
+      color: var(--white);
+      border-radius: 42px;
+      padding: 58px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+    .cta h2 { font-size: clamp(32px, 5vw, 54px); line-height: 1; margin-bottom: 12px; }
+    .cta p { color: #d7dde7; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .contact-card, form { background: var(--white); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+    .contact-card h3, form h3 { color: var(--navy); margin-bottom: 18px; font-size: 24px; }
+    .contact-item { padding: 14px 0; border-bottom: 1px solid #eef0f2; color: #354052; font-weight: 700; }
+    input, textarea, select {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid #dfe3e8;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      font: inherit;
+      outline: none;
+      background: #fbfbfa;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+
+    footer { background: #03101f; color: #cbd5e1; padding: 34px 0; }
+    .footer-flex { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+    @media (max-width: 980px) {
+      .links { display: none; }
+      .hero-grid, .about-grid, .contact-grid, .cta { grid-template-columns: 1fr; }
+      .services { grid-template-columns: repeat(2, 1fr); }
+      .projects { grid-template-columns: 1fr 1fr; }
+      .hero-card img { height: 320px; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding-top: 116px; }
+      .services, .projects, .stats, .values { grid-template-columns: 1fr; }
+      .cta { padding: 34px 24px; border-radius: 28px; }
+      h1 { letter-spacing: -2px; }
+      .brand div:last-child { font-size: 14px; }
+      .mark { width: 46px; height: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="Menu Real Estate Group home">
+        <div class="mark">M</div>
+        <div>MENU<br><small>REAL ESTATE GROUP</small></div>
+      </a>
+      <nav class="links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-primary" href="#contact">Get Consultation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">One Group. Complete Solutions.</div>
+          <h1>Building <span>Opportunities.</span><br>Creating <span>Futures.</span></h1>
+          <p>We deliver integrated solutions in real estate, construction, investment, and marketing to help you build, grow, and succeed with confidence.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#services">Explore Services</a>
+            <a class="btn btn-dark" href="#contact">Start Your Project</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85" alt="Luxury modern house" loading="eager">
+          <div class="stats">
+            <div class="stat"><strong>4+</strong>Core Services</div>
+            <div class="stat"><strong>360°</strong>Support</div>
+            <div class="stat"><strong>Real</strong>Results</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our <span>Services</span></h2>
+          <p>Everything you need to buy, build, invest, brand, and grow under one trusted group.</p>
+        </div>
+        <div class="services">
+          <article class="service-card">
+            <div class="icon">⌂</div>
+            <h3>Real Estate <span>Services</span></h3>
+            <ul>
+              <li>Buying, Selling & Renting</li>
+              <li>Residential & Commercial</li>
+              <li>Property Management</li>
+              <li>Market Analysis</li>
+              <li>Legal & Documentation Support</li>
+            </ul>
+          </article>
+          <article class="service-card">
+            <div class="icon">▧</div>
+            <h3>Construction <span>& Architecture</span></h3>
+            <ul>
+              <li>Custom Home Construction</li>
+              <li>Commercial & Residential Projects</li>
+              <li>Architectural Design & Planning</li>
+              <li>Renovation & Remodeling</li>
+              <li>Project Management</li>
+            </ul>
+          </article>
+          <article class="service-card">
+            <div class="icon">↗</div>
+            <h3>Investment <span>& Business</span></h3>
+            <ul>
+              <li>Real Estate Investment Consulting</li>
+              <li>Feasibility & Financial Analysis</li>
+              <li>Business Setup & Advisory</li>
+              <li>Portfolio Growth Strategies</li>
+              <li>Risk Management</li>
+            </ul>
+          </article>
+          <article class="service-card">
+            <div class="icon">◉</div>
+            <h3>Marketing <span>& Advertising</span></h3>
+            <ul>
+              <li>Branding & Identity Development</li>
+              <li>Digital Marketing</li>
+              <li>Social Media Management</li>
+              <li>Content Creation</li>
+              <li>Advertising Campaigns</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <div>
+          <h2>Your Vision.<br><span>Our Expertise.</span><br>Real Results.</h2>
+          <p>Menu Real Estate Group is built for clients who want more than one service. We connect property opportunities, construction expertise, business strategy, and marketing power into one complete solution.</p>
+          <div class="values">
+            <div class="value"><strong>Client Focused</strong>Your goals are our priority.</div>
+            <div class="value"><strong>Integrity</strong>Honest advice and clear communication.</div>
+            <div class="value"><strong>Excellence</strong>Quality in everything we do.</div>
+            <div class="value"><strong>Results Driven</strong>We deliver value and proven results.</div>
+          </div>
+        </div>
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85" alt="Modern real estate building" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-title">
+          <h2>Featured <span>Opportunities</span></h2>
+          <p>Premium property, smart investment, and construction support designed for long-term success.</p>
+        </div>
+        <div class="projects">
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85" alt="Luxury villa" loading="lazy">
+            <div class="project-body">
+              <h3>Luxury Homes</h3>
+              <p>Elegant residential properties for families, investors, and premium buyers.</p>
+            </div>
+          </article>
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=85" alt="Modern home" loading="lazy">
+            <div class="project-body">
+              <h3>Custom Construction</h3>
+              <p>From architectural planning to project delivery with professional management.</p>
+            </div>
+          </article>
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=85" alt="Real estate keys" loading="lazy">
+            <div class="project-body">
+              <h3>Investment Growth</h3>
+              <p>Consulting and analysis to help clients make smarter property decisions.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>Let’s build your <span style="color:var(--gold)">future</span> together.</h2>
+            <p>Book a consultation today and discover the best path for your real estate, construction, or investment goal.</p>
+          </div>
+          <a class="btn btn-primary" href="#contact">Contact Us Now</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>Start Your <span>Journey</span></h2>
+          <p>Tell us what you want to build, buy, sell, or grow. Our team will guide you.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Contact Details</h3>
+            <div class="contact-item">📞 Phone: +250 000 000 000</div>
+            <div class="contact-item">✉️ Email: info@menurealestategroup.com</div>
+            <div class="contact-item">📍 Location: Kigali, Rwanda</div>
+            <div class="contact-item">⏱️ Working Hours: Mon - Sat, 8:00 AM - 6:00 PM</div>
+            <br>
+            <a class="btn btn-dark" href="https://wa.me/250000000000?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
+          </div>
+          <form>
+            <h3>Request Consultation</h3>
+            <input type="text" placeholder="Full name" required>
+            <input type="tel" placeholder="Phone number" required>
+            <select required>
+              <option value="">Choose service</option>
+              <option>Real Estate Services</option>
+              <option>Construction & Architecture</option>
+              <option>Investment & Business Services</option>
+              <option>Marketing & Advertising</option>
+            </select>
+            <textarea placeholder="Tell us about your project"></textarea>
+            <button class="btn btn-primary" type="submit">Send Request</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-flex">
+      <div>© 2026 Menu Real Estate Group. All rights reserved.</div>
+      <div>One Group. Complete Solutions.</div>
+    </div>
+  </footer>
+</body>
+</html>
