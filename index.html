@@ -4,115 +4,207 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Menu Real Estate Group | Complete Property Solutions</title>
-  <meta name="description" content="Menu Real Estate Group provides real estate, construction, investment, and marketing solutions for clients who want to build, grow, and succeed." />
+  <meta name="description" content="MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora." />
+  
+  <!-- Premium Font Import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --navy: #071d33;
-      --navy-soft: #0d2c4b;
-      --gold: #c8922f;
-      --gold-soft: #f4e2bd;
+      /* Refined Color Palette */
+      --navy: #0a192f;
+      --navy-soft: #112240;
+      --gold: #d4af37;
+      --gold-soft: rgba(212, 175, 55, 0.1);
       --white: #ffffff;
-      --text: #263344;
-      --muted: #6b7280;
-      --bg: #f7f7f5;
-      --shadow: 0 20px 55px rgba(7, 29, 51, 0.18);
-      --shadow-hover: 0 28px 65px rgba(7, 29, 51, 0.25);
-      --radius: 26px;
-      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --text: #334155;
+      --muted: #64748b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      
+      /* Diffused, elegant shadows instead of harsh boxes */
+      --shadow-sm: 0 4px 20px rgba(10, 25, 47, 0.03);
+      --shadow-md: 0 10px 40px -10px rgba(10, 25, 47, 0.08);
+      --shadow-lg: 0 20px 60px -15px rgba(10, 25, 47, 0.12);
+      --shadow-hover: 0 30px 60px -20px rgba(212, 175, 55, 0.25);
+      
+      /* Organic, rounded shapes */
+      --radius-sm: 16px;
+      --radius-md: 24px;
+      --radius-lg: 32px;
+      --radius-pill: 999px;
+      
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    
     body {
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
+
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
+    .container { width: min(1200px, 90%); margin: 0 auto; }
 
-    .container { width: min(1200px, 92%); margin: 0 auto; }
-
-    /* subtle floating background shapes */
+    /* Elegant background glow */
     body::before {
       content: "";
       position: fixed;
-      top: -10%;
-      right: -5%;
-      width: 70vw;
-      height: 70vh;
-      background: radial-gradient(circle at 30% 30%, rgba(200, 146, 47, 0.04), transparent 70%);
+      top: -20%;
+      right: -10%;
+      width: 80vw;
+      height: 80vh;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
       pointer-events: none;
       z-index: -1;
     }
 
-    /* ---------- TOPBAR ---------- */
+    /* --- Navigation --- */
     .topbar {
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid rgba(7, 29, 51, 0.05);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(10, 25, 47, 0.03);
       transition: var(--transition);
     }
+
     .nav {
-      height: 82px;
+      height: 100px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 28px;
+      gap: 32px;
     }
+
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
-      font-weight: 900;
+      gap: 16px;
+      font-weight: 800;
       color: var(--navy);
-      transition: 0.2s ease;
+      transition: var(--transition);
+      letter-spacing: -0.5px;
     }
-    .brand:hover { transform: scale(1.01); }
+
+    .brand:hover { transform: translateY(-1px); }
+    
+    .nav-logo {
+      height: 75px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: var(--transition);
+    }
+
     .mark {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       display: grid;
       place-items: center;
       color: var(--white);
-      background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
-      box-shadow: 0 14px 25px rgba(200, 146, 47, 0.25);
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -4px;
-      transition: 0.3s;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      box-shadow: 0 10px 20px rgba(10, 25, 47, 0.15);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      transition: var(--transition);
     }
-    .brand:hover .mark { transform: rotate(-2deg) scale(1.03); }
-    .brand small { display: block; color: var(--gold); font-size: 11px; letter-spacing: 3.5px; font-weight: 600; }
 
-    .links { display: flex; gap: 26px; align-items: center; color: var(--navy); font-weight: 700; font-size: 15px; }
+    .brand:hover .mark { transform: rotate(-5deg) scale(1.05); box-shadow: var(--shadow-hover); }
+    .brand small { display: block; color: var(--gold); font-size: 10px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 2px;}
+
+    .links { display: flex; gap: 32px; align-items: center; color: var(--navy); font-weight: 600; font-size: 15px; }
     .links a:not(.btn) {
       position: relative;
-      padding: 6px 2px;
-      transition: color 0.2s;
+      padding: 8px 0;
+      transition: color 0.3s ease;
     }
+
     .links a:not(.btn)::after {
       content: "";
       position: absolute;
-      bottom: -2px;
+      bottom: 0;
       left: 0;
       width: 0%;
       height: 2px;
       background: var(--gold);
-      transition: 0.25s ease;
+      transition: 0.3s ease;
+      border-radius: 2px;
     }
+    
     .links a:not(.btn):hover { color: var(--gold); }
     .links a:not(.btn):hover::after { width: 100%; }
 
+    /* Dropdowns redefined to eliminate boxy feel */
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 20px);
+      left: -20px;
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      min-width: 300px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(15px) scale(0.98);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .dropdown-menu::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+    }
+    
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    
+    .links a.dropdown-item {
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      transition: var(--transition);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .links a.dropdown-item::after { display: none; }
+    .links a.dropdown-item:hover {
+      background: var(--bg);
+      color: var(--navy);
+      transform: translateX(6px);
+    }
+
+    /* --- Buttons --- */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -120,256 +212,1018 @@
       gap: 10px;
       border: none;
       cursor: pointer;
-      padding: 14px 24px;
-      border-radius: 999px;
+      padding: 16px 32px;
+      border-radius: var(--radius-pill);
       font-weight: 700;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
       transition: var(--transition);
       position: relative;
-      overflow: hidden;
-      background: transparent;
-      color: inherit;
       font-size: 15px;
+      text-align: center;
     }
-    .btn-primary { background: var(--gold); color: var(--white); box-shadow: 0 14px 32px rgba(200, 146, 47, 0.45); }
-    .btn-dark { background: var(--navy); color: var(--white); box-shadow: 0 12px 28px rgba(7, 29, 51, 0.35); }
-    .btn:hover { transform: translateY(-4px); filter: brightness(1.08); }
+
+    .btn-primary { 
+      background: var(--gold); 
+      color: var(--white); 
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); 
+    }
+    
+    .btn-dark { 
+      background: var(--navy); 
+      color: var(--white); 
+      box-shadow: 0 10px 25px rgba(10, 25, 47, 0.2); 
+    }
+    
+    .btn:hover { 
+      transform: translateY(-4px); 
+      box-shadow: var(--shadow-hover); 
+    }
+    
     .btn:active { transform: translateY(-1px); }
 
-    /* ---------- HERO ---------- */
+    /* --- Hero Section --- */
     .hero {
-      padding: 148px 0 90px;
+      padding: 200px 0 120px;
       min-height: 100vh;
       display: grid;
       align-items: center;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(200,146,47,0.18), transparent 40%),
-        linear-gradient(105deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.9) 45%, rgba(7,29,51,0.12) 100%),
-        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85') center/cover;
+      background: 
+        linear-gradient(105deg, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0.95) 45%, rgba(248, 250, 252, 0.4) 100%),
+        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
       position: relative;
     }
-    .hero-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 50px; align-items: center; }
+
+    .hero-grid { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 60px; 
+      align-items: center; 
+    }
+
     .eyebrow {
       color: var(--gold);
       font-weight: 800;
-      letter-spacing: 5px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      margin-bottom: 16px;
-      font-size: 14px;
-      background: rgba(200,146,47,0.08);
-      display: inline-block;
-      padding: 8px 18px;
-      border-radius: 30px;
-      backdrop-filter: blur(4px);
-    }
-    h1 {
-      font-size: clamp(46px, 7.5vw, 88px);
-      line-height: 0.95;
-      color: var(--navy);
-      letter-spacing: -3.5px;
       margin-bottom: 24px;
+      font-size: 12px;
+      background: var(--gold-soft);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+    }
+
+    h1 {
+      font-size: clamp(48px, 6.5vw, 82px);
+      line-height: 1.05;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+      margin-bottom: 30px;
       font-weight: 800;
     }
+    
     h1 span, h2 span { color: var(--gold); }
-    .hero p { max-width: 620px; font-size: 18px; color: #2e3b4e; margin-bottom: 34px; font-weight: 500; }
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
+    .hero p { 
+      max-width: 580px; 
+      font-size: 18px; 
+      color: var(--text); 
+      margin-bottom: 40px; 
+      font-weight: 500; 
+      line-height: 1.8;
+    }
+    
+    .hero-actions { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    /* Floating Image approach instead of a harsh card */
     .hero-card {
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,.8);
-      box-shadow: var(--shadow);
-      border-radius: 38px;
-      padding: 30px;
-      transition: var(--transition);
-      transform: translateY(0);
-    }
-    .hero-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
-    .hero-card img { border-radius: 28px; height: 440px; width: 100%; object-fit: cover; transition: 0.4s ease; }
-    .hero-card:hover img { transform: scale(1.02); }
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
-    .stat {
-      background: var(--navy);
-      color: var(--white);
-      border-radius: 20px;
-      padding: 20px 8px;
-      text-align: center;
-      font-weight: 600;
-      transition: 0.3s;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .stat:hover { background: #0a2540; transform: scale(1.03); }
-    .stat strong { display: block; font-size: 28px; color: var(--gold); margin-bottom: 4px; }
-
-    /* ---------- SECTIONS ---------- */
-    section { padding: 90px 0; }
-    .section-title { text-align: center; max-width: 780px; margin: 0 auto 54px; }
-    .section-title h2 { color: var(--navy); font-size: clamp(36px, 5.5vw, 58px); line-height: 1.05; margin-bottom: 16px; letter-spacing: -2px; font-weight: 800; }
-    .section-title p { color: var(--muted); font-size: 18px; }
-
-    .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-    .service-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px 24px;
-      box-shadow: 0 16px 45px rgba(7, 29, 51, 0.08);
-      border: 1px solid rgba(7, 29, 51, 0.04);
-      min-height: 380px;
       position: relative;
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
       transform: translateY(0);
+      transition: var(--transition);
     }
-    .service-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-hover);
-      border-color: rgba(200,146,47,0.25);
-    }
-    .service-card::before {
-      content: "";
+    
+    .hero-card::after {
+      content: '';
       position: absolute;
-      inset: 0 0 auto auto;
-      width: 140px;
-      height: 140px;
-      background: var(--gold-soft);
-      border-radius: 0 0 0 100%;
-      opacity: 0.7;
-      transition: 0.4s;
-    }
-    .service-card:hover::before { opacity: 0.9; width: 150px; height: 150px; }
-    .service-card:nth-child(even)::before { background: rgba(7,29,51,0.1); }
-    .icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 24px;
-      display: grid;
-      place-items: center;
-      background: var(--navy);
-      color: var(--white);
-      font-size: 34px;
-      margin-bottom: 24px;
-      position: relative;
-      transition: 0.3s;
-      box-shadow: 0 10px 18px rgba(0,0,0,0.1);
-    }
-    .service-card:nth-child(even) .icon { background: var(--gold); }
-    .service-card:hover .icon { transform: scale(1.08); }
-    .service-card h3 { color: var(--navy); font-size: 23px; line-height: 1.2; margin-bottom: 20px; position: relative; font-weight: 800; }
-    .service-card h3 span { color: var(--gold); }
-    .service-card li { list-style: none; margin: 12px 0; color: #354052; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    .service-card li::before { content: "✓"; color: var(--gold); font-weight: 900; font-size: 16px; }
-
-    /* about */
-    .about { background: var(--navy); color: var(--white); position: relative; overflow: hidden; }
-    .about::after {
-      content: "";
-      position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(200,146,47,0.2), transparent 70%);
+      inset: 0;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       pointer-events: none;
     }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; position: relative; z-index: 2; }
-    .about h2 { font-size: clamp(36px, 5vw, 58px); line-height: 1.05; margin-bottom: 22px; font-weight: 800; }
-    .about h2 span { color: var(--gold); }
-    .about p { color: #d7dde7; margin-bottom: 26px; font-size: 17px; }
-    .values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    .value {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 22px;
-      padding: 20px;
-      transition: 0.3s;
+    
+    .hero-card:hover { 
+      transform: translateY(-12px); 
+      box-shadow: 0 40px 80px -20px rgba(10, 25, 47, 0.25); 
     }
-    .value:hover { background: rgba(255,255,255,0.14); transform: translateY(-4px); }
-    .value strong { color: var(--gold); display: block; margin-bottom: 6px; font-size: 17px; }
-    .about-img { border-radius: 36px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.35); transition: 0.4s; }
-    .about-img:hover { transform: scale(1.02); }
-    .about-img img { transition: 0.5s ease; }
-    .about-img:hover img { transform: scale(1.06); }
+    
+    .hero-card img { 
+      height: 540px; 
+      width: 100%; 
+      object-fit: cover; 
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+    }
+    
+    .hero-card:hover img { transform: scale(1.05); }
 
-    /* projects */
-    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+    /* --- Global Sections --- */
+    section { padding: 120px 0; }
+    
+    .section-title { text-align: center; max-width: 700px; margin: 0 auto 64px; }
+    .section-title h2 { 
+      color: var(--navy); 
+      font-size: clamp(36px, 5vw, 54px); 
+      line-height: 1.1; 
+      margin-bottom: 20px; 
+      letter-spacing: -0.02em; 
+      font-weight: 800; 
+    }
+    .section-title p { color: var(--muted); font-size: 18px; line-height: 1.8; }
+
+    /* --- About & Mission Section --- */
+    .about-section { background: var(--bg); position: relative; z-index: 1;}
+    
+    .about-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+      gap: 32px; 
+      margin-bottom: 32px; 
+    }
+    
+    .vision-mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+    /* Soft, floating cards without rigid borders */
+    .about-card {
+      background: var(--surface);
+      padding: 48px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .about-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .about-icon {
+      width: 64px; height: 64px;
+      background: var(--bg); color: var(--gold);
+      border-radius: var(--radius-md); 
+      display: grid; place-items: center;
+      font-size: 28px; margin-bottom: 32px; 
+      transition: var(--transition);
+    }
+    
+    .about-card:hover .about-icon { 
+      transform: scale(1.1) rotate(-5deg); 
+      background: var(--gold); 
+      color: var(--white); 
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .about-card h3 { color: var(--navy); font-size: 24px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px;}
+    .about-card p { color: var(--muted); font-size: 16px; margin-bottom: 16px; }
+    .about-card p:last-child { margin-bottom: 0; }
+
+    /* Subtle top accent instead of full borders */
+    .vision-card { position: relative; }
+    .vision-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+      background: var(--gold);
+    }
+    .mission-card { position: relative; }
+    .mission-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+      background: var(--navy);
+    }
+
+    /* --- Core Services --- */
+    .core-services { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+      gap: 24px; 
+    }
+    
+    .core-service-item {
+      background: var(--surface);
+      padding: 32px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .core-service-item:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .core-service-icon {
+      background: var(--bg);
+      color: var(--gold);
+      width: 54px;
+      height: 54px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    
+    .core-service-item:hover .core-service-icon {
+      background: var(--navy);
+      color: var(--white);
+    }
+    
+    .core-service-item h4 { color: var(--navy); font-size: 18px; margin-bottom: 10px; font-weight: 700; line-height: 1.4; }
+    .core-service-item p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+    /* --- Solutions Section --- */
+    .solutions { 
+      background: var(--navy); 
+      color: var(--white); 
+      position: relative; 
+      border-radius: 40px; /* Soften the entire section */
+      margin: 0 20px; /* Float it slightly off the edges */
+      padding: 120px 0;
+    }
+    
+    .solutions::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1), transparent 60%); 
+      pointer-events: none;
+      border-radius: 40px;
+    }
+    
+    .solutions .section-title h2, .solutions .section-title p { color: var(--white); }
+    .solutions .section-title p { opacity: 0.8; }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; z-index: 2; }
+    
     .project {
       background: var(--white);
-      border-radius: 30px;
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 18px 48px rgba(7,29,51,0.1);
+      box-shadow: var(--shadow-lg);
       transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
     }
-    .project:hover { transform: translateY(-12px); box-shadow: var(--shadow-hover); }
-    .project img { height: 270px; width: 100%; object-fit: cover; transition: 0.45s ease; }
-    .project:hover img { transform: scale(1.07); }
-    .project-body { padding: 26px; }
-    .project h3 { color: var(--navy); margin-bottom: 10px; font-weight: 800; }
+    
+    .project:hover { transform: translateY(-12px); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
+    
+    .project img { height: 280px; width: 100%; object-fit: cover; transition: 0.6s ease; }
+    .project:hover img { transform: scale(1.05); }
 
-    /* cta */
-    .cta {
-      background: linear-gradient(135deg, #071d33 0%, #0b3a5c 100%);
+    .project-body { padding: 40px; flex-grow: 1; display: flex; flex-direction: column; }
+    .project h3 { color: var(--navy); margin-bottom: 16px; font-weight: 800; font-size: 24px; letter-spacing: -0.5px;}
+    .project p { color: var(--muted); margin-bottom: 24px; font-size: 16px; flex-grow: 1; }
+    
+    .read-more { color: var(--gold); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; margin-top: auto;}
+    .read-more::after { content: "→"; transition: 0.3s ease; font-size: 18px;}
+    .project:hover .read-more::after { transform: translateX(6px); }
+
+    /* --- Why Us --- */
+    .why-us { background: var(--bg); padding-top: 140px; }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    
+    .why-img { 
+      border-radius: var(--radius-lg); 
+      overflow: hidden; 
+      box-shadow: var(--shadow-lg); 
+      position: relative;
+    }
+    
+    .why-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      pointer-events: none;
+    }
+    
+    .why-list { list-style: none; display: flex; flex-direction: column; gap: 20px;}
+    .why-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    
+    .why-list li::before {
+      content: "✓";
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--gold);
       color: var(--white);
-      border-radius: 44px;
-      padding: 60px 50px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 900;
+      margin-top: 2px;
+      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    /* --- CTA Section --- */
+    .cta {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      color: var(--white);
+      border-radius: 48px;
+      padding: 80px 64px;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 28px;
+      gap: 40px;
       align-items: center;
-      box-shadow: 0 30px 65px rgba(7,29,51,0.5);
-      transition: 0.3s;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
     }
-    .cta:hover { box-shadow: 0 35px 70px rgba(7,29,51,0.6); }
-    .cta h2 { font-size: clamp(34px, 5vw, 56px); line-height: 1; margin-bottom: 14px; font-weight: 800; }
+    
+    .cta::before {
+      content: ""; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .cta h2 { font-size: clamp(36px, 5vw, 54px); line-height: 1.1; margin-bottom: 16px; font-weight: 800; letter-spacing: -0.02em;}
+    .cta p { font-size: 18px; opacity: 0.9; max-width: 500px;}
 
-    /* contact */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    /* --- Contact & Forms --- */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
+    
     .contact-card, form {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .contact-card h3, form h3 {
+      color: var(--navy); font-size: 28px; font-weight: 800; margin-bottom: 32px; letter-spacing: -0.5px;
+    }
+
+    .contact-item {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(10, 25, 47, 0.06);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .contact-item:last-of-type { border-bottom: none; }
+
+    /* Elegant, premium form inputs */
+    input, textarea, select {
+      width: 100%;
+      padding: 18px 24px;
+      border: 1px solid rgba(10, 25, 47, 0.08);
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      font: inherit;
+      outline: none;
+      background: var(--bg);
+      color: var(--navy);
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    input::placeholder, textarea::placeholder, select::placeholder { color: var(--muted); font-weight: 400;}
+    
+    input:focus, textarea:focus, select:focus { 
       background: var(--white);
-      border-radius: var(--radius);
-      padding: 34px;
-      box-shadow: 0 20px 45px rgba(7,29,51,0.08);
+      border-color: var(--gold); 
+      box-shadow: 0 0 0 4px var(--gold-soft); 
+    }
+    
+    textarea { min-height: 160px; resize: vertical; }
+
+    /* --- Partners Ticker --- */
+    .partners-section {
+      background: transparent;
+      padding: 0 0 100px 0;
+      overflow: hidden;
+    }
+    
+    .partners-section h4 {
+      text-align: center;
+      color: var(--gold);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 40px;
+      font-weight: 800;
+    }
+    
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    
+    .ticker-wrap::before, .ticker-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 200px;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    
+    .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+    
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      animation: scroll 30s linear infinite;
+    }
+    
+    .ticker-track:hover { animation-play-state: paused; }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      opacity: 0.4;
+      padding: 0 50px;
       transition: var(--transition);
     }
-    .contact-card:hover, form:hover { box-shadow: var(--shadow-hover); }
-    .contact-item {
-      padding: 16px 0;
-      border-bottom: 1px solid #eef0f2;
-      color: #354052;
+    
+    .ticker-item:hover { opacity: 1; }
+    
+    .ticker-item::after {
+      content: "•";
+      color: var(--gold);
+      margin-left: 100px;
+      font-size: 32px;
+      line-height: 0;
+      opacity: 0.5;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* --- Footer --- */
+    footer { 
+      background: #020a14; 
+      color: rgba(255,255,255,0.6); 
+      padding: 48px 0; 
+      font-size: 15px;
+    }
+    
+    .footer-flex { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 24px; 
+      flex-wrap: wrap; 
+    }
+
+    /* --- Elegant Modal --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 25, 47, 0.4);
+      backdrop-filter: blur(12px); 
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000; 
+      opacity: 0; 
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 20px;
+    }
+    
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    
+    .modal-content {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 56px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(40px) scale(0.96);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+    
+    .modal-close {
+      position: absolute; top: 24px; right: 24px;
+      background: var(--bg); border: none; font-size: 20px;
+      width: 48px; height: 48px; border-radius: 50%;
+      cursor: pointer; display: grid; place-items: center;
+      color: var(--navy); transition: var(--transition);
+    }
+    
+    .modal-close:hover { background: #fee2e2; color: #dc2626; transform: rotate(90deg); }
+
+    .modal-header h3 { 
+      font-size: 36px; 
+      color: var(--navy); 
+      font-weight: 800; 
+      line-height: 1.1; 
+      margin-bottom: 24px; 
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(10, 25, 47, 0.08);
+      letter-spacing: -0.02em;
+    }
+    
+    .modal-header h3 span { color: var(--gold); }
+    
+    .modal-body { color: var(--text); font-size: 17px; line-height: 1.8; }
+    .modal-body p { margin-bottom: 24px; }
+    .modal-body h4 { 
+      color: var(--navy); 
+      margin: 40px 0 20px; 
+      font-size: 22px; 
+      font-weight: 800; 
+      background: var(--bg); 
+      padding: 16px 24px; 
+      border-radius: var(--radius-sm); 
+      display: inline-block;
+    }
+    
+    .modal-body ul { margin-bottom: 32px; padding-left: 0; }
+    .modal-body li { 
+      list-style: none; 
+      margin: 16px 0; 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 16px; 
+      font-weight: 500; 
+    }
+    
+    .modal-body li::before { 
+      content: "•"; 
+      color: var(--gold); 
+      font-weight: 900; 
+      font-size: 24px; 
+      line-height: 1; 
+      margin-top: -2px;
+    }
+
+    /* Custom Scrollbar for Modal and Body */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* --- Chatbot Styles --- */
+    .chat-widget {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      color: var(--white);
+      border: none;
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      transition: var(--transition);
+    }
+    
+    .chat-toggle:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .chat-window {
+      width: 380px;
+      height: 600px;
+      max-height: 80vh;
+      max-width: calc(100vw - 40px);
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-bottom: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: bottom right;
+    }
+    
+    .chat-window.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    
+    .chat-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .chat-header h4 {
+      margin: 0;
+      font-size: 16px;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .chat-header h4::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    }
+    
+    .chat-close {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: 0.2s;
+    }
+    
+    .chat-close:hover { opacity: 1; }
+    
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--bg);
+    }
+    
+    .message {
+      max-width: 85%;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .message.bot {
+      background: var(--white);
+      color: var(--navy);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-sm);
+      align-self: flex-start;
+    }
+    
+    .message.user {
+      background: var(--gold);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+    }
+    
+    .chat-footer {
+      padding: 16px;
+      background: var(--white);
+      border-top: 1px solid rgba(10, 25, 47, 0.05);
+      display: flex;
+      gap: 10px;
+    }
+    
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid rgba(10, 25, 47, 0.1);
+      border-radius: var(--radius-pill);
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      transition: var(--transition);
+      margin-bottom: 0;
+    }
+    
+    .chat-input:focus {
+      border-color: var(--gold);
+      background: var(--bg);
+    }
+    
+    .chat-send {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    
+    .chat-send:hover {
+      background: var(--gold);
+      transform: scale(1.05);
+    }
+
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--white);
+      padding: 12px 16px;
+      border-radius: 18px;
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-sm);
+      gap: 4px;
+      align-items: center;
+    }
+
+    .typing-indicator.active { display: flex; }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--muted);
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    /* --- Responsiveness --- */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px;}
+      .hero p { margin: 0 auto 40px; }
+      .hero-actions { justify-content: center; }
+      .hero-card img { height: 400px; }
+      .projects { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+      .solutions { margin: 0; border-radius: 0; }
+    }
+    
+    @media (max-width: 980px) {
+      .links { display: none; } /* Mobile menu implementation left intact as requested */
+      .vision-mission-grid, .why-grid, .contact-grid, .cta { grid-template-columns: 1fr; }
+      .cta { text-align: center; padding: 60px 40px;}
+      .why-img { margin-top: 40px; }
+      .nav { height: 80px; }
+      .nav-logo { height: 50px; }
+    }
+    
+    @media (max-width: 640px) {
+      .hero { padding-top: 140px; } /* Adjusted for taller navbar on mobile */
+      .cta { padding: 38px 26px; border-radius: 30px; }
+      .modal-content { padding: 30px 20px; }
+    }
+
+    /* --- Chatbot Styles --- */
+    .chat-widget {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .chat-toggle {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      color: var(--white);
+      border: none;
+      box-shadow: 0 15px 35px rgba(7, 29, 51, 0.25);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: var(--transition);
+    }
+    .chat-toggle:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 20px 45px rgba(7, 29, 51, 0.35);
+    }
+    .chat-window {
+      width: 380px;
+      height: 600px;
+      max-height: 80vh;
+      max-width: calc(100vw - 40px);
+      background: var(--white);
+      border-radius: 28px;
+      box-shadow: 0 25px 65px rgba(7, 29, 51, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-bottom: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform-origin: bottom right;
+      border: 1px solid rgba(7, 29, 51, 0.05);
+    }
+    .chat-window.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    .chat-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header h4 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    input, textarea, select {
-      width: 100%;
-      padding: 16px 18px;
+    .chat-header h4::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+    }
+    .chat-close {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 22px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: 0.2s;
+    }
+    .chat-close:hover { opacity: 1; }
+    .chat-body {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--bg);
+    }
+    .message {
+      max-width: 85%;
+      padding: 16px 20px;
+      border-radius: 20px;
+      font-size: 15px;
+      line-height: 1.6;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .message.bot {
+      background: var(--white);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 5px 15px rgba(7, 29, 51, 0.03);
+      align-self: flex-start;
+      border: 1px solid rgba(7, 29, 51, 0.03);
+    }
+    .message.user {
+      background: var(--gold);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+      box-shadow: 0 5px 15px rgba(200, 146, 47, 0.2);
+    }
+    .chat-footer {
+      padding: 20px;
+      background: var(--white);
+      border-top: 1px solid rgba(7, 29, 51, 0.05);
+      display: flex;
+      gap: 12px;
+    }
+    .chat-input {
+      flex: 1;
+      padding: 14px 20px;
       border: 1px solid #dfe3e8;
-      border-radius: 18px;
-      margin-bottom: 16px;
-      font: inherit;
+      border-radius: 99px;
       outline: none;
-      background: #fbfbfa;
-      transition: 0.25s;
+      font-family: inherit;
+      font-size: 15px;
+      transition: 0.3s;
+      margin-bottom: 0;
+      background: var(--bg);
     }
-    input:focus, textarea:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(200,146,47,0.15); }
-    textarea { min-height: 125px; resize: vertical; }
-
-    footer { background: #03101f; color: #cbd5e1; padding: 36px 0; }
-    .footer-flex { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
-
-    @media (max-width: 980px) {
-      .links { display: none; }
-      .hero-grid, .about-grid, .contact-grid, .cta { grid-template-columns: 1fr; }
-      .services { grid-template-columns: repeat(2, 1fr); }
-      .projects { grid-template-columns: 1fr 1fr; }
-      .hero-card img { height: 340px; }
+    .chat-input:focus {
+      border-color: var(--gold);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(200,146,47,0.1);
     }
-    @media (max-width: 640px) {
-      .hero { padding-top: 120px; }
-      .services, .projects, .stats, .values { grid-template-columns: 1fr; }
-      .cta { padding: 38px 26px; border-radius: 30px; }
-      .mark { width: 48px; height: 48px; }
+    .chat-send {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: 0.3s;
+      flex-shrink: 0;
+    }
+    .chat-send:hover {
+      background: var(--gold);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(200, 146, 47, 0.3);
+    }
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--white);
+      padding: 16px 20px;
+      border-radius: 20px;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 5px 15px rgba(7, 29, 51, 0.03);
+      gap: 6px;
+      align-items: center;
+      border: 1px solid rgba(7, 29, 51, 0.03);
+    }
+    .typing-indicator.active { display: flex; }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--muted);
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
     }
   </style>
 </head>
@@ -377,14 +1231,37 @@
   <header class="topbar">
     <div class="container nav">
       <a href="#" class="brand" aria-label="Menu Real Estate Group home">
-        <div class="mark">M</div>
-        <div>MENU<br><small>REAL ESTATE GROUP</small></div>
+        <img src="logo.jpg" alt="Menu Real Estate Group Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
+        <div id="fallback-logo" style="display: none; align-items: center; gap: 16px;">
+          <div class="mark">M</div>
+          <div>MENU<br><small>REAL ESTATE GROUP</small></div>
+        </div>
       </a>
       <nav class="links">
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="#about">About Us</a>
+        <div class="dropdown">
+          <a href="#core-services">Services <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <div class="dropdown-menu" style="min-width: 360px; max-height: 70vh; overflow-y: auto;">
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('brokerage')">🤝 Brokerage & Transactions</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('management')">🏢 Property Management & Operations</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('valuation')">📊 Valuation & Advisory</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('development')">🏗️ Development & Project Services</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('architectural')">📐 Architectural & Planning</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('construction')">🚜 Construction Support</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('community')">🏘️ Community & Affordable Housing</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('investment')">📈 Investment Guidance</a>
+            <a href="#core-services" class="dropdown-item" onclick="openPageModal('consultation')">💬 Real Estate Consultation</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="#solutions">Solutions <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <div class="dropdown-menu">
+            <a href="#solutions" class="dropdown-item" onclick="openPageModal('commercial')">🏢 Commercial Properties</a>
+            <a href="#solutions" class="dropdown-item" onclick="openPageModal('residential')">🏡 Residential Properties</a>
+            <a href="#solutions" class="dropdown-item" onclick="openPageModal('agricultural')">🌾 Agricultural Land & Farming</a>
+          </div>
+        </div>
+        <a href="#why-us">Why Choose Us</a>
         <a class="btn btn-primary" href="#contact">Get Consultation</a>
       </nav>
     </div>
@@ -394,138 +1271,222 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow">One Group. Complete Solutions.</div>
+          <div class="eyebrow">Where real estate begins, grows, and is cared for—forever.</div>
           <h1>Building <span>Opportunities.</span><br>Creating <span>Futures.</span></h1>
-          <p>We deliver integrated solutions in real estate, construction, investment, and marketing to help you build, grow, and succeed with confidence.</p>
+          <p>MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#services">Explore Services</a>
-            <a class="btn btn-dark" href="#contact">Start Your Project</a>
+            <a class="btn btn-primary" href="#solutions">Explore Portfolios</a>
+            <a class="btn btn-dark" href="#contact">Contact Us</a>
           </div>
         </div>
         <div class="hero-card">
           <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85" alt="Luxury modern house" loading="eager">
-          <div class="stats">
-            <div class="stat"><strong>4+</strong>Core Services</div>
-            <div class="stat"><strong>360°</strong>Support</div>
-            <div class="stat"><strong>Real</strong>Results</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>About <span>Us</span></h2>
+          <p>Where real estate begins, grows, and is cared for—forever.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">🏢</div>
+            <h3>Company Profile</h3>
+            <p><strong>MENU Real Estate Group</strong> is a licensed and registered real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora.</p>
+            <p>We support our clients from the very first step by helping them identify genuine, high-value plots in strategic and fast-growing locations across the country.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">⚖️</div>
+            <h3>Legal & Development</h3>
+            <p>Our team oversees all legal processes, including land title verification, mutation, and documentation support, ensuring a smooth and transparent transaction.</p>
+            <p>We assist with securing construction permits, district approvals, and architectural compliance, removing the complexity from the development process. We also provide full construction services.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">💎</div>
+            <h3>Long-Term Value</h3>
+            <p>Once a property is completed, we continue to add value through long-term property management, tenant sourcing, rent collection, facility care, and ongoing maintenance.</p>
+            <p>With a strong commitment to professionalism, integrity, and client success, we stand as a trusted partner for all real estate needs in Rwanda.</p>
+          </div>
+        </div>
+
+        <div class="vision-mission-grid">
+          <div class="about-card vision-card">
+            <div class="about-icon" style="background: var(--gold-soft); color: var(--gold);">👁️</div>
+            <h3>Our Vision</h3>
+            <p>Our vision is to become Rwanda's most trusted, fully integrated real estate partner guiding clients from finding the right land to delivering high-quality finished properties, and continuing with lifelong property management and maintenance.</p>
+            <p>We aim to simplify the entire real estate journey by offering reliable support at every stage. We envision a future where owning property is easy, transparent, and stress-free for everyone, while contributing to sustainable growth in Rwanda's real estate sector.</p>
+          </div>
+          <div class="about-card mission-card">
+            <div class="about-icon" style="background: rgba(10, 25, 47, 0.05); color: var(--navy);">🎯</div>
+            <h3>Our Mission</h3>
+            <p>Our mission is to provide dependable, innovative, and compliant real estate solutions that empower clients to buy, sell, develop, manage, and invest in property with complete confidence.</p>
+            <p>Beyond construction, we offer long-term property management, tenant support, and ongoing maintenance to ensure every asset remains productive, secure, and well-cared-for. MENU Real Estate Group exists to simplify the entire real estate journey and create lasting value.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="services">
+    <section id="core-services">
       <div class="container">
         <div class="section-title">
-          <h2>Our <span>Services</span></h2>
-          <p>Everything you need to buy, build, invest, brand, and grow under one trusted group.</p>
+          <h2>Our <span>Core Services</span></h2>
+          <p>We provide comprehensive property solutions customized for the Rwandan market. Click on any service to learn more.</p>
         </div>
-        <div class="services">
-          <article class="service-card">
-            <div class="icon">⌂</div>
-            <h3>Real Estate <span>Services</span></h3>
-            <ul>
-              <li>Buying, Selling & Renting</li>
-              <li>Residential & Commercial</li>
-              <li>Property Management</li>
-              <li>Market Analysis</li>
-              <li>Legal & Documentation Support</li>
-            </ul>
-          </article>
-          <article class="service-card">
-            <div class="icon">▧</div>
-            <h3>Construction <span>& Architecture</span></h3>
-            <ul>
-              <li>Custom Home Construction</li>
-              <li>Commercial & Residential Projects</li>
-              <li>Architectural Design & Planning</li>
-              <li>Renovation & Remodeling</li>
-              <li>Project Management</li>
-            </ul>
-          </article>
-          <article class="service-card">
-            <div class="icon">↗</div>
-            <h3>Investment <span>& Business</span></h3>
-            <ul>
-              <li>Real Estate Investment Consulting</li>
-              <li>Feasibility & Financial Analysis</li>
-              <li>Business Setup & Advisory</li>
-              <li>Portfolio Growth Strategies</li>
-              <li>Risk Management</li>
-            </ul>
-          </article>
-          <article class="service-card">
-            <div class="icon">◉</div>
-            <h3>Marketing <span>& Advertising</span></h3>
-            <ul>
-              <li>Branding & Identity Development</li>
-              <li>Digital Marketing</li>
-              <li>Social Media Management</li>
-              <li>Content Creation</li>
-              <li>Advertising Campaigns</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <div class="container about-grid">
-        <div>
-          <h2>Your Vision.<br><span>Our Expertise.</span><br>Real Results.</h2>
-          <p>Menu Real Estate Group is built for clients who want more than one service. We connect property opportunities, construction expertise, business strategy, and marketing power into one complete solution.</p>
-          <div class="values">
-            <div class="value"><strong>Client Focused</strong>Your goals are our priority.</div>
-            <div class="value"><strong>Integrity</strong>Honest advice and clear communication.</div>
-            <div class="value"><strong>Excellence</strong>Quality in everything we do.</div>
-            <div class="value"><strong>Results Driven</strong>We deliver value and proven results.</div>
+        <div class="core-services">
+          <div class="core-service-item" onclick="openPageModal('brokerage')" role="button" tabindex="0">
+            <div class="core-service-icon">🤝</div>
+            <div>
+              <h4>Brokerage & Transactions</h4>
+              <p>Buying, selling, and renting of residential and commercial properties...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('management')" role="button" tabindex="0">
+            <div class="core-service-icon">🏢</div>
+            <div>
+              <h4>Property Management & Operations</h4>
+              <p>Tenant sourcing, rent collection, maintenance coordination...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('valuation')" role="button" tabindex="0">
+            <div class="core-service-icon">📊</div>
+            <div>
+              <h4>Valuation & Advisory</h4>
+              <p>Professional property valuation, market research, feasibility studies...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('development')" role="button" tabindex="0">
+            <div class="core-service-icon">🏗️</div>
+            <div>
+              <h4>Development & Project Services</h4>
+              <p>Building project development, land subdivision, project coordination...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('architectural')" role="button" tabindex="0">
+            <div class="core-service-icon">📐</div>
+            <div>
+              <h4>Architectural & Planning</h4>
+              <p>Building design, drafting, planning, and landscape advisory...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('construction')" role="button" tabindex="0">
+            <div class="core-service-icon">🚜</div>
+            <div>
+              <h4>Construction Support</h4>
+              <p>Leasing of construction and civil engineering machinery...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('community')" role="button" tabindex="0">
+            <div class="core-service-icon">🏘️</div>
+            <div>
+              <h4>Community & Affordable Housing</h4>
+              <p>Volunteer-based low-cost housing development initiatives...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('investment')" role="button" tabindex="0">
+            <div class="core-service-icon">📈</div>
+            <div>
+              <h4>Investment Guidance</h4>
+              <p>Data-driven advice on high-growth locations, risk assessment...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="openPageModal('consultation')" role="button" tabindex="0">
+            <div class="core-service-icon">💬</div>
+            <div>
+              <h4>Real Estate Consultation</h4>
+              <p>Expert guidance on market research, feasibility studies...</p>
+            </div>
           </div>
         </div>
-        <div class="about-img">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85" alt="Modern real estate building" loading="lazy">
-        </div>
       </div>
     </section>
 
-    <section id="projects">
+    <section id="solutions" class="solutions">
       <div class="container">
         <div class="section-title">
-          <h2>Featured <span>Opportunities</span></h2>
-          <p>Premium property, smart investment, and construction support designed for long-term success.</p>
+          <h2>Specialized <span>Solutions</span></h2>
+          <p>Explore our targeted portfolios designed for investors, businesses, families, and the agricultural sector.</p>
         </div>
         <div class="projects">
-          <article class="project">
-            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85" alt="Luxury villa" loading="lazy">
+          <article class="project" onclick="openPageModal('commercial')" role="button" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=85" alt="Commercial Building" loading="lazy">
             <div class="project-body">
-              <h3>Luxury Homes</h3>
-              <p>Elegant residential properties for families, investors, and premium buyers.</p>
+              <h3>Commercial Property Solutions</h3>
+              <p>Strategic, data-driven real estate services designed to support investors, business owners, and commercial landlords across Rwanda.</p>
+              <div class="read-more">View Full Details</div>
             </div>
           </article>
-          <article class="project">
-            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=85" alt="Modern home" loading="lazy">
+          <article class="project" onclick="openPageModal('residential')" role="button" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85" alt="Residential Home" loading="lazy">
             <div class="project-body">
-              <h3>Custom Construction</h3>
-              <p>From architectural planning to project delivery with professional management.</p>
+              <h3>Residential Property Solutions</h3>
+              <p>Helping individuals, families, and investors find quality residential properties in Rwanda's most desirable and fast-growing neighborhoods.</p>
+              <div class="read-more">View Full Details</div>
             </div>
           </article>
-          <article class="project">
-            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=85" alt="Real estate keys" loading="lazy">
+          <article class="project" onclick="openPageModal('agricultural')" role="button" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=85" alt="Agricultural Land" loading="lazy">
             <div class="project-body">
-              <h3>Investment Growth</h3>
-              <p>Consulting and analysis to help clients make smarter property decisions.</p>
+              <h3>Agricultural Land & Farming</h3>
+              <p>Expert guidance for buying, leasing, or developing agricultural land, commercial farming, and agribusiness projects.</p>
+              <div class="read-more">View Full Details</div>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section>
+    <section id="why-us" class="why-us">
+      <div class="container why-grid">
+        <div>
+          <h2 style="font-size: clamp(36px, 5vw, 54px); font-weight: 800; color: var(--navy); margin-bottom: 32px; line-height: 1.1; letter-spacing: -0.02em;">Why Choose <br><span style="color: var(--gold);">MENU Real Estate</span></h2>
+          <ul class="why-list">
+            <li>Fully licensed and compliant with RDB and RRA regulations.</li>
+            <li>Strong knowledge of Kigali and high-growth markets.</li>
+            <li>Transparent processes with verified documentation at every stage.</li>
+            <li>Advisory services tailored to investors, individuals, and the diaspora.</li>
+            <li>One-stop real estate solutions: land acquisition, documentation, construction permits, development, and long-term property management.</li>
+            <li>Reliable guidance from the first plot search to complete property delivery.</li>
+            <li>Professional support that simplifies every step of the real estate journey.</li>
+            <li>Focus on secure, high-value, and sustainable investments.</li>
+          </ul>
+        </div>
+        <div class="why-img">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1000&q=85" alt="Real estate team holding keys" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <section class="partners-section">
+      <h4>Our Partners</h4>
+      <div class="ticker-wrap">
+        <div class="ticker-track">
+          <!-- First Set -->
+          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
+          <div class="ticker-item">ELITE WORKS</div>
+          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
+          <div class="ticker-item">ELITE WORKS</div>
+          
+          <!-- Second Set (Exact duplicate for seamless looping) -->
+          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
+          <div class="ticker-item">ELITE WORKS</div>
+          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
+          <div class="ticker-item">ELITE WORKS</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
       <div class="container">
         <div class="cta">
           <div>
             <h2>Let’s build your <span style="color:var(--gold)">future</span> together.</h2>
-            <p>Book a consultation today and discover the best path for your real estate, construction, or investment goal.</p>
+            <p>Book a consultation today and discover the best path for your real estate, construction, or investment goals in Rwanda.</p>
           </div>
-          <a class="btn btn-primary" href="#contact">Contact Us Now</a>
+          <a class="btn btn-primary" style="background: var(--white); color: var(--navy);" href="#contact">Contact Us Now</a>
         </div>
       </div>
     </section>
@@ -538,27 +1499,38 @@
         </div>
         <div class="contact-grid">
           <div class="contact-card">
-            <h3>Contact Details</h3>
-            <div class="contact-item">📞 Phone: +250 000 000 000</div>
-            <div class="contact-item">✉️ Email: info@menurealestategroup.com</div>
-            <div class="contact-item">📍 Location: Kigali, Rwanda</div>
-            <div class="contact-item">⏱️ Working Hours: Mon - Sat, 8:00 AM - 6:00 PM</div>
-            <br>
-            <a class="btn btn-dark" href="https://wa.me/250000000000?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
+            <h3>Contact Information</h3>
+            <div class="contact-item">
+              <span style="font-size: 24px; color: var(--gold);">📍</span> 
+              <span>Inyarurembo, Kiyovu, Nyarugenge, City of Kigali</span>
+            </div>
+            <div class="contact-item">
+              <span style="font-size: 24px; color: var(--gold);">📞</span> 
+              <span>+250 782 616 150</span>
+            </div>
+            <div class="contact-item">
+              <span style="font-size: 24px; color: var(--gold);">✉️</span> 
+              <span>menurealestategroup@gmail.com</span>
+            </div>
+            <div class="contact-item" style="border-bottom: none; margin-bottom: 24px;">
+              <span style="font-size: 24px; color: var(--gold);">⏱️</span> 
+              <span>Working Hours: Mon - Sat, 8:00 AM - 6:00 PM</span>
+            </div>
+            <a class="btn btn-dark" style="width: 100%; justify-content: center;" href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
-          <form>
+          <form onsubmit="event.preventDefault();">
             <h3>Request Consultation</h3>
             <input type="text" placeholder="Full name" required>
             <input type="tel" placeholder="Phone number" required>
             <select required>
-              <option value="">Choose service</option>
-              <option>Real Estate Services</option>
-              <option>Construction & Architecture</option>
-              <option>Investment & Business Services</option>
-              <option>Marketing & Advertising</option>
+              <option value="" disabled selected hidden>Choose solution interest</option>
+              <option>Commercial Property Solutions</option>
+              <option>Residential Property Solutions</option>
+              <option>Agricultural Land & Farming</option>
+              <option>General Real Estate Consultation</option>
             </select>
-            <textarea placeholder="Tell us about your project"></textarea>
-            <button class="btn btn-primary" type="submit">Send Request</button>
+            <textarea placeholder="Tell us about your project or inquiry..."></textarea>
+            <button class="btn btn-primary" type="submit" style="width: 100%;">Send Request</button>
           </form>
         </div>
       </div>
@@ -568,8 +1540,414 @@
   <footer>
     <div class="container footer-flex">
       <div>© 2026 Menu Real Estate Group. All rights reserved.</div>
-      <div>One Group. Complete Solutions.</div>
+      <div>Where real estate begins, grows, and is cared for—forever.</div>
     </div>
   </footer>
+
+  <!-- Chatbot Widget -->
+  <div class="chat-widget">
+    <div id="chatWindow" class="chat-window">
+      <div class="chat-header">
+        <h4>MENU Assistant</h4>
+        <button class="chat-close" onclick="toggleChat()" aria-label="Close Chat">✕</button>
+      </div>
+      <div id="chatBody" class="chat-body">
+        <div class="message bot">
+          Hello! I'm the MENU Real Estate Group assistant. How can I help you today? Whether you're looking for land, commercial properties, or have questions about our services, I'm here to guide you.
+        </div>
+        <div id="typingIndicator" class="typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+      <form class="chat-footer" onsubmit="handleChatSubmit(event)">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." autocomplete="off">
+        <button type="submit" class="chat-send" aria-label="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--white)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+    </div>
+    <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle Chat">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </button>
+  </div>
+
+  <!-- Detail Modal ("Open Page" View) -->
+  <div id="pageModal" class="modal-overlay" onclick="handleModalOverlayClick(event)">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closePageModal()" aria-label="Close modal">✕</button>
+      <div id="modalHeader" class="modal-header">
+        <!-- Title injected here via JS -->
+      </div>
+      <div id="modalBody" class="modal-body">
+        <!-- Content injected here via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Exact content matching the PDF Portfolios and Core Services (Pages 3 - 9)
+    const modalData = {
+      // --- CORE SERVICES ---
+      'brokerage': {
+        title: 'Brokerage & <span>Transactions</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Buying, selling, and renting of residential and commercial properties, including negotiation, escrow coordination, and transaction closing.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'management': {
+        title: 'Property Management <span>& Operations</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Tenant sourcing, rent collection, maintenance coordination, inspections, and owner reporting.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'valuation': {
+        title: 'Valuation <span>& Advisory</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Professional property valuation, market research, feasibility studies, and investment advisory services.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'development': {
+        title: 'Development <span>& Project Services</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Building project development, land subdivision, project coordination, and development advisory.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'architectural': {
+        title: 'Architectural <span>& Planning Consulting</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Building design, drafting, planning, and landscape advisory through qualified professionals.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'construction': {
+        title: 'Construction <span>Support</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Leasing of construction and civil engineering machinery and wholesale supply of construction materials.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'community': {
+        title: 'Community <span>& Affordable Housing</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Volunteer-based low-cost housing development and repair initiatives in partnership with homeowners.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'investment': {
+        title: 'Investment <span>Guidance</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Data-driven advice on high-growth locations, risk assessment, and portfolio diversification to help individuals and the diaspora maximize long-term property returns in Rwanda.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+      'consultation': {
+        title: 'Real Estate <span>Consultation</span>',
+        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Expert guidance on market research, feasibility studies, legal due diligence, and land mutation to ensure secure, high-value investments and compliant project development.</p>
+        <div style="margin-top: 40px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
+      },
+
+      // --- SPECIALIZED SOLUTIONS ---
+      'commercial': {
+        title: 'Commercial Property <span>Solutions</span>',
+        content: `
+          <p>At MENU Real Estate Group, we provide strategic, data-driven real estate services designed to support investors, business owners, property developers, and commercial landlords across Rwanda.</p>
+          <p>This portfolio reflects our commitment to delivering high-value commercial properties— from office buildings and retail spaces to hotels, restaurants, and mixed-use developments.</p>
+          
+          <h4>For Investors</h4>
+          <ul>
+            <li>Commercial property acquisition support</li>
+            <li>Market research & investment analysis</li>
+            <li>Portfolio development & diversification strategies</li>
+            <li>Due diligence and valuation guidance</li>
+            <li>High-return rental property sourcing</li>
+          </ul>
+          <h4>For Property Owners & Developers</h4>
+          <ul>
+            <li>Property listing, marketing & exposure across multiple platforms</li>
+            <li>Tenant sourcing and screening</li>
+            <li>Property management solutions</li>
+            <li>Renovation, upgrade & development advisory</li>
+            <li>Asset appreciation strategies</li>
+          </ul>
+          <h4>For Business Clients</h4>
+          <ul>
+            <li>Assistance in securing office space, retail shops, restaurants, and hospitality facilities</li>
+            <li>Lease negotiation & contract support</li>
+            <li>Site selection for expansion</li>
+            <li>Long-term occupancy planning</li>
+          </ul>
+          <h4>For Buyers & Sellers</h4>
+          <ul>
+            <li>Transaction coordination</li>
+            <li>Professional pricing guidance</li>
+            <li>Document assistance (including mutation support)</li>
+            <li>Seamless representation from viewing to closing</li>
+          </ul>
+          <h4>Our Commitment</h4>
+          <p>MENU Real Estate Group is dedicated to helping clients navigate Rwanda's fast-growing commercial real estate sector with confidence, transparency, and expert guidance.</p>
+          
+          <div style="margin-top: 40px; text-align: left;">
+            <a href="#contact" class="btn btn-primary" onclick="closePageModal()">Consult our Commercial Team</a>
+          </div>
+        `
+      },
+      'residential': {
+        title: 'Residential Property <span>Solutions</span>',
+        content: `
+          <p>At MENU Real Estate Group, we help individuals, families, and investors find quality residential properties in Rwanda's most desirable and fast-growing neighborhoods. Our approach combines market insight, trusted guidance, and a commitment to delivering smooth, transparent real estate experiences.</p>
+          
+          <h4>For Home Buyers</h4>
+          <ul>
+            <li>Verified residential property listings</li>
+            <li>Guidance on location, pricing, and development potential</li>
+            <li>Viewing coordination and support</li>
+            <li>Offer and negotiation assistance</li>
+            <li>End-to-end support from search to ownership</li>
+          </ul>
+          <h4>For Property Owners & Sellers</h4>
+          <ul>
+            <li>Professional property valuation guidance</li>
+            <li>High-quality listing and marketing services</li>
+            <li>Buyer sourcing and screening</li>
+            <li>Transaction support and documentation guidance</li>
+            <li>Strategies to maximize selling value</li>
+          </ul>
+          <h4>For Tenants & Landlords</h4>
+          <ul>
+            <li>Rental property sourcing</li>
+            <li>Lease documentation assistance</li>
+            <li>Tenant Screening Support</li>
+            <li>Property management solutions</li>
+          </ul>
+          <h4>For Residential Investors</h4>
+          <ul>
+            <li>Assistance in identifying high-yield residential opportunities</li>
+            <li>Market trend and area growth analysis</li>
+            <li>Portfolio development strategies</li>
+            <li>Advisory on renovations and value-adding upgrades</li>
+          </ul>
+          <h4>Our Commitment</h4>
+          <p>Whether you are buying your first home, investing in rental units, or selling a residential property, MENU Real Estate Group provides the expertise and reliability needed to make every decision confidential and informed.</p>
+          
+          <div style="margin-top: 40px; text-align: left;">
+            <a href="#contact" class="btn btn-primary" onclick="closePageModal()">Speak to a Residential Agent</a>
+          </div>
+        `
+      },
+      'agricultural': {
+        title: 'Agricultural Land <span>& Farming</span>',
+        content: `
+          <p>At MENU Real Estate Group, we support investors, cooperatives, and landowners looking to buy, lease, or develop agricultural land across Rwanda. Whether you are focused on commercial farming, horticulture, livestock, or long-term land investment, we offer expert guidance backed by local market knowledge.</p>
+          
+          <h4>For Agricultural Investors</h4>
+          <ul>
+            <li>Sourcing fertile, well-located farmland</li>
+            <li>Land suitability assessments (soil, topography, access)</li>
+            <li>Investment analysis for short- and long-term agribusiness projects</li>
+            <li>Advisory on crop selection and land use optimization</li>
+          </ul>
+          <h4>For Landowners</h4>
+          <ul>
+            <li>Farmland valuation guidance</li>
+            <li>Professional listing & marketing for agricultural land</li>
+            <li>Tenant or buyer sourcing</li>
+            <li>Support with leasing agreements and sale procedures</li>
+          </ul>
+          <h4>For Farmers & Agribusiness Projects</h4>
+          <ul>
+            <li>Assistance in accessing farming plots</li>
+            <li>Support with cooperative partnerships</li>
+            <li>Guidance on infrastructure needs (water access, roads, storage)</li>
+            <li>Expansion planning for medium to large-scale farming</li>
+          </ul>
+          <h4>For Developers</h4>
+          <ul>
+            <li>Feasibility studies for agricultural estates</li>
+            <li>Coordination with agronomists and land planners</li>
+            <li>Advisory on sustainable farming models</li>
+          </ul>
+          <h4>Our Commitment</h4>
+          <p>MENU Real Estate Group connects clients with the right agricultural opportunities—ensuring productivity, growth, and sustainable land use. We help transform land into long-term value through professional, transparent, and reliable real estate solutions.</p>
+          
+          <div style="margin-top: 40px; text-align: left;">
+            <a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire about Land</a>
+          </div>
+        `
+      }
+    };
+
+    const modal = document.getElementById('pageModal');
+    const modalHeader = document.getElementById('modalHeader');
+    const modalBody = document.getElementById('modalBody');
+
+    // Open modal function
+    function openPageModal(key) {
+      const data = modalData[key];
+      if (!data) return;
+
+      // Populate content
+      modalHeader.innerHTML = `<h3>${data.title}</h3>`;
+      modalBody.innerHTML = data.content;
+
+      // Show modal and lock body scroll
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal function
+    function closePageModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Restore body scroll
+    }
+
+    // Close when clicking outside the modal content
+    function handleModalOverlayClick(event) {
+      if (event.target === modal) {
+        closePageModal();
+      }
+    }
+
+    // Close modal on Escape key press
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && modal.classList.contains('active')) {
+        closePageModal();
+      }
+    });
+
+    // --- CHATBOT LOGIC ---
+    const chatWindow = document.getElementById('chatWindow');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    const systemPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Your goal is to assist clients based ONLY on the following company information. Tone: Professional, reassuring, informative, and polite. Always end interactions politely. If asked a question that cannot be answered using the provided context, politely apologize, say you are an AI assistant, and direct them to contact us via phone (+250 782 616 150) or email (menurealestategroup@gmail.com).
+
+    COMPANY INFO:
+    MENU Real Estate Group: Where real estate begins, grows, and is cared for forever.
+    About Us: Licensed and registered real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora. We identify genuine, high-value plots in strategic locations. We oversee legal processes (title verification, mutation, documentation). We assist with construction permits, district approvals, architectural compliance. We provide full construction services (design, engineering, supervision, delivery). Post-completion, we offer long-term property management (tenant sourcing, rent collection, maintenance).
+    Vision: To become Rwanda's most trusted, fully integrated real estate partner.
+    Mission: To provide dependable, innovative, and compliant real estate solutions empowering clients to buy, sell, develop, manage, and invest with confidence.
+
+    SERVICES:
+    - Brokerage & Transactions: Buying, selling, renting residential/commercial properties.
+    - Property Management & Operations: Tenant sourcing, rent collection, maintenance.
+    - Valuation & Advisory: Property valuation, market research, feasibility.
+    - Development & Project Services: Building project development, land subdivision.
+    - Architectural & Planning Consulting: Building design, drafting, landscape advisory.
+    - Construction Support: Leasing machinery, wholesale materials.
+    - Community & Affordable Housing: Volunteer-based low-cost housing development.
+    - Investment Guidance: Advice on high-growth locations, risk assessment.
+    - Real Estate Consultation: Market research, legal due diligence, land mutation.
+
+    COMMERCIAL PROPERTY SOLUTIONS:
+    For Investors: acquisition support, market research, portfolio development, due diligence.
+    For Owners/Developers: listing, tenant sourcing, property management.
+    For Business: office/retail/restaurant space, lease negotiation, site selection.
+    For Buyers/Sellers: transaction coordination, pricing guidance, document assistance.
+
+    RESIDENTIAL PROPERTY SOLUTIONS:
+    For Home Buyers: verified listings, location/pricing guidance, negotiation.
+    For Owners/Sellers: valuation, marketing, buyer sourcing, transaction support.
+    For Tenants/Landlords: property sourcing, lease docs, tenant screening.
+    For Investors: high-yield opportunities, market trend analysis.
+
+    AGRICULTURAL LAND, FARMING & CULTIVATION:
+    For Investors: sourcing fertile land, suitability assessments, investment analysis.
+    For Landowners: valuation, listing, tenant/buyer sourcing.
+    For Farmers: accessing plots, cooperative partnerships, infrastructure guidance.
+    For Developers: feasibility studies, agronomist coordination.
+
+    WHY CHOOSE US:
+    Fully licensed (RDB/RRA), strong knowledge of Kigali/high-growth markets, transparent processes, tailored advisory (investors/diaspora), one-stop solutions.
+
+    PARTNERS: ESTATE SOVEREIGNTY INSTITUTE, ELITE WORKS.
+    CONTACT: Address: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com`;
+
+    let chatHistory = [];
+
+    function toggleChat() {
+      chatWindow.classList.toggle('active');
+      if(chatWindow.classList.contains('active')) {
+        setTimeout(() => chatInput.focus(), 300);
+      }
+    }
+
+    function addMessageToUI(text, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      
+      let formattedText = text;
+      if (sender === 'bot') {
+        formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      }
+      
+      messageDiv.innerHTML = formattedText;
+      chatBody.insertBefore(messageDiv, typingIndicator);
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    async function handleChatSubmit(e) {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      addMessageToUI(text, 'user');
+      chatInput.value = '';
+      chatHistory.push({ role: "user", parts: [{ text: text }] });
+
+      typingIndicator.classList.add('active');
+      scrollToBottom();
+
+      const payload = {
+        contents: chatHistory,
+        systemInstruction: { parts: [{ text: systemPrompt }] }
+      };
+
+      const apiKey = ""; 
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+      let retries = 0;
+      const maxRetries = 3;
+      let delay = 1000;
+      let success = false;
+
+      while (!success && retries < maxRetries) {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            if (response.status === 429 || response.status >= 500) {
+              throw new Error("retry");
+            }
+            // Log exact API error if it's a 400/403 to help debug in console
+            const errText = await response.text();
+            console.error("API Error:", response.status, errText);
+            throw new Error("fatal");
+          }
+
+          const result = await response.json();
+          const candidate = result.candidates?.[0];
+
+          if (candidate && candidate.content?.parts?.[0]?.text) {
+            const botResponse = candidate.content.parts[0].text;
+            typingIndicator.classList.remove('active');
+            addMessageToUI(botResponse, 'bot');
+            chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
+            success = true;
+          } else {
+            throw new Error("retry");
+          }
+        } catch (error) {
+          if (error.message === "fatal" || retries >= maxRetries - 1) {
+            typingIndicator.classList.remove('active');
+            addMessageToUI("I'm sorry, I'm having a little trouble connecting right now. Please try again or contact us directly at +250 782 616 150.", 'bot');
+            chatHistory.pop(); // Remove the user message from history so they can retry
+            break;
+          }
+          await new Promise(res => setTimeout(res, delay));
+          delay *= 1.5;
+          retries++;
+        }
+      }
+    }
+  </script>
 </body>
 </html>
