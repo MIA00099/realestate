@@ -67,7 +67,7 @@
     body.locked { overflow: hidden !important; touch-action: none; }
 
     /* Touch Target Optimization */
-    a, button, .project, .core-service-item, .tab-item, .mobile-overlay { 
+    a, button, .project, .core-service-item { 
       cursor: pointer; 
       -webkit-tap-highlight-color: transparent; 
       touch-action: manipulation;
@@ -356,7 +356,7 @@
     .mobile-nav-close { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: none; font-size: 20px; cursor: pointer; display: grid; place-items: center; color: var(--navy); transition: var(--transition);}
     .mobile-nav-links { flex: 1; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;}
     
-    /* ACCORDION FIX FOR MOBILE MENU */
+    /* ACCORDION CSS-ONLY FIX FOR MOBILE MENU */
     .mobile-accordion-btn {
       display: flex; align-items: center; justify-content: space-between; width: 100%;
       background: transparent; border: none; padding: 18px 16px 10px; font-family: inherit;
@@ -367,17 +367,11 @@
     .mobile-accordion-btn.expanded svg { transform: rotate(180deg); }
     
     .mobile-accordion-content {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.4s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      display: flex; flex-direction: column; gap: 4px; overflow: hidden;
+      max-height: 0; transition: max-height 0.4s ease-in-out;
     }
-    /* expanded class now only rotates icon, max-height set via JS */
-    .mobile-accordion-content.expanded {
-      /* max-height set by JS */
-    }
+    /* Fixed: Now uses reliable CSS max-height for expanding */
+    .mobile-accordion-content.expanded { max-height: 1000px; }
 
     .mobile-nav-links a {
       display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text);
@@ -504,17 +498,17 @@
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a href="#top" data-scroll-to="top" class="brand" aria-label="Menu Real Estate Group home">
+      <button data-scroll-to="top" class="brand" aria-label="Menu Real Estate Group home" style="background:transparent; border:none; padding:0;">
         <img src="logo.jpg" alt="Menu Real Estate Group Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
         <div id="fallback-logo" style="display: none; align-items: center; gap: 16px;">
           <div class="mark">M</div>
-          <div>MENU<br><small>REAL ESTATE GROUP</small></div>
+          <div style="text-align:left;">MENU<br><small>REAL ESTATE GROUP</small></div>
         </div>
-      </a>
+      </button>
       <nav class="links">
-        <a href="#about" data-scroll-to="about">About Us</a>
+        <button data-scroll-to="about" style="background:none; border:none; font:inherit; cursor:pointer;">About Us</button>
         <div class="dropdown">
-          <a href="#core-services" data-scroll-to="core-services">Services <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <button data-scroll-to="core-services" style="background:none; border:none; font:inherit; cursor:pointer;">Services <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></button>
           <div class="dropdown-menu" style="min-width: 360px; max-height: 70vh; overflow-y: auto;">
             <button class="dropdown-item" data-modal-target="brokerage">🤝 Brokerage & Transactions</button>
             <button class="dropdown-item" data-modal-target="management">🏢 Property Management & Operations</button>
@@ -528,15 +522,15 @@
           </div>
         </div>
         <div class="dropdown">
-          <a href="#solutions" data-scroll-to="solutions">Solutions <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <button data-scroll-to="solutions" style="background:none; border:none; font:inherit; cursor:pointer;">Solutions <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></button>
           <div class="dropdown-menu">
             <button class="dropdown-item" data-modal-target="commercial">🏢 Commercial Properties</button>
             <button class="dropdown-item" data-modal-target="residential">🏡 Residential Properties</button>
             <button class="dropdown-item" data-modal-target="agricultural">🌾 Agricultural Land & Farming</button>
           </div>
         </div>
-        <a href="#why-us" data-scroll-to="why-us">Why Choose Us</a>
-        <a class="btn btn-primary" href="#contact" data-scroll-to="contact">Get Consultation</a>
+        <button data-scroll-to="why-us" style="background:none; border:none; font:inherit; cursor:pointer;">Why Choose Us</button>
+        <button class="btn btn-primary" data-scroll-to="contact">Get Consultation</button>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" data-action="toggle-nav">
         <span></span><span></span><span></span>
@@ -558,9 +552,9 @@
     </div>
     
     <div class="mobile-nav-links">
-      <a href="#about" class="primary-link" data-scroll-to="about">🏢 About Us</a>
+      <button class="primary-link" data-scroll-to="about" style="background:transparent; border:none; text-align:left; width:100%;">🏢 About Us</button>
 
-      <!-- Services Accordion (initially expanded) -->
+      <!-- NEW: Services Accordion -->
       <button class="mobile-accordion-btn expanded">
         Services 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -577,7 +571,7 @@
         <button class="sub-link" data-modal-target="consultation">💬 Real Estate Consultation</button>
       </div>
 
-      <!-- Solutions Accordion (collapsed) -->
+      <!-- NEW: Solutions Accordion -->
       <button class="mobile-accordion-btn">
         Solutions 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -588,8 +582,8 @@
         <button class="sub-link" data-modal-target="agricultural">🌾 Agricultural Land &amp; Farming</button>
       </div>
 
-      <a href="#why-us" class="primary-link" style="margin-top:8px;" data-scroll-to="why-us">⭐ Why Choose Us</a>
-      <a href="#contact" class="primary-link" data-scroll-to="contact">📞 Contact</a>
+      <button class="primary-link" style="margin-top:8px; background:transparent; border:none; text-align:left; width:100%;" data-scroll-to="why-us">⭐ Why Choose Us</button>
+      <button class="primary-link" data-scroll-to="contact" style="background:transparent; border:none; text-align:left; width:100%;">📞 Contact</button>
     </div>
     
     <div class="mobile-nav-cta">
@@ -597,7 +591,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         WhatsApp Us
       </a>
-      <a href="#contact" class="cta-consult" data-scroll-to="contact">Get Free Consultation</a>
+      <button class="cta-consult" data-scroll-to="contact" style="border:none; width:100%;">Get Free Consultation</button>
     </div>
   </nav>
 
@@ -636,8 +630,10 @@
           <h1>Building <span>Opportunities.</span><br>Creating <span>Futures.</span></h1>
           <p>MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#solutions" data-scroll-to="solutions">Explore Portfolios</a>
-            <a class="btn btn-dark" href="#contact" data-scroll-to="contact">Contact Us</a>
+            <!-- Converted to button tags for fail-proof mobile tapping -->
+            <button class="btn btn-primary" data-scroll-to="solutions">Explore Portfolios</button>
+            <button class="btn btn-dark" data-scroll-to="contact">Contact Us</button>
+            <!-- LLM Feature Trigger Button -->
             <button class="btn btn-primary" style="background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); color: var(--white); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);" data-action="open-matchmaker">AI Matchmaker ✨</button>
           </div>
         </div>
@@ -826,8 +822,13 @@
       <h4>Our Partners</h4>
       <div class="ticker-wrap">
         <div class="ticker-track">
+          <!-- First Set -->
           <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
           <div class="ticker-item">ELITE WORKS</div>
+          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
+          <div class="ticker-item">ELITE WORKS</div>
+          
+          <!-- Second Set (Exact duplicate for seamless looping) -->
           <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
           <div class="ticker-item">ELITE WORKS</div>
           <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
@@ -843,7 +844,7 @@
             <h2>Let’s build your <span style="color:var(--gold)">future</span> together.</h2>
             <p>Book a consultation today and discover the best path for your real estate, construction, or investment goals in Rwanda.</p>
           </div>
-          <a class="btn btn-primary" style="background: var(--white); color: var(--navy);" href="#contact" data-scroll-to="contact">Contact Us Now</a>
+          <button class="btn btn-primary" style="background: var(--white); color: var(--navy);" data-scroll-to="contact">Contact Us Now</button>
         </div>
       </div>
     </section>
@@ -969,7 +970,6 @@
   <script>
   // ═══════════════════════════════════════════════════════════════
   //  MENU REAL ESTATE GROUP — BULLETPROOF MOBILE EVENT SYSTEM
-  //  With smooth native‑feeling accordions for mobile menu
   // ═══════════════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -1068,66 +1068,7 @@
     const hamburger = document.getElementById('hamburger');
     const matchmakerModal = document.getElementById('matchmakerModal');
 
-    // ── 3. SMOOTH ACCORDION (MOBILE MENU) ─────────────────────────
-    const accordionButtons = document.querySelectorAll('.mobile-accordion-btn');
-    
-    function setAccordionHeight(panel, open) {
-      panel.style.transition = 'max-height 0.4s ease';
-      if (open) {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      } else {
-        panel.style.maxHeight = '0px';
-      }
-    }
-
-    function initialiseAccordions() {
-      accordionButtons.forEach(btn => {
-        const panel = btn.nextElementSibling;
-        if (!panel || !panel.classList.contains('mobile-accordion-content')) return;
-        if (btn.classList.contains('expanded') && panel.classList.contains('expanded')) {
-          // set initial height to content
-          panel.style.transition = 'none';
-          panel.style.maxHeight = panel.scrollHeight + 'px';
-          // then remove the inline transition so the next toggle uses transition
-          requestAnimationFrame(() => { panel.style.transition = ''; });
-        } else {
-          panel.style.maxHeight = '0px';
-        }
-      });
-    }
-    initialiseAccordions();
-
-    function toggleAccordion(btn) {
-      const panel = btn.nextElementSibling;
-      if (!panel || !panel.classList.contains('mobile-accordion-content')) return;
-      
-      const isOpening = !btn.classList.contains('expanded');
-      
-      // close others
-      accordionButtons.forEach(otherBtn => {
-        if (otherBtn !== btn) {
-          const otherPanel = otherBtn.nextElementSibling;
-          if (otherPanel && otherPanel.classList.contains('mobile-accordion-content')) {
-            otherBtn.classList.remove('expanded');
-            otherPanel.classList.remove('expanded');
-            setAccordionHeight(otherPanel, false);
-          }
-        }
-      });
-      
-      // toggle current
-      if (isOpening) {
-        btn.classList.add('expanded');
-        panel.classList.add('expanded');
-        setAccordionHeight(panel, true);
-      } else {
-        btn.classList.remove('expanded');
-        panel.classList.remove('expanded');
-        setAccordionHeight(panel, false);
-      }
-    }
-
-    // ── 4. HELPER FUNCTIONS ────────────────────────────────────────
+    // ── 3. HELPER FUNCTIONS ────────────────────────────────────────
     const lockScroll = () => body.classList.add('locked');
     const unlockScroll = () => body.classList.remove('locked');
     
@@ -1140,21 +1081,28 @@
       t._tid = setTimeout(() => t.classList.remove('show'), 3500);
     };
 
+    // 🔴 BULLETPROOF SCROLLING: Failsafe try/catch block for mobile 
     const scrollToSection = (id) => {
       const el = document.getElementById(id);
       if (!el && id !== 'top') return;
+      
       if (mobileNav.classList.contains('open')) {
           hamburger.classList.remove('open');
           mobileNav.classList.remove('open');
           mobileOverlayEl.classList.remove('visible');
           unlockScroll();
       }
+      
       setTimeout(() => {
-          if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+          if (id === 'top') { window.scrollTo(0, 0); return; }
           const offset = 90;
           const topPos = el.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: topPos, behavior: 'smooth' });
-      }, 10);
+          try {
+             window.scrollTo({ top: topPos, behavior: 'smooth' });
+          } catch(e) {
+             window.scrollTo(0, topPos); // Failsafe for older mobile browsers
+          }
+      }, 50);
     };
 
     const openPageModal = (key) => {
@@ -1186,81 +1134,107 @@
       }
     };
 
-    // ── 5. EVENT DELEGATION FOR ALL CLICKS ─────────────────────────
+    // ── 4. DIRECT EVENT BINDINGS (100% Reliable on Mobile) ─────────
+    
+    // Smooth Scroll Links
+    document.querySelectorAll('[data-scroll-to]').forEach(el => {
+       el.addEventListener('click', (e) => {
+           e.preventDefault();
+           scrollToSection(el.getAttribute('data-scroll-to'));
+       });
+    });
+
+    // Modals Triggers
+    document.querySelectorAll('[data-modal-target]').forEach(el => {
+       el.addEventListener('click', (e) => {
+           e.preventDefault();
+           openPageModal(el.getAttribute('data-modal-target'));
+       });
+    });
+
+    // Explicit Action Handlers
+    document.querySelectorAll('[data-action]').forEach(el => {
+       el.addEventListener('click', (e) => {
+           const action = el.getAttribute('data-action');
+           
+           if (action === 'toggle-nav') {
+               e.preventDefault();
+               toggleNav();
+           } 
+           else if (action === 'close-nav') {
+               if (mobileNav.classList.contains('open')) toggleNav();
+           } 
+           else if (action === 'close-page-modal') {
+               e.preventDefault();
+               pageModal.classList.remove('active');
+               unlockScroll();
+           } 
+           else if (action === 'close-page-modal-bg') {
+               if (e.target === pageModal) {
+                   pageModal.classList.remove('active');
+                   unlockScroll();
+               }
+           } 
+           else if (action === 'open-matchmaker') {
+               e.preventDefault();
+               matchmakerModal.classList.add('active');
+               lockScroll();
+           } 
+           else if (action === 'close-matchmaker') {
+               e.preventDefault();
+               matchmakerModal.classList.remove('active');
+               unlockScroll();
+           } 
+           else if (action === 'close-matchmaker-bg') {
+               if (e.target === matchmakerModal) {
+                   matchmakerModal.classList.remove('active');
+                   unlockScroll();
+               }
+           } 
+           else if (action === 'toggle-chat') {
+               e.preventDefault();
+               const cw = document.getElementById('chatWindow');
+               cw.classList.toggle('active');
+               if (cw.classList.contains('active')) setTimeout(() => document.getElementById('chatInput').focus(), 300);
+           }
+       });
+    });
+
+    // Delegation ONLY for dynamically injected elements (like the "Inquire" button)
     document.addEventListener('click', (e) => {
-        // 1. Accordion buttons (must be before data-modal)
-        const accordionBtn = e.target.closest('.mobile-accordion-btn');
-        if (accordionBtn) {
+        const inquireBtn = e.target.closest('[data-action="inquire-from-modal"]');
+        if (inquireBtn) {
             e.preventDefault();
-            toggleAccordion(accordionBtn);
-            return;
-        }
-
-        // 2. Data-Modal Triggers (Services, Solutions)
-        const modalTrigger = e.target.closest('[data-modal-target]');
-        if (modalTrigger) {
-            e.preventDefault();
-            openPageModal(modalTrigger.getAttribute('data-modal-target'));
-            return;
-        }
-
-        // 3. Data-Scroll-To Triggers
-        const scrollTrigger = e.target.closest('[data-scroll-to]');
-        if (scrollTrigger) {
-            e.preventDefault();
-            scrollToSection(scrollTrigger.getAttribute('data-scroll-to'));
-            return;
-        }
-
-        // 4. Specific Actions
-        const actionTrigger = e.target.closest('[data-action]');
-        if (actionTrigger) {
-            const action = actionTrigger.getAttribute('data-action');
-            if (action === 'toggle-nav') {
-                e.preventDefault();
-                toggleNav();
-            } else if (action === 'close-nav') {
-                if (e.target === mobileOverlayEl || e.target.closest('.mobile-nav-close') || e.target.closest('.cta-wa')) {
-                   if (mobileNav.classList.contains('open')) toggleNav();
-                }
-            } else if (action === 'close-page-modal') {
-                e.preventDefault();
-                pageModal.classList.remove('active');
-                unlockScroll();
-            } else if (action === 'close-page-modal-bg') {
-                if (e.target === pageModal) {
-                    pageModal.classList.remove('active');
-                    unlockScroll();
-                }
-            } else if (action === 'inquire-from-modal') {
-                e.preventDefault();
-                pageModal.classList.remove('active');
-                unlockScroll();
-                setTimeout(() => scrollToSection('contact'), 300);
-            } else if (action === 'open-matchmaker') {
-                e.preventDefault();
-                matchmakerModal.classList.add('active');
-                lockScroll();
-            } else if (action === 'close-matchmaker') {
-                e.preventDefault();
-                matchmakerModal.classList.remove('active');
-                unlockScroll();
-            } else if (action === 'close-matchmaker-bg') {
-                if (e.target === matchmakerModal) {
-                    matchmakerModal.classList.remove('active');
-                    unlockScroll();
-                }
-            } else if (action === 'toggle-chat') {
-                e.preventDefault();
-                const cw = document.getElementById('chatWindow');
-                cw.classList.toggle('active');
-                if (cw.classList.contains('active')) setTimeout(() => document.getElementById('chatInput').focus(), 300);
-            }
-            return;
+            pageModal.classList.remove('active');
+            unlockScroll();
+            scrollToSection('contact');
         }
     });
 
-    // ── 6. FORM SUBMISSION ─────────────────────────────────────────
+    // 🔴 BULLETPROOF ACCORDIONS: Pure class toggle, logic mapped directly
+    document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const panel = btn.nextElementSibling;
+            const isOpening = !btn.classList.contains('expanded');
+
+            // Close all others
+            document.querySelectorAll('.mobile-accordion-btn').forEach(otherBtn => {
+                otherBtn.classList.remove('expanded');
+                if (otherBtn.nextElementSibling) {
+                    otherBtn.nextElementSibling.classList.remove('expanded');
+                }
+            });
+
+            // Open clicked
+            if (isOpening) {
+                btn.classList.add('expanded');
+                panel.classList.add('expanded');
+            }
+        });
+    });
+
+    // ── 5. FORM SUBMISSION ─────────────────────────────────────────
     const consultForm = document.getElementById('consultForm');
     if (consultForm) {
         consultForm.addEventListener('submit', async (e) => {
@@ -1287,7 +1261,7 @@
         });
     }
 
-    // ── 7. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
+    // ── 6. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
     const apiKey = ""; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
@@ -1396,6 +1370,20 @@
             resultEl.style.display = 'block';
         });
     }
+
+    // Escape Key logic added
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (pageModal?.classList.contains('active')) {
+          pageModal.classList.remove('active'); unlockScroll();
+      }
+      else if (mobileNav?.classList.contains('open')) {
+          toggleNav();
+      }
+      else if (matchmakerModal?.classList.contains('active')) {
+          matchmakerModal.classList.remove('active'); unlockScroll();
+      }
+    });
   });
   </script>
 </body>
