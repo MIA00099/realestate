@@ -1532,7 +1532,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 11a19.79 19.79 0 01-3.07-8.67A2 2 0 011.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
       <span>Contact</span>
     </button>
-    <button class="tab-item" id="tab-chat">
+    <button class="tab-item" id="tab-chat" onclick="toggleChat()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       <span>Chat</span>
     </button>
@@ -1862,8 +1862,7 @@
 
   <script>
   // ═══════════════════════════════════════════════════════════════
-  //  MENU REAL ESTATE GROUP — UNIFIED INTERACTION SCRIPT
-  //  All events wired via addEventListener. Zero inline onclick conflicts.
+  //  MENU REAL ESTATE GROUP — REPAIRED INTERACTION SCRIPT
   // ═══════════════════════════════════════════════════════════════
 
   // ── 1. PWA MANIFEST ────────────────────────────────────────────
@@ -2015,26 +2014,18 @@
     unlockScroll();
   }
 
-  // Close on overlay background tap
-  modalOverlay?.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-
-  // Wire the modal close X button
-  document.querySelector('.modal-close')?.addEventListener('click', closeModal);
-
-  // Wire ALL service cards and solution articles (data-modal attribute)
-  document.querySelectorAll('[data-modal]').forEach(el => {
-    el.addEventListener('click', () => openModal(el.dataset.modal));
-  });
-
-  // Wire ALL onclick="openPageModal(...)" elements — read the inline attr and convert
-  document.querySelectorAll('[onclick]').forEach(el => {
-    const oc = el.getAttribute('onclick') || '';
-    const match = oc.match(/openPageModal\(['"](\w+)['"]\)/);
-    if (match) {
-      el.removeAttribute('onclick');
-      el.addEventListener('click', e => { e.preventDefault(); openModal(match[1]); });
-    }
-  });
+  // Define Globally Accessible Functions for inline HTML handlers! 
+  // (This fixes the "button not working" JS ReferenceError issue on mobile)
+  window.openPageModal = function(key) {
+      if(typeof event !== 'undefined' && event) event.preventDefault();
+      openModal(key);
+  };
+  window.closePageModal = function() {
+      closeModal();
+  };
+  window.handleModalOverlayClick = function(event) {
+      if (event.target === modalOverlay) closeModal();
+  };
 
   // ── 6. MOBILE NAV ──────────────────────────────────────────────
   const hamburger      = document.getElementById('hamburger');
@@ -2096,9 +2087,8 @@
 
   // ── 8. NAV HASH LINKS (desktop — Why Choose Us, About Us, etc.) ─
   document.querySelectorAll('a[href^="#"]').forEach(a => {
-    // Skip those already handled by data-modal or inline modal openers
+    // Skip those already handled by mobile nav
     if (a.classList.contains('mobile-nav-scroll') || a.classList.contains('mobile-nav-modal')) return;
-    if ((a.getAttribute('onclick') || '').includes('openPageModal')) return;
     a.addEventListener('click', e => {
       const href = a.getAttribute('href');
       if (!href || href === '#') return;
@@ -2127,9 +2117,20 @@
       const el = document.getElementById(id);
       if (el && el.offsetTop <= mid) active = tab;
     });
-    tabSections.forEach(({ tab }) => document.getElementById(tab)?.classList.toggle('active', tab === active));
+    tabSections.forEach(({ tab }) => {
+        const t = document.getElementById(tab);
+        if(t) t.classList.toggle('active', tab === active);
+    });
   }
   window.addEventListener('scroll', updateTabs, { passive: true });
+
+  // FIXED: Missing Event Listeners for Bottom Tab Bar
+  document.querySelectorAll('.tab-item[data-tab-scroll]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      goTab(this.getAttribute('data-tab-scroll'));
+    });
+  });
 
   // ── 10. TOPBAR SHADOW ON SCROLL ────────────────────────────────
   const topbar = document.querySelector('.topbar');
@@ -2160,7 +2161,7 @@
   });
 
   // ── 13. CONTACT FORM → WHATSAPP ───────────────────────────────
-  document.getElementById('consultForm')?.addEventListener('submit', async function(e) {
+  window.handleFormSubmit = async function(e) {
     e.preventDefault();
     const btn  = document.getElementById('formSubmitBtn');
     const name = document.getElementById('formName')?.value.trim();
@@ -2173,11 +2174,11 @@
     const text = encodeURIComponent(`Hello MENU Real Estate Group,\n\nName: ${name}\nPhone: ${phone}\nInterest: ${svc}${msg ? '\nMessage: '+msg : ''}\n\nI would like to request a consultation.`);
     window.open(`https://wa.me/250782616150?text=${text}`, '_blank', 'noopener');
     await new Promise(r => setTimeout(r, 600));
-    this.reset();
+    e.target.reset();
     btn.textContent = 'Send Request';
     btn.disabled = false;
     showToast('✓ WhatsApp opened with your message!', 'success');
-  });
+  };
 
   // ── 14. CHATBOT ────────────────────────────────────────────────
   const chatWindow = document.getElementById('chatWindow');
@@ -2185,14 +2186,10 @@
   const chatInput  = document.getElementById('chatInput');
   const typingInd  = document.getElementById('typingIndicator');
 
-  function toggleChat() {
+  window.toggleChat = function() {
     chatWindow?.classList.toggle('active');
     if (chatWindow?.classList.contains('active')) setTimeout(() => chatInput?.focus(), 300);
-  }
-  // Chat toggle button
-  document.querySelector('.chat-toggle')?.addEventListener('click', toggleChat);
-  document.querySelector('.chat-close')?.addEventListener('click', toggleChat);
-  document.getElementById('tab-chat')?.addEventListener('click', toggleChat);
+  };
 
   function addMsg(text, sender) {
     const d = document.createElement('div');
@@ -2205,7 +2202,7 @@
   let chatHistory = [];
   const sysPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Answer based ONLY on company info. If you can't answer, direct them to +250 782 616 150 or menurealestategroup@gmail.com. Company: Licensed real estate company in Rwanda. Services: Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, Consultation. Contact: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com. Hours: Mon-Sat 8AM-6PM.`;
 
-  document.querySelector('.chat-footer')?.addEventListener('submit', async function(e) {
+  window.handleChatSubmit = async function(e) {
     e.preventDefault();
     const text = chatInput?.value.trim();
     if (!text) return;
@@ -2214,7 +2211,11 @@
     chatHistory.push({ role:'user', parts:[{text}] });
     typingInd?.classList.add('active');
     chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=`;
+    
+    // Fallback environment API Key
+    const apiKey = "";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    
     let tries = 0, delay = 1000;
     while (tries < 3) {
       try {
@@ -2240,8 +2241,7 @@
         delay *= 1.5;
       }
     }
-  });
-
+  };
   </script>
 </body>
 </html>
