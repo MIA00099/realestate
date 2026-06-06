@@ -690,7 +690,7 @@
     .toast.success { background: #10b981; }
     .toast.error   { background: #ef4444; }
 
-    /* Chatbot Styles Condensed */
+    /* Chatbot & API Features Styles */
     .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end;}
     .chat-toggle { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%); color: var(--white); border: none; box-shadow: 0 15px 35px rgba(7, 29, 51, 0.25); cursor: pointer; display: grid; place-items: center; transition: var(--transition);}
     .chat-toggle:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 45px rgba(7, 29, 51, 0.35);}
@@ -845,6 +845,8 @@
             <!-- Explicit inline scroll functions for guaranteed execution -->
             <a class="btn btn-primary" href="javascript:void(0)" onclick="scrollToSection('solutions')">Explore Portfolios</a>
             <a class="btn btn-dark" href="javascript:void(0)" onclick="scrollToSection('contact')">Contact Us</a>
+            <!-- NEW LLM Feature Trigger Button -->
+            <a class="btn btn-primary" style="background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); color: var(--white); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);" href="javascript:void(0)" onclick="openMatchmakerModal()">AI Matchmaker ✨</a>
           </div>
         </div>
         <div class="hero-card">
@@ -1112,6 +1114,32 @@
     </div>
   </footer>
 
+  <!-- NEW FEATURE: AI Matchmaker Modal -->
+  <div id="matchmakerModal" class="modal-overlay" onclick="if(event.target===this) closeMatchmakerModal()">
+    <div class="modal-content" role="dialog" aria-modal="true" style="max-width: 600px; padding: 40px;">
+      <button class="modal-close" onclick="closeMatchmakerModal()" aria-label="Close modal">✕</button>
+      <div class="modal-header">
+        <h3 style="font-size: 30px;">AI Property <span>Matchmaker ✨</span></h3>
+        <p style="color: var(--muted); font-size: 16px; margin-top: 10px;">Describe your ideal property, budget, or investment goals in plain English, and our AI will recommend the perfect solution for you in Rwanda.</p>
+      </div>
+      <div class="modal-body" style="padding-top: 10px;">
+        <textarea id="matchmakerInput" placeholder="E.g., I'm looking for a commercial plot in Kigali for a new hotel development. Budget is flexible but needs good road access..." style="min-height: 140px; font-size: 16px; padding: 20px;"></textarea>
+        <button class="btn btn-primary" onclick="generateMatch()" id="matchmakerBtn" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); border: none; font-size: 16px;">Find My Match ✨</button>
+        
+        <div id="matchmakerLoader" style="display: none; text-align: center; padding: 30px;">
+          <div class="typing-indicator active" style="justify-content: center; box-shadow: none; background: transparent; border: none; align-self: center;">
+            <div class="typing-dot" style="background: #a855f7;"></div><div class="typing-dot" style="background: #d4af37;"></div><div class="typing-dot" style="background: var(--navy);"></div>
+          </div>
+          <p style="color: var(--muted); font-size: 14px; margin-top: 10px;">Analyzing Rwandan market data...</p>
+        </div>
+        
+        <div id="matchmakerResult" style="margin-top: 24px; padding: 24px; background: var(--bg); border-radius: var(--radius-md); display: none; border: 1px solid rgba(212, 175, 55, 0.2);">
+          <!-- LLM Response gets injected here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Chatbot Widget -->
   <div class="chat-widget">
     <div id="chatWindow" class="chat-window">
@@ -1342,6 +1370,7 @@
     if (e.key !== 'Escape') return;
     if (modalOverlay?.classList.contains('active')) closePageModal();
     else if (mobileNav?.classList.contains('open')) closeNav();
+    else if (document.getElementById('matchmakerModal')?.classList.contains('active')) closeMatchmakerModal();
   });
 
   // ── 8. BOTTOM TAB BAR ACTIVE STATE LOGIC ───────────────────────
@@ -1423,7 +1452,7 @@
   const chatWindow = document.getElementById('chatWindow');
   const chatBodyEl = document.getElementById('chatBody');
   const chatInput  = document.getElementById('chatInput');
-  const typingInd  = document.getElementById('typingIndicator');
+  const chatTypingInd  = document.getElementById('typingIndicator');
 
   window.toggleChat = function() {
     chatWindow?.classList.toggle('active');
@@ -1434,12 +1463,12 @@
     const d = document.createElement('div');
     d.className = `message ${sender}`;
     d.innerHTML = sender === 'bot' ? text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>') : text;
-    chatBodyEl?.insertBefore(d, typingInd);
+    chatBodyEl?.insertBefore(d, chatTypingInd);
     chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
   }
 
   let chatHistory = [];
-  const sysPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Answer based ONLY on company info. If you can't answer, direct them to +250 782 616 150 or menurealestategroup@gmail.com. Company: Licensed real estate company in Rwanda. Services: Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, Consultation. Contact: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com. Hours: Mon-Sat 8AM-6PM.`;
+  const chatSysPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Answer based ONLY on company info. If you can't answer, direct them to +250 782 616 150 or menurealestategroup@gmail.com. Company: Licensed real estate company in Rwanda. Services: Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, Consultation. Contact: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com. Hours: Mon-Sat 8AM-6PM.`;
 
   window.handleChatSubmit = async function(e) {
     e.preventDefault();
@@ -1448,10 +1477,9 @@
     addMsg(text, 'user');
     chatInput.value = '';
     chatHistory.push({ role:'user', parts:[{text}] });
-    typingInd?.classList.add('active');
+    chatTypingInd?.classList.add('active');
     chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
     
-    // API KEY placeholder logic
     const apiKey = ""; 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
     
@@ -1459,19 +1487,19 @@
     while (tries < 3) {
       try {
         const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ contents: chatHistory, systemInstruction:{ parts:[{text: sysPrompt}] } }) });
+          body: JSON.stringify({ contents: chatHistory, systemInstruction:{ parts:[{text: chatSysPrompt}] } }) });
         if (!r.ok) throw new Error(r.status >= 500 || r.status === 429 ? 'retry' : 'fatal');
         const j = await r.json();
         const reply = j.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!reply) throw new Error('retry');
-        typingInd?.classList.remove('active');
+        chatTypingInd?.classList.remove('active');
         addMsg(reply, 'bot');
         chatHistory.push({ role:'model', parts:[{text:reply}] });
         break;
       } catch(err) {
         tries++;
         if (err.message === 'fatal' || tries >= 3) {
-          typingInd?.classList.remove('active');
+          chatTypingInd?.classList.remove('active');
           addMsg("Sorry, I'm having trouble connecting. Please call us at +250 782 616 150.", 'bot');
           chatHistory.pop();
           break;
@@ -1480,6 +1508,85 @@
         delay *= 1.5;
       }
     }
+  };
+
+  // ── 14. NEW FEATURE: AI PROPERTY MATCHMAKER ✨ ────────────────
+  const matchmakerModal = document.getElementById('matchmakerModal');
+  const matchmakerInput = document.getElementById('matchmakerInput');
+  const matchmakerBtn = document.getElementById('matchmakerBtn');
+  const matchmakerLoader = document.getElementById('matchmakerLoader');
+  const matchmakerResult = document.getElementById('matchmakerResult');
+
+  window.openMatchmakerModal = function() {
+    matchmakerModal?.classList.add('active');
+    lockScroll();
+  };
+
+  window.closeMatchmakerModal = function() {
+    matchmakerModal?.classList.remove('active');
+    // Reset view
+    setTimeout(() => {
+        matchmakerInput.value = '';
+        matchmakerResult.style.display = 'none';
+        matchmakerResult.innerHTML = '';
+        matchmakerBtn.style.display = 'block';
+    }, 400);
+    unlockScroll();
+  };
+
+  window.generateMatch = async function() {
+    const userInput = matchmakerInput.value.trim();
+    if (!userInput) {
+        window.showToast('Please describe your real estate goals first.', 'error');
+        return;
+    }
+
+    matchmakerBtn.style.display = 'none';
+    matchmakerResult.style.display = 'none';
+    matchmakerLoader.style.display = 'block';
+
+    const apiKey = "";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    const matchmakerSysPrompt = "You are a friendly and expert real estate advisor AI for MENU Real Estate Group in Rwanda. Your task is to: 1) Analyze the user's specific request or dream property. 2) Enthusiastically identify which 1-2 specific services from MENU Real Estate they need (Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, or Consultation). 3) Provide a brief, promising, and realistic overview of the Rwandan market related strictly to their request. Output MUST be formatted in clean HTML (using <h4>, <p>, and <ul>). Keep it under 150 words. Do NOT include markdown backticks or ```html formatting wrappers.";
+
+    let tries = 0, delay = 1000, success = false;
+    while (tries < 4 && !success) {
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: userInput }] }],
+            systemInstruction: { parts: [{ text: matchmakerSysPrompt }] }
+          })
+        });
+
+        if (!response.ok) throw new Error(response.status >= 500 || response.status === 429 ? 'retry' : 'fatal');
+        const data = await response.json();
+        const replyHTML = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        
+        if (!replyHTML) throw new Error('No reply');
+
+        matchmakerResult.innerHTML = replyHTML + `
+          <div style="margin-top: 24px;">
+             <a class="btn btn-primary" style="width:100%; background: var(--navy);" href="javascript:void(0)" onclick="closeMatchmakerModal(); setTimeout(()=>scrollToSection('contact'),300)">Contact us to make this a reality</a>
+             <button class="btn" style="width:100%; margin-top:8px; background: transparent; color: var(--muted); padding: 10px;" onclick="closeMatchmakerModal(); setTimeout(()=>openMatchmakerModal(),400);">Try another search</button>
+          </div>`;
+        success = true;
+      } catch (err) {
+        tries++;
+        if (err.message === 'fatal' || tries >= 4) {
+          matchmakerResult.innerHTML = `<p style="color: #ef4444;">We couldn't reach our AI advisor at the moment. Please try again or contact us directly at +250 782 616 150.</p><button class="btn btn-dark" style="margin-top: 16px; width: 100%;" onclick="closeMatchmakerModal()">Close</button>`;
+          break;
+        }
+        await new Promise(r => setTimeout(r, delay));
+        delay *= 1.5;
+      }
+    }
+
+    matchmakerLoader.style.display = 'none';
+    matchmakerResult.style.display = 'block';
   };
   </script>
 </body>
