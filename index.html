@@ -2,11 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Menu Real Estate Group | Complete Property Solutions</title>
-  <meta name="description" content="MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora." />
-  
-  <!-- Premium Font Import -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+
+  <!-- ═══════════════════════════════════════════
+       PRIMARY SEO META
+  ═══════════════════════════════════════════ -->
+  <title>MENU Real Estate Group | Complete Property Solutions in Rwanda</title>
+  <meta name="description" content="MENU Real Estate Group is a licensed real estate company in Rwanda, providing end-to-end property solutions — land acquisition, construction, management and investment — to individuals, investors, developers, and the diaspora." />
+  <meta name="keywords" content="real estate Rwanda, Kigali property, buy land Rwanda, sell property Kigali, property management Rwanda, real estate investment Rwanda, construction Rwanda, diaspora real estate, MENU Real Estate Group" />
+  <meta name="author" content="MENU Real Estate Group" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://menurealestate.rw/" />
+
+  <!-- ═══════════════════════════════════════════
+       OPEN GRAPH (Facebook / WhatsApp / LinkedIn)
+  ═══════════════════════════════════════════ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MENU Real Estate Group" />
+  <meta property="og:title" content="MENU Real Estate Group | Complete Property Solutions in Rwanda" />
+  <meta property="og:description" content="Licensed and registered real estate company in Rwanda. Buy, sell, develop, manage and invest in property with complete confidence." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://menurealestate.rw/" />
+  <meta property="og:locale" content="en_RW" />
+
+  <!-- ═══════════════════════════════════════════
+       TWITTER CARD
+  ═══════════════════════════════════════════ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MENU Real Estate Group | Complete Property Solutions in Rwanda" />
+  <meta name="twitter:description" content="Licensed real estate company in Rwanda — land, construction, management & investment advisory." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" />
+
+  <!-- ═══════════════════════════════════════════
+       PWA — iOS / Android "Add to Home Screen"
+  ═══════════════════════════════════════════ -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="MENU RE" />
+  <meta name="application-name" content="MENU Real Estate" />
+  <meta name="theme-color" content="#0a192f" />
+  <meta name="msapplication-TileColor" content="#0a192f" />
+  <link rel="manifest" id="pwa-manifest" />
+
+  <!-- ═══════════════════════════════════════════
+       STRUCTURED DATA (Google Rich Results)
+  ═══════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "MENU Real Estate Group",
+    "description": "Licensed real estate company in Rwanda providing comprehensive end-to-end property solutions.",
+    "url": "https://menurealestate.rw/",
+    "logo": "https://menurealestate.rw/logo.jpg",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
+    "telephone": "+250782616150",
+    "email": "menurealestategroup@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Inyarurembo, Kiyovu",
+      "addressLocality": "Nyarugenge",
+      "addressRegion": "Kigali",
+      "addressCountry": "RW"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -1.9441,
+      "longitude": 30.0619
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    ],
+    "sameAs": [],
+    "areaServed": {
+      "@type": "Country",
+      "name": "Rwanda"
+    },
+    "serviceType": ["Brokerage","Property Management","Valuation","Construction","Investment Advisory"]
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════
+       FONT
+  ═══════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -801,239 +887,354 @@
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
-    /* --- Chatbot Styles --- */
-    .chat-widget {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 1000;
-      display: flex;
+    /* ═══════════════════════════════════════════
+       HAMBURGER / MOBILE NAV
+    ═══════════════════════════════════════════ */
+    .hamburger {
+      display: none;
       flex-direction: column;
-      align-items: flex-end;
-    }
-    
-    .chat-toggle {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
-      color: var(--white);
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--bg);
       border: none;
-      box-shadow: var(--shadow-lg);
       cursor: pointer;
-      display: grid;
-      place-items: center;
-      font-size: 28px;
       transition: var(--transition);
+      -webkit-tap-highlight-color: transparent;
+      z-index: 200;
+      flex-shrink: 0;
     }
-    
-    .chat-toggle:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: var(--shadow-hover);
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 4px;
+      transition: var(--transition);
+      transform-origin: center;
     }
-    
-    .chat-window {
-      width: 380px;
-      height: 600px;
-      max-height: 80vh;
-      max-width: calc(100vw - 40px);
-      background: var(--surface);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 25, 47, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-overlay.visible { opacity: 1; }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(340px, 88vw);
+      height: 100%;
+      background: var(--white);
+      z-index: 160;
+      transform: translateX(100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-      margin-bottom: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(20px) scale(0.95);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      transform-origin: bottom right;
     }
-    
-    .chat-window.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
-    }
-    
-    .chat-header {
-      background: var(--navy);
-      color: var(--white);
-      padding: 20px;
+    .mobile-nav.open { transform: translateX(0); }
+
+    .mobile-nav-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid rgba(10, 25, 47, 0.06);
     }
-    
-    .chat-header h4 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .chat-header h4::before {
-      content: "";
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background: #22c55e;
+    .mobile-nav-close {
+      width: 44px; height: 44px;
       border-radius: 50%;
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
-    }
-    
-    .chat-close {
-      background: transparent;
+      background: var(--bg);
       border: none;
-      color: var(--white);
       font-size: 20px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: 0.2s;
-    }
-    
-    .chat-close:hover { opacity: 1; }
-    
-    .chat-body {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      background: var(--bg);
-    }
-    
-    .message {
-      max-width: 85%;
-      padding: 14px 18px;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.6;
-      animation: fadeIn 0.3s ease forwards;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .message.bot {
-      background: var(--white);
-      color: var(--navy);
-      border-bottom-left-radius: 4px;
-      box-shadow: var(--shadow-sm);
-      align-self: flex-start;
-    }
-    
-    .message.user {
-      background: var(--gold);
-      color: var(--white);
-      border-bottom-right-radius: 4px;
-      align-self: flex-end;
-    }
-    
-    .chat-footer {
-      padding: 16px;
-      background: var(--white);
-      border-top: 1px solid rgba(10, 25, 47, 0.05);
-      display: flex;
-      gap: 10px;
-    }
-    
-    .chat-input {
-      flex: 1;
-      padding: 12px 16px;
-      border: 1px solid rgba(10, 25, 47, 0.1);
-      border-radius: var(--radius-pill);
-      outline: none;
-      font-family: inherit;
-      font-size: 14px;
-      transition: var(--transition);
-      margin-bottom: 0;
-    }
-    
-    .chat-input:focus {
-      border-color: var(--gold);
-      background: var(--bg);
-    }
-    
-    .chat-send {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: var(--white);
-      border: none;
       cursor: pointer;
       display: grid;
       place-items: center;
+      color: var(--navy);
       transition: var(--transition);
-      flex-shrink: 0;
-    }
-    
-    .chat-send:hover {
-      background: var(--gold);
-      transform: scale(1.05);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .typing-indicator {
-      display: none;
-      align-self: flex-start;
-      background: var(--white);
-      padding: 12px 16px;
-      border-radius: 18px;
-      border-bottom-left-radius: 4px;
-      box-shadow: var(--shadow-sm);
+    .mobile-nav-links {
+      flex: 1;
+      padding: 16px 16px 24px;
+      display: flex;
+      flex-direction: column;
       gap: 4px;
+      overflow-y: auto;
+    }
+
+    .mobile-nav-links a,
+    .mobile-nav-section-title {
+      display: flex;
       align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      transition: background 0.2s, color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 52px;
+    }
+    .mobile-nav-links a:active { background: var(--bg); }
+    .mobile-nav-links a.primary-link {
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .mobile-nav-links a.primary-link:hover,
+    .mobile-nav-links a.primary-link:active { background: var(--gold-soft); color: var(--gold); }
+
+    .mobile-nav-section-title {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 800;
+      padding: 20px 16px 8px;
+      min-height: unset;
     }
 
-    .typing-indicator.active { display: flex; }
+    .mobile-nav-links a.sub-link {
+      padding: 12px 16px 12px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .mobile-nav-links a.sub-link:hover { color: var(--navy); background: var(--bg); }
 
-    .typing-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--muted);
-      border-radius: 50%;
-      animation: typingBounce 1.4s infinite ease-in-out both;
+    .mobile-nav-cta {
+      padding: 0 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mobile-nav-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 15px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-nav-cta .cta-wa {
+      background: #25D366;
+      color: var(--white);
+    }
+    .mobile-nav-cta .cta-consult {
+      background: var(--gold);
+      color: var(--white);
     }
 
-    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-    @keyframes typingBounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1); }
+    /* ═══════════════════════════════════════════
+       BOTTOM TAB BAR (App-like navigation)
+    ═══════════════════════════════════════════ */
+    .bottom-tab-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 120;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(10, 25, 47, 0.06);
+      padding: 10px 0 env(safe-area-inset-bottom, 10px);
+      justify-content: space-around;
     }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 16px;
+      border-radius: 12px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-family: inherit;
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      min-width: 60px;
+    }
+    .tab-item.active { color: var(--gold); }
+    .tab-item svg { width: 22px; height: 22px; }
+    .tab-item span { font-size: 9px; }
 
-    /* --- Responsiveness --- */
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px;}
-      .hero p { margin: 0 auto 40px; }
+    /* ═══════════════════════════════════════════
+       MOBILE-RESPONSIVE OVERRIDES
+    ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      /* Nav */
+      .links { display: none; }
+      .hamburger { display: flex; }
+
+      /* Body gets bottom padding for tab bar */
+      body { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
+      .bottom-tab-bar { display: flex; }
+
+      /* Chat widget lifted above tab bar */
+      .chat-widget { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); right: 16px; }
+      .chat-toggle { width: 56px; height: 56px; }
+
+      /* Nav height */
+      .nav { height: 72px; }
+
+      /* Hero */
+      .hero { padding: 110px 0 60px; min-height: unset; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        text-align: center;
+      }
       .hero-actions { justify-content: center; }
-      .hero-card img { height: 400px; }
-      .projects { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-      .solutions { margin: 0; border-radius: 0; }
+      .hero-card img { height: 280px; }
+      .hero p { max-width: 100%; font-size: 16px; }
+
+      /* Sections */
+      section { padding: 72px 0; }
+
+      /* About */
+      .about-grid { grid-template-columns: 1fr; }
+      .vision-mission-grid { grid-template-columns: 1fr; }
+      .about-card { padding: 32px 24px; }
+
+      /* Solutions cards */
+      .projects { grid-template-columns: 1fr; gap: 20px; }
+
+      /* Solutions section */
+      .solutions { margin: 0 8px; border-radius: 24px; padding: 72px 0; }
+
+      /* Core services */
+      .core-services { grid-template-columns: 1fr; }
+
+      /* Why us */
+      .why-grid { grid-template-columns: 1fr; gap: 32px; }
+      .why-us { padding-top: 72px; }
+
+      /* CTA */
+      .cta {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 48px 28px;
+        border-radius: 28px;
+      }
+      .cta a { width: 100%; }
+
+      /* Contact */
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-card, form { padding: 28px 20px; }
+
+      /* Modal */
+      .modal-content {
+        padding: 32px 20px;
+        border-radius: 24px;
+        max-height: 85vh;
+        margin: 0;
+      }
+      .modal-overlay { align-items: flex-end; padding: 0; }
+      .modal-overlay.active .modal-content { border-radius: 24px 24px 0 0; }
+
+      /* Form inputs — larger tap target */
+      input, textarea, select {
+        padding: 16px 18px;
+        font-size: 16px; /* prevents iOS zoom */
+      }
+
+      /* Footer */
+      .footer-flex { flex-direction: column; text-align: center; gap: 8px; }
     }
-    
-    @media (max-width: 980px) {
-      .links { display: none; } /* Mobile menu implementation left intact as requested */
-      .vision-mission-grid, .why-grid, .contact-grid, .cta { grid-template-columns: 1fr; }
-      .cta { text-align: center; padding: 60px 40px;}
-      .why-img { margin-top: 40px; }
-      .nav { height: 80px; }
-      .nav-logo { height: 50px; }
+
+    @media (max-width: 540px) {
+      .container { width: min(100%, calc(100% - 32px)); }
+      h1 { font-size: clamp(36px, 10vw, 52px); }
+      .section-title h2 { font-size: clamp(28px, 7vw, 40px); }
+      .about-card { padding: 28px 20px; }
+      .core-service-item { padding: 22px 16px; }
+
+      /* Chat window full-width on small screens */
+      .chat-window {
+        width: calc(100vw - 24px);
+        max-width: 100%;
+        height: 70vh;
+        border-radius: 20px;
+      }
     }
-    
-    @media (max-width: 640px) {
-      .hero { padding-top: 140px; } /* Adjusted for taller navbar on mobile */
-      .cta { padding: 38px 26px; border-radius: 30px; }
-      .modal-content { padding: 30px 20px; }
+
+    /* ═══════════════════════════════════════════
+       TOUCH / TAP IMPROVEMENTS
+    ═══════════════════════════════════════════ */
+    .btn, .core-service-item, .project, .tab-item,
+    .mobile-nav-links a, .contact-item a,
+    .chat-toggle, .chat-send, .modal-close {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
+
+    /* Ensure minimum 44px tap target on all interactive elements */
+    .btn { min-height: 50px; }
+
+    /* Smooth scroll for iOS */
+    html { -webkit-overflow-scrolling: touch; }
+
+    /* Prevent text size adjustment on rotation */
+    body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    /* ═══════════════════════════════════════════
+       TOAST NOTIFICATION
+    ═══════════════════════════════════════════ -->
+    .toast {
+      position: fixed;
+      bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 15px;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      box-shadow: var(--shadow-lg);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast.success { background: #10b981; }
+    .toast.error   { background: #ef4444; }
 
     /* --- Chatbot Styles --- */
     .chat-widget {
@@ -1264,8 +1465,81 @@
         <a href="#why-us">Why Choose Us</a>
         <a class="btn btn-primary" href="#contact">Get Consultation</a>
       </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-overlay" id="mobileOverlay" role="presentation"></div>
+
+  <!-- Mobile slide-in nav -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <div class="mobile-nav-header">
+      <div class="brand" style="gap:12px;">
+        <div class="mark">M</div>
+        <div style="font-size:14px;font-weight:800;color:var(--navy);">MENU<br><small style="color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase;">Real Estate Group</small></div>
+      </div>
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">✕</button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="#about" class="primary-link" onclick="closeMobileNav()">🏢 About Us</a>
+
+      <div class="mobile-nav-section-title">Services</div>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('brokerage')">🤝 Brokerage &amp; Transactions</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('management')">🏢 Property Management</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('valuation')">📊 Valuation &amp; Advisory</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('development')">🏗️ Development &amp; Projects</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('architectural')">📐 Architectural &amp; Planning</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('construction')">🚜 Construction Support</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('community')">🏘️ Community Housing</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('investment')">📈 Investment Guidance</a>
+      <a href="#core-services" class="sub-link" onclick="closeMobileNav(); openPageModal('consultation')">💬 Real Estate Consultation</a>
+
+      <div class="mobile-nav-section-title">Solutions</div>
+      <a href="#solutions" class="sub-link" onclick="closeMobileNav(); openPageModal('commercial')">🏢 Commercial Properties</a>
+      <a href="#solutions" class="sub-link" onclick="closeMobileNav(); openPageModal('residential')">🏡 Residential Properties</a>
+      <a href="#solutions" class="sub-link" onclick="closeMobileNav(); openPageModal('agricultural')">🌾 Agricultural Land &amp; Farming</a>
+
+      <a href="#why-us" class="primary-link" onclick="closeMobileNav()" style="margin-top:8px;">⭐ Why Choose Us</a>
+      <a href="#contact" class="primary-link" onclick="closeMobileNav()">📞 Contact</a>
+    </div>
+    <div class="mobile-nav-cta">
+      <a href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener" class="cta-wa" onclick="closeMobileNav()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+      <a href="#contact" class="cta-consult" onclick="closeMobileNav()">Get Free Consultation</a>
+    </div>
+  </nav>
+
+  <!-- Bottom Tab Bar -->
+  <nav class="bottom-tab-bar" aria-label="Quick navigation">
+    <button class="tab-item active" onclick="scrollToSection('body')" id="tab-home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="tab-item" onclick="scrollToSection('core-services')" id="tab-services">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      <span>Services</span>
+    </button>
+    <button class="tab-item" onclick="scrollToSection('solutions')" id="tab-solutions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      <span>Solutions</span>
+    </button>
+    <button class="tab-item" onclick="scrollToSection('contact')" id="tab-contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 11a19.79 19.79 0 01-3.07-8.67A2 2 0 011.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <span>Contact</span>
+    </button>
+    <button class="tab-item" onclick="toggleChat()" id="tab-chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <span>Chat</span>
+    </button>
+  </nav>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
   <main>
     <section class="hero">
@@ -1504,33 +1778,33 @@
               <span style="font-size: 24px; color: var(--gold);">📍</span> 
               <span>Inyarurembo, Kiyovu, Nyarugenge, City of Kigali</span>
             </div>
-            <div class="contact-item">
+            <a class="contact-item" href="tel:+250782616150" style="text-decoration:none;">
               <span style="font-size: 24px; color: var(--gold);">📞</span> 
               <span>+250 782 616 150</span>
-            </div>
-            <div class="contact-item">
+            </a>
+            <a class="contact-item" href="mailto:menurealestategroup@gmail.com" style="text-decoration:none;">
               <span style="font-size: 24px; color: var(--gold);">✉️</span> 
               <span>menurealestategroup@gmail.com</span>
-            </div>
+            </a>
             <div class="contact-item" style="border-bottom: none; margin-bottom: 24px;">
               <span style="font-size: 24px; color: var(--gold);">⏱️</span> 
               <span>Working Hours: Mon - Sat, 8:00 AM - 6:00 PM</span>
             </div>
             <a class="btn btn-dark" style="width: 100%; justify-content: center;" href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
-          <form onsubmit="event.preventDefault();">
+          <form onsubmit="handleFormSubmit(event)" id="consultForm" novalidate>
             <h3>Request Consultation</h3>
-            <input type="text" placeholder="Full name" required>
-            <input type="tel" placeholder="Phone number" required>
-            <select required>
+            <input type="text" id="formName" placeholder="Full name" required autocomplete="name">
+            <input type="tel" id="formPhone" placeholder="Phone number" required autocomplete="tel">
+            <select id="formService" required>
               <option value="" disabled selected hidden>Choose solution interest</option>
               <option>Commercial Property Solutions</option>
               <option>Residential Property Solutions</option>
               <option>Agricultural Land & Farming</option>
               <option>General Real Estate Consultation</option>
             </select>
-            <textarea placeholder="Tell us about your project or inquiry..."></textarea>
-            <button class="btn btn-primary" type="submit" style="width: 100%;">Send Request</button>
+            <textarea id="formMessage" placeholder="Tell us about your project or inquiry..."></textarea>
+            <button class="btn btn-primary" type="submit" id="formSubmitBtn" style="width: 100%;">Send Request</button>
           </form>
         </div>
       </div>
@@ -1573,7 +1847,7 @@
     </button>
   </div>
 
-  <!-- Detail Modal ("Open Page" View) -->
+  <!-- Detail Modal -->
   <div id="pageModal" class="modal-overlay" onclick="handleModalOverlayClick(event)">
     <div class="modal-content" role="dialog" aria-modal="true">
       <button class="modal-close" onclick="closePageModal()" aria-label="Close modal">✕</button>
@@ -1587,7 +1861,7 @@
   </div>
 
   <script>
-    // Exact content matching the PDF Portfolios and Core Services (Pages 3 - 9)
+    // Exact content matching the PDF Portfolios and Core Services
     const modalData = {
       // --- CORE SERVICES ---
       'brokerage': {
@@ -1766,43 +2040,43 @@
       }
     };
 
+    // ─── Unified overflow lock (modal + mobile nav safe) ───
     const modal = document.getElementById('pageModal');
     const modalHeader = document.getElementById('modalHeader');
     const modalBody = document.getElementById('modalBody');
+    let _overflowLocks = 0;
+    function lockScroll()   { _overflowLocks++; document.body.style.overflow = 'hidden'; }
+    function unlockScroll() { _overflowLocks = Math.max(0, _overflowLocks - 1); if (_overflowLocks === 0) document.body.style.overflow = ''; }
 
-    // Open modal function
     function openPageModal(key) {
       const data = modalData[key];
       if (!data) return;
-
-      // Populate content
       modalHeader.innerHTML = `<h3>${data.title}</h3>`;
       modalBody.innerHTML = data.content;
-
-      // Show modal and lock body scroll
+      // Wire up any "Inquire" buttons inside modal content to scroll+close properly
+      modalBody.querySelectorAll('a[href="#contact"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          closePageModal();
+          setTimeout(() => {
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        });
+      });
       modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      lockScroll();
     }
 
-    // Close modal function
     function closePageModal() {
       modal.classList.remove('active');
-      document.body.style.overflow = ''; // Restore body scroll
+      unlockScroll();
     }
 
-    // Close when clicking outside the modal content
     function handleModalOverlayClick(event) {
-      if (event.target === modal) {
-        closePageModal();
-      }
+      if (event.target === modal) closePageModal();
     }
 
-    // Close modal on Escape key press
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape' && modal.classList.contains('active')) {
-        closePageModal();
-      }
-    });
+    // Escape handler merged below with mobile nav handler
 
     // --- CHATBOT LOGIC ---
     const chatWindow = document.getElementById('chatWindow');
@@ -1897,8 +2171,12 @@
         systemInstruction: { parts: [{ text: systemPrompt }] }
       };
 
+      // IMPORTANT: Due to environment rules, leave this empty inside the preview. 
+      // The platform handles injecting the valid key automatically.
       const apiKey = ""; 
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+      
+      // Using the allowed model version
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
       let retries = 0;
       const maxRetries = 3;
@@ -1917,7 +2195,6 @@
             if (response.status === 429 || response.status >= 500) {
               throw new Error("retry");
             }
-            // Log exact API error if it's a 400/403 to help debug in console
             const errText = await response.text();
             console.error("API Error:", response.status, errText);
             throw new Error("fatal");
@@ -1939,7 +2216,7 @@
           if (error.message === "fatal" || retries >= maxRetries - 1) {
             typingIndicator.classList.remove('active');
             addMessageToUI("I'm sorry, I'm having a little trouble connecting right now. Please try again or contact us directly at +250 782 616 150.", 'bot');
-            chatHistory.pop(); // Remove the user message from history so they can retry
+            chatHistory.pop(); 
             break;
           }
           await new Promise(res => setTimeout(res, delay));
@@ -1948,6 +2225,241 @@
         }
       }
     }
+    // ═══════════════════════════════════════════
+    // PWA MANIFEST (inline, no server needed)
+    // ═══════════════════════════════════════════
+    (function() {
+      const manifest = {
+        name: "MENU Real Estate Group",
+        short_name: "MENU RE",
+        description: "Complete Property Solutions in Rwanda",
+        start_url: "./",
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#0a192f",
+        theme_color: "#0a192f",
+        icons: [
+          { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=192&h=192&q=85", sizes: "192x192", type: "image/jpeg", purpose: "any maskable" },
+          { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=512&h=512&q=85", sizes: "512x512", type: "image/jpeg", purpose: "any maskable" }
+        ],
+        categories: ["business", "finance"],
+        lang: "en",
+        dir: "ltr"
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      document.getElementById('pwa-manifest').href = url;
+    })();
+
+    // ═══════════════════════════════════════════
+    // TOAST
+    // ═══════════════════════════════════════════
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast' + (type ? ' ' + type : '');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ═══════════════════════════════════════════
+    // MOBILE NAV
+    // ═══════════════════════════════════════════
+    const hamburger     = document.getElementById('hamburger');
+    const mobileNav     = document.getElementById('mobileNav');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+
+    function openMobileNav() {
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileNav.classList.add('open');
+      mobileOverlay.style.display = 'block';
+      requestAnimationFrame(() => mobileOverlay.classList.add('visible'));
+      lockScroll();
+    }
+
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileNav.classList.remove('open');
+      mobileOverlay.classList.remove('visible');
+      setTimeout(() => { mobileOverlay.style.display = 'none'; }, 400);
+      unlockScroll();
+    }
+
+    // Mobile nav sub-links that also open a modal — close nav first, then open modal after nav animation
+    document.querySelectorAll('.mobile-nav-links .sub-link[onclick]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        // The onclick already calls closeMobileNav() + openPageModal()
+        // We just need the href scroll suppressed since modal takes over
+        e.preventDefault();
+      });
+    });
+
+    hamburger.addEventListener('click', () => {
+      if (mobileNav.classList.contains('open')) closeMobileNav();
+      else openMobileNav();
+    });
+    mobileNavClose.addEventListener('click', closeMobileNav);
+    mobileOverlay.addEventListener('click', closeMobileNav);
+
+    // Unified Escape key handler (replaces duplicate handlers)
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (modal.classList.contains('active')) closePageModal();
+      else if (mobileNav.classList.contains('open')) closeMobileNav();
+    });
+
+    // ═══════════════════════════════════════════
+    // BOTTOM TAB BAR — active state on scroll
+    // ═══════════════════════════════════════════
+    function scrollToSection(id) {
+      if (id === 'body') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    const tabSections = [
+      { tab: 'tab-home', sectionId: null },
+      { tab: 'tab-services', sectionId: 'core-services' },
+      { tab: 'tab-solutions', sectionId: 'solutions' },
+      { tab: 'tab-contact', sectionId: 'contact' },
+    ];
+
+    function updateTabBar() {
+      const scrollY = window.scrollY + window.innerHeight / 2;
+      let active = 'tab-home';
+
+      tabSections.forEach(({ tab, sectionId }) => {
+        if (!sectionId) return;
+        const el = document.getElementById(sectionId);
+        if (el && el.offsetTop <= scrollY) active = tab;
+      });
+
+      tabSections.forEach(({ tab }) => {
+        document.getElementById(tab)?.classList.toggle('active', tab === active);
+      });
+    }
+
+    window.addEventListener('scroll', updateTabBar, { passive: true });
+
+    // ═══════════════════════════════════════════
+    // SCROLL-AWARE TOPBAR SHADOW
+    // ═══════════════════════════════════════════
+    const topbar = document.querySelector('.topbar');
+    window.addEventListener('scroll', () => {
+      topbar.style.boxShadow = window.scrollY > 10
+        ? '0 4px 24px rgba(10,25,47,0.08)'
+        : 'none';
+    }, { passive: true });
+
+    // ═══════════════════════════════════════════
+    // DESKTOP DROPDOWN — click toggle for touch devices
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+      const trigger = dropdown.querySelector('a:first-child');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      if (!trigger || !menu) return;
+
+      trigger.addEventListener('click', (e) => {
+        // Only intercept if screen is touch-based (no fine pointer)
+        if (!window.matchMedia('(hover: none)').matches) return;
+        e.preventDefault();
+        const isOpen = menu.style.opacity === '1';
+        // Close all other dropdowns
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          m.style.opacity = ''; m.style.visibility = ''; m.style.transform = '';
+        });
+        if (!isOpen) {
+          menu.style.opacity = '1';
+          menu.style.visibility = 'visible';
+          menu.style.transform = 'translateY(0) scale(1)';
+        }
+      });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          m.style.opacity = ''; m.style.visibility = ''; m.style.transform = '';
+        });
+      }
+    });
+
+    // ═══════════════════════════════════════════
+    // SMOOTH SCROLL WITH HEADER OFFSET — all #hash links
+    // (Why Choose Us, About Us, Get Consultation, etc.)
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        // Skip links that open modals — those are handled by openPageModal()
+        const oc = this.getAttribute('onclick') || '';
+        if (oc.includes('openPageModal')) return;
+        e.preventDefault();
+        const headerH = document.querySelector('.topbar')?.offsetHeight || 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // ═══════════════════════════════════════════
+    // KEYBOARD NAVIGATION FOR SERVICE CARDS
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('[role="button"]').forEach(el => {
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
+    });
+
+    // ═══════════════════════════════════════════
+    // WORKING CONTACT FORM — WhatsApp integration
+    // ═══════════════════════════════════════════
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('formSubmitBtn');
+      const name    = document.getElementById('formName').value.trim();
+      const phone   = document.getElementById('formPhone').value.trim();
+      const service = document.getElementById('formService').value;
+      const message = document.getElementById('formMessage').value.trim();
+
+      if (!name || !phone || !service) {
+        showToast('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      // Build a WhatsApp pre-filled message and open it
+      const waText = encodeURIComponent(
+        `Hello MENU Real Estate Group,\n\nName: ${name}\nPhone: ${phone}\nInterest: ${service}${message ? '\nMessage: ' + message : ''}\n\nI would like to request a consultation.`
+      );
+
+      // Simulate brief processing then redirect
+      await new Promise(r => setTimeout(r, 800));
+
+      window.open(`https://wa.me/250782616150?text=${waText}`, '_blank', 'noopener');
+
+      // Reset form
+      document.getElementById('consultForm').reset();
+      btn.textContent = 'Send Request';
+      btn.disabled = false;
+
+      showToast('✓ Opening WhatsApp — message pre-filled!', 'success');
+    }
+
   </script>
 </body>
 </html>
