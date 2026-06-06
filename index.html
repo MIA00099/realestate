@@ -105,13 +105,22 @@
     .brand small { display: block; color: var(--gold); font-size: 10px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 2px;}
 
     .links { display: flex; gap: 32px; align-items: center; color: var(--navy); font-weight: 600; font-size: 15px; }
-    .links a:not(.btn) { position: relative; padding: 8px 0; transition: color 0.3s ease; }
-    .links a:not(.btn)::after {
+    
+    .nav-link-btn {
+      background: none; border: none; font: inherit; cursor: pointer;
+      color: var(--navy); font-weight: 700; font-size: 15px;
+      padding: 8px 0; position: relative; transition: color 0.3s ease;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-link-btn::after {
       content: ""; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
       background: var(--gold); transition: 0.3s ease; border-radius: 2px;
     }
-    .links a:not(.btn):hover { color: var(--gold); }
-    .links a:not(.btn):hover::after { width: 100%; }
+    .nav-link-btn:not(.drop-trigger):hover::after { width: 100%; }
+    .nav-link-btn:hover, .dropdown.active .nav-link-btn { color: var(--gold); }
+    
+    .caret { font-size: 10px; transition: transform 0.3s ease; }
+    .dropdown.active .caret { transform: rotate(180deg); }
 
     /* Dropdowns */
     .dropdown { position: relative; }
@@ -122,13 +131,15 @@
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; gap: 4px;
     }
     .dropdown-menu::before { content: ""; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; }
-    .dropdown-menu.dd-open { opacity: 1 !important; visibility: visible !important; transform: translateY(0) scale(1) !important; }
-    .links a.dropdown-item {
+    
+    /* Click to open logic applied via JS adding .active class */
+    .dropdown.active .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; z-index: 1000; }
+    
+    .dropdown-item {
       padding: 14px 20px; font-size: 14px; font-weight: 600; color: var(--text); transition: var(--transition);
-      border-radius: 12px; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left;
+      border-radius: 12px; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left; cursor: pointer;
     }
-    .links a.dropdown-item::after { display: none; }
-    .links a.dropdown-item:hover { background: var(--bg); color: var(--navy); transform: translateX(6px); }
+    .dropdown-item:hover { background: var(--bg); color: var(--navy); transform: translateX(6px); }
 
     /* --- Buttons --- */
     .btn {
@@ -356,7 +367,6 @@
     .mobile-nav-close { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: none; font-size: 20px; cursor: pointer; display: grid; place-items: center; color: var(--navy); transition: var(--transition);}
     .mobile-nav-links { flex: 1; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;}
     
-    /* ACCORDION CSS-ONLY FIX FOR MOBILE MENU */
     .mobile-accordion-btn {
       display: flex; align-items: center; justify-content: space-between; width: 100%;
       background: transparent; border: none; padding: 18px 16px 10px; font-family: inherit;
@@ -370,7 +380,6 @@
       display: flex; flex-direction: column; gap: 4px; overflow: hidden;
       max-height: 0; transition: max-height 0.4s ease-in-out;
     }
-    /* Fixed: Now uses reliable CSS max-height for expanding */
     .mobile-accordion-content.expanded { max-height: 1000px; }
 
     .mobile-nav-links a {
@@ -505,10 +514,12 @@
           <div style="text-align:left;">MENU<br><small>REAL ESTATE GROUP</small></div>
         </div>
       </button>
+      
       <nav class="links">
-        <button data-scroll-to="about" style="background:none; border:none; font:inherit; cursor:pointer;">About Us</button>
+        <button data-scroll-to="about" class="nav-link-btn">About Us</button>
+        
         <div class="dropdown">
-          <button data-scroll-to="core-services" style="background:none; border:none; font:inherit; cursor:pointer;">Services <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></button>
+          <button class="nav-link-btn drop-trigger">Services <span class="caret">▼</span></button>
           <div class="dropdown-menu" style="min-width: 360px; max-height: 70vh; overflow-y: auto;">
             <button class="dropdown-item" data-modal-target="brokerage">🤝 Brokerage & Transactions</button>
             <button class="dropdown-item" data-modal-target="management">🏢 Property Management & Operations</button>
@@ -521,17 +532,20 @@
             <button class="dropdown-item" data-modal-target="consultation">💬 Real Estate Consultation</button>
           </div>
         </div>
+        
         <div class="dropdown">
-          <button data-scroll-to="solutions" style="background:none; border:none; font:inherit; cursor:pointer;">Solutions <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></button>
+          <button class="nav-link-btn drop-trigger">Solutions <span class="caret">▼</span></button>
           <div class="dropdown-menu">
             <button class="dropdown-item" data-modal-target="commercial">🏢 Commercial Properties</button>
             <button class="dropdown-item" data-modal-target="residential">🏡 Residential Properties</button>
             <button class="dropdown-item" data-modal-target="agricultural">🌾 Agricultural Land & Farming</button>
           </div>
         </div>
-        <button data-scroll-to="why-us" style="background:none; border:none; font:inherit; cursor:pointer;">Why Choose Us</button>
+        
+        <button data-scroll-to="why-us" class="nav-link-btn">Why Choose Us</button>
         <button class="btn btn-primary" data-scroll-to="contact">Get Consultation</button>
       </nav>
+
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" data-action="toggle-nav">
         <span></span><span></span><span></span>
       </button>
@@ -554,7 +568,6 @@
     <div class="mobile-nav-links">
       <button class="primary-link" data-scroll-to="about" style="background:transparent; border:none; text-align:left; width:100%;">🏢 About Us</button>
 
-      <!-- NEW: Services Accordion -->
       <button class="mobile-accordion-btn expanded">
         Services 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -571,7 +584,6 @@
         <button class="sub-link" data-modal-target="consultation">💬 Real Estate Consultation</button>
       </div>
 
-      <!-- NEW: Solutions Accordion -->
       <button class="mobile-accordion-btn">
         Solutions 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -630,10 +642,8 @@
           <h1>Building <span>Opportunities.</span><br>Creating <span>Futures.</span></h1>
           <p>MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora.</p>
           <div class="hero-actions">
-            <!-- Converted to button tags for fail-proof mobile tapping -->
             <button class="btn btn-primary" data-scroll-to="solutions">Explore Portfolios</button>
             <button class="btn btn-dark" data-scroll-to="contact">Contact Us</button>
-            <!-- LLM Feature Trigger Button -->
             <button class="btn btn-primary" style="background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); color: var(--white); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);" data-action="open-matchmaker">AI Matchmaker ✨</button>
           </div>
         </div>
@@ -969,7 +979,7 @@
 
   <script>
   // ═══════════════════════════════════════════════════════════════
-  //  MENU REAL ESTATE GROUP — BULLETPROOF MOBILE EVENT SYSTEM
+  //  MENU REAL ESTATE GROUP — JS LOGIC
   // ═══════════════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -1081,7 +1091,6 @@
       t._tid = setTimeout(() => t.classList.remove('show'), 3500);
     };
 
-    // 🔴 BULLETPROOF SCROLLING: Failsafe try/catch block for mobile 
     const scrollToSection = (id) => {
       const el = document.getElementById(id);
       if (!el && id !== 'top') return;
@@ -1100,7 +1109,7 @@
           try {
              window.scrollTo({ top: topPos, behavior: 'smooth' });
           } catch(e) {
-             window.scrollTo(0, topPos); // Failsafe for older mobile browsers
+             window.scrollTo(0, topPos);
           }
       }, 50);
     };
@@ -1134,7 +1143,42 @@
       }
     };
 
-    // ── 4. DIRECT EVENT BINDINGS (100% Reliable on Mobile) ─────────
+    // ── 4. DESKTOP DROPDOWN LOGIC ──────────────────────────────────
+    const desktopDropdowns = document.querySelectorAll('.links .dropdown');
+    
+    desktopDropdowns.forEach(drop => {
+        const triggerBtn = drop.querySelector('.drop-trigger');
+        if(triggerBtn) {
+            triggerBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Close other open dropdowns
+                desktopDropdowns.forEach(other => {
+                    if (other !== drop) other.classList.remove('active');
+                });
+                
+                // Toggle current
+                drop.classList.toggle('active');
+            });
+        }
+    });
+
+    // Close desktop dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.links .dropdown')) {
+            desktopDropdowns.forEach(drop => drop.classList.remove('active'));
+        }
+    });
+    
+    // Close desktop dropdowns when clicking an item inside them
+    document.querySelectorAll('.dropdown-menu .dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            desktopDropdowns.forEach(drop => drop.classList.remove('active'));
+        });
+    });
+
+    // ── 5. DIRECT EVENT BINDINGS ───────────────────────────────────
     
     // Smooth Scroll Links
     document.querySelectorAll('[data-scroll-to]').forEach(el => {
@@ -1200,7 +1244,7 @@
        });
     });
 
-    // Delegation ONLY for dynamically injected elements (like the "Inquire" button)
+    // Delegation ONLY for dynamically injected elements
     document.addEventListener('click', (e) => {
         const inquireBtn = e.target.closest('[data-action="inquire-from-modal"]');
         if (inquireBtn) {
@@ -1211,14 +1255,13 @@
         }
     });
 
-    // 🔴 BULLETPROOF ACCORDIONS: Pure class toggle, logic mapped directly
+    // Mobile Accordions
     document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const panel = btn.nextElementSibling;
             const isOpening = !btn.classList.contains('expanded');
 
-            // Close all others
             document.querySelectorAll('.mobile-accordion-btn').forEach(otherBtn => {
                 otherBtn.classList.remove('expanded');
                 if (otherBtn.nextElementSibling) {
@@ -1226,7 +1269,6 @@
                 }
             });
 
-            // Open clicked
             if (isOpening) {
                 btn.classList.add('expanded');
                 panel.classList.add('expanded');
@@ -1234,7 +1276,7 @@
         });
     });
 
-    // ── 5. FORM SUBMISSION ─────────────────────────────────────────
+    // ── 6. FORM SUBMISSION ─────────────────────────────────────────
     const consultForm = document.getElementById('consultForm');
     if (consultForm) {
         consultForm.addEventListener('submit', async (e) => {
@@ -1261,7 +1303,7 @@
         });
     }
 
-    // ── 6. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
+    // ── 7. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
     const apiKey = ""; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
