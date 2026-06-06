@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
+ 
   <!-- ═══════════════════════════════════════════
        PRIMARY SEO META
   ═══════════════════════════════════════════ -->
   <title>MENU Real Estate Group | Complete Property Solutions in Rwanda</title>
   <meta name="description" content="MENU Real Estate Group is a licensed real estate company in Rwanda, providing end-to-end property solutions." />
-
+ 
   <!-- ═══════════════════════════════════════════
        FONT
   ═══════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+ 
   <style>
     :root {
       /* Refined Color Palette */
@@ -44,7 +44,7 @@
       
       --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
+ 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     html { 
@@ -65,7 +65,7 @@
     
     /* Mobile scroll lock - simple overflow only, NO position:fixed which breaks z-index on mobile */
     html.scroll-locked { overflow: hidden; }
-
+ 
     /* Touch Target Optimization */
     a, button, .project, .core-service-item { 
       cursor: pointer; 
@@ -79,23 +79,23 @@
     @media (max-width: 900px) {
       .tab-item, .mobile-nav-close, .hamburger { min-height: 44px; min-width: 44px; }
     }
-
+ 
     /* Elegant background glow */
     body::before {
       content: ""; position: fixed; top: -20%; right: -10%; width: 80vw; height: 80vh;
       background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
       pointer-events: none; z-index: -1;
     }
-
+ 
     /* --- Navigation --- */
     .topbar {
       position: fixed; top: 0; width: 100%; z-index: 100;
       background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(10, 25, 47, 0.03); transition: var(--transition);
     }
-
+ 
     .nav { height: 100px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-
+ 
     .brand { display: flex; align-items: center; gap: 16px; font-weight: 800; color: var(--navy); transition: var(--transition); letter-spacing: -0.5px; }
     .brand:hover { transform: translateY(-1px); }
     
@@ -107,7 +107,7 @@
     }
     .brand:hover .mark { transform: rotate(-5deg) scale(1.05); box-shadow: var(--shadow-hover); }
     .brand small { display: block; color: var(--gold); font-size: 10px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 2px;}
-
+ 
     .links { display: flex; gap: 32px; align-items: center; color: var(--navy); font-weight: 600; font-size: 15px; }
     
     .nav-link-btn {
@@ -125,7 +125,7 @@
     
     .caret { font-size: 10px; transition: transform 0.3s ease; }
     .dropdown.active .caret { transform: rotate(180deg); }
-
+ 
     /* Dropdowns */
     .dropdown { position: relative; }
     .dropdown-menu {
@@ -144,7 +144,7 @@
       border-radius: 12px; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left; cursor: pointer;
     }
     .dropdown-item:hover { background: var(--bg); color: var(--navy); transform: translateX(6px); }
-
+ 
     /* --- Buttons --- */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none;
@@ -156,7 +156,7 @@
     .btn-dark { background: var(--navy); color: var(--white); box-shadow: 0 10px 25px rgba(10, 25, 47, 0.2); }
     .btn:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
     .btn:active { transform: translateY(-1px); }
-
+ 
     /* --- Hero Section --- */
     .hero {
       padding: 200px 0 120px; min-height: 100vh; display: grid; align-items: center;
@@ -180,13 +180,13 @@
     .hero-card:hover { transform: translateY(-12px); box-shadow: 0 40px 80px -20px rgba(10, 25, 47, 0.25); }
     .hero-card img { height: 540px; width: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
     .hero-card:hover img { transform: scale(1.05); }
-
+ 
     /* --- Global Sections --- */
     section { padding: 120px 0; }
     .section-title { text-align: center; max-width: 700px; margin: 0 auto 64px; }
     .section-title h2 { color: var(--navy); font-size: clamp(36px, 5vw, 54px); line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; font-weight: 800; }
     .section-title p { color: var(--muted); font-size: 18px; line-height: 1.8; }
-
+ 
     /* --- About Section --- */
     .about-section { background: var(--bg); position: relative; z-index: 1;}
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 32px; }
@@ -200,7 +200,7 @@
     .about-card p:last-child { margin-bottom: 0; }
     .vision-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--gold); }
     .mission-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--navy); }
-
+ 
     /* --- Core Services --- */
     .core-services { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
     .core-service-item {
@@ -218,7 +218,7 @@
     .core-service-item:hover .core-service-icon { background: var(--navy); color: var(--white); }
     .core-service-item h4 { color: var(--navy); font-size: 18px; margin-bottom: 10px; font-weight: 700; line-height: 1.4; }
     .core-service-item p { font-size: 15px; color: var(--muted); line-height: 1.6; margin: 0; }
-
+ 
     /* --- Solutions Section --- */
     .solutions { background: var(--navy); color: var(--white); position: relative; border-radius: 40px; margin: 0 20px; padding: 120px 0; }
     .solutions::before {
@@ -228,7 +228,7 @@
     }
     .solutions .section-title h2, .solutions .section-title p { color: var(--white); }
     .solutions .section-title p { opacity: 0.8; }
-
+ 
     .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; z-index: 2; }
     .project {
       background: var(--white); border-radius: var(--radius-lg); overflow: hidden;
@@ -239,14 +239,14 @@
     .project:hover { transform: translateY(-12px); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
     .project img { height: 280px; width: 100%; object-fit: cover; transition: 0.6s ease; }
     .project:hover img { transform: scale(1.05); }
-
+ 
     .project-body { padding: 40px; flex-grow: 1; display: flex; flex-direction: column; }
     .project h3 { color: var(--navy); margin-bottom: 16px; font-weight: 800; font-size: 24px; letter-spacing: -0.5px;}
     .project p { color: var(--muted); margin-bottom: 24px; font-size: 16px; flex-grow: 1; }
     .read-more { color: var(--gold); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; margin-top: auto;}
     .read-more::after { content: "→"; transition: 0.3s ease; font-size: 18px;}
     .project:hover .read-more::after { transform: translateX(6px); }
-
+ 
     /* --- Why Us --- */
     .why-us { background: var(--bg); padding-top: 140px; }
     .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
@@ -259,7 +259,7 @@
       color: var(--white); border-radius: 50%; display: grid; place-items: center;
       font-size: 14px; font-weight: 900; margin-top: 2px; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
     }
-
+ 
     /* --- CTA Section --- */
     .cta {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
@@ -273,7 +273,7 @@
     }
     .cta h2 { font-size: clamp(36px, 5vw, 54px); line-height: 1.1; margin-bottom: 16px; font-weight: 800; letter-spacing: -0.02em;}
     .cta p { font-size: 18px; opacity: 0.9; max-width: 500px;}
-
+ 
     /* --- Contact & Forms --- */
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-card, form { background: var(--surface); border-radius: var(--radius-lg); padding: 48px; box-shadow: var(--shadow-md); }
@@ -281,7 +281,7 @@
     .contact-item { padding: 20px 0; border-bottom: 1px solid rgba(10, 25, 47, 0.06); color: var(--text); font-weight: 600; font-size: 16px; display: flex !important; align-items: center; gap: 16px; width: 100%; text-decoration: none; }
     .contact-item:last-of-type { border-bottom: none; }
     a.contact-item { display: flex !important; }
-
+ 
     input, textarea, select {
       width: 100%; padding: 18px 24px; border: 1px solid rgba(10, 25, 47, 0.08);
       border-radius: var(--radius-sm); margin-bottom: 20px; font: inherit; outline: none;
@@ -291,7 +291,7 @@
     input::placeholder, textarea::placeholder, select::placeholder { color: var(--muted); font-weight: 400;}
     input:focus, textarea:focus, select:focus { background: var(--white); border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-soft); }
     textarea { min-height: 160px; resize: vertical; }
-
+ 
     /* --- Partners Ticker --- */
     .partners-section { background: transparent; padding: 0 0 100px 0; overflow: hidden; }
     .partners-section h4 { text-align: center; color: var(--gold); font-size: 14px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; font-weight: 800;}
@@ -305,11 +305,11 @@
     .ticker-item:hover { opacity: 1; }
     .ticker-item::after { content: "•"; color: var(--gold); margin-left: 100px; font-size: 32px; line-height: 0; opacity: 0.5;}
     @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
+ 
     /* --- Footer --- */
     footer { background: #020a14; color: rgba(255,255,255,0.6); padding: 48px 0; font-size: 15px;}
     .footer-flex { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
-
+ 
     /* --- Elegant Modal --- */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -343,7 +343,7 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
+ 
     /* ═══════════════════════════════════════════
        HAMBURGER / MOBILE NAV
     ═══════════════════════════════════════════ */
@@ -356,14 +356,14 @@
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
+ 
     .mobile-overlay {
       position: fixed; inset: 0; background: rgba(10, 25, 47, 0.5);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 150;
       opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
     }
     .mobile-overlay.visible { opacity: 1; pointer-events: auto; }
-
+ 
     .mobile-nav {
       position: fixed; top: 0; right: 0; width: min(340px, 88vw); height: 100%; background: var(--white);
       z-index: 160; transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -389,7 +389,7 @@
       max-height: 0; transition: max-height 0.4s ease-in-out;
     }
     .mobile-accordion-content.expanded { max-height: 1000px; }
-
+ 
     .mobile-nav-links a {
       display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text);
       transition: background 0.2s, color 0.2s; min-height: 52px; cursor: pointer; -webkit-tap-highlight-color: transparent;
@@ -414,12 +414,12 @@
       transition: background 0.2s, color 0.2s; min-height: 52px; cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
     .mobile-nav-links button.sub-link:active, .mobile-nav-links button.sub-link:hover { color: var(--navy); background: var(--bg); }
-
+ 
     .mobile-nav-cta { padding: 0 16px 24px; display: flex; flex-direction: column; gap: 12px;}
     .mobile-nav-cta a { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; cursor: pointer; -webkit-tap-highlight-color: transparent;}
     .mobile-nav-cta .cta-wa { background: #25D366; color: var(--white);}
     .mobile-nav-cta .cta-consult { background: var(--gold); color: var(--white);}
-
+ 
     /* ═══════════════════════════════════════════
        BOTTOM TAB BAR (App-like navigation)
     ═══════════════════════════════════════════ */
@@ -435,7 +435,7 @@
     .tab-item.active { color: var(--gold); }
     .tab-item svg { width: 22px; height: 22px; }
     .tab-item span { font-size: 9px; }
-
+ 
     /* ═══════════════════════════════════════════
        MOBILE-RESPONSIVE OVERRIDES
     ═══════════════════════════════════════════ */
@@ -470,7 +470,7 @@
       input, textarea, select { padding: 16px 18px; font-size: 16px; }
       .footer-flex { flex-direction: column; text-align: center; gap: 8px; }
     }
-
+ 
     @media (max-width: 540px) {
       .container { width: min(100%, calc(100% - 32px)); }
       h1 { font-size: clamp(36px, 10vw, 52px); }
@@ -479,7 +479,7 @@
       .core-service-item { padding: 22px 16px; }
       .chat-window { width: calc(100vw - 24px); max-width: 100%; height: 70vh; border-radius: 20px; }
     }
-
+ 
     .toast {
       position: fixed; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); left: 50%;
       transform: translateX(-50%) translateY(20px); background: var(--navy); color: var(--white);
@@ -490,7 +490,7 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .toast.success { background: #10b981; }
     .toast.error   { background: #ef4444; }
-
+ 
     /* Chatbot & API Features Styles */
     .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end;}
     .chat-toggle { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%); color: var(--white); border: none; box-shadow: 0 15px 35px rgba(7, 29, 51, 0.25); cursor: pointer; display: grid; place-items: center; transition: var(--transition);}
@@ -561,16 +561,16 @@
         <button data-scroll-to="why-us" class="nav-link-btn">Why Choose Us</button>
         <button class="btn btn-primary" data-scroll-to="contact">Get Consultation</button>
       </nav>
-
+ 
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" data-action="toggle-nav">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
-
+ 
   <!-- Mobile overlay -->
   <div class="mobile-overlay" id="mobileOverlay" role="presentation" data-action="close-nav"></div>
-
+ 
   <!-- Mobile slide-in nav -->
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
     <div class="mobile-nav-header">
@@ -583,7 +583,7 @@
     
     <div class="mobile-nav-links">
       <button class="primary-link" data-scroll-to="about" data-action="close-nav" style="background:transparent; border:none; text-align:left; width:100%;">🏢 About Us</button>
-
+ 
       <button class="mobile-accordion-btn expanded">
         Services 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -599,7 +599,7 @@
         <button class="sub-link" data-modal-target="investment">📈 Investment Guidance</button>
         <button class="sub-link" data-modal-target="consultation">💬 Real Estate Consultation</button>
       </div>
-
+ 
       <button class="mobile-accordion-btn">
         Solutions 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -609,7 +609,7 @@
         <button class="sub-link" data-modal-target="residential">🏡 Residential Properties</button>
         <button class="sub-link" data-modal-target="agricultural">🌾 Agricultural Land &amp; Farming</button>
       </div>
-
+ 
       <button class="primary-link" style="margin-top:8px; background:transparent; border:none; text-align:left; width:100%;" data-scroll-to="why-us" data-action="close-nav">⭐ Why Choose Us</button>
       <button class="primary-link" data-scroll-to="contact" data-action="close-nav" style="background:transparent; border:none; text-align:left; width:100%;">📞 Contact</button>
     </div>
@@ -622,7 +622,7 @@
       <button class="cta-consult" data-scroll-to="contact" data-action="close-nav" style="border:none; width:100%;">Get Free Consultation</button>
     </div>
   </nav>
-
+ 
   <!-- Bottom Tab Bar -->
   <nav class="bottom-tab-bar" aria-label="Quick navigation">
     <button class="tab-item active" id="tab-home" data-scroll-to="top">
@@ -646,10 +646,10 @@
       <span>Chat</span>
     </button>
   </nav>
-
+ 
   <!-- Toast notification -->
   <div class="toast" id="toast" role="alert" aria-live="polite"></div>
-
+ 
   <main>
     <section class="hero" id="top">
       <div class="container hero-grid">
@@ -668,14 +668,14 @@
         </div>
       </div>
     </section>
-
+ 
     <section id="about" class="about-section">
       <div class="container">
         <div class="section-title">
           <h2>About <span>Us</span></h2>
           <p>Where real estate begins, grows, and is cared for—forever.</p>
         </div>
-
+ 
         <div class="about-grid">
           <div class="about-card">
             <div class="about-icon">🏢</div>
@@ -696,7 +696,7 @@
             <p>With a strong commitment to professionalism, integrity, and client success, we stand as a trusted partner for all real estate needs in Rwanda.</p>
           </div>
         </div>
-
+ 
         <div class="vision-mission-grid">
           <div class="about-card vision-card">
             <div class="about-icon" style="background: var(--gold-soft); color: var(--gold);">👁️</div>
@@ -713,7 +713,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section id="core-services">
       <div class="container">
         <div class="section-title">
@@ -787,7 +787,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section id="solutions" class="solutions">
       <div class="container">
         <div class="section-title">
@@ -822,7 +822,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section id="why-us" class="why-us">
       <div class="container why-grid">
         <div>
@@ -843,7 +843,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section class="partners-section">
       <h4>Our Partners</h4>
       <div class="ticker-wrap">
@@ -862,7 +862,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section style="padding-top: 0;">
       <div class="container">
         <div class="cta">
@@ -874,7 +874,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section id="contact">
       <div class="container">
         <div class="section-title">
@@ -920,14 +920,14 @@
       </div>
     </section>
   </main>
-
+ 
   <footer>
     <div class="container footer-flex">
       <div>© 2026 Menu Real Estate Group. All rights reserved.</div>
       <div>Where real estate begins, grows, and is cared for—forever.</div>
     </div>
   </footer>
-
+ 
   <!-- AI Matchmaker Modal -->
   <div id="matchmakerModal" class="modal-overlay" data-action="close-matchmaker-bg">
     <div class="modal-content" role="dialog" aria-modal="true" style="max-width: 600px; padding: 40px;">
@@ -952,7 +952,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- Chatbot Widget -->
   <div class="chat-widget">
     <div id="chatWindow" class="chat-window">
@@ -981,7 +981,7 @@
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     </button>
   </div>
-
+ 
   <!-- Detail Modal -->
   <div id="pageModal" class="modal-overlay" data-action="close-page-modal-bg">
     <div class="modal-content" role="dialog" aria-modal="true">
@@ -992,13 +992,13 @@
       </div>
     </div>
   </div>
-
+ 
   <script>
   // ═══════════════════════════════════════════════════════════════
   //  MENU REAL ESTATE GROUP — MOBILE-FIRST JS
   // ═══════════════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', () => {
-
+ 
     // ── 1. MODAL DATA ──────────────────────────────────────────────
     const modalData = {
       'brokerage':     { title:'Brokerage & <span>Transactions</span>',            content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Buying, selling, and renting of residential and commercial properties, including negotiation, escrow coordination, and transaction closing.</p>` },
@@ -1076,14 +1076,14 @@
           <p>MENU Real Estate Group connects clients with the right agricultural opportunities — ensuring productivity, growth, and sustainable land use.</p>`
       }
     };
-
+ 
     // Inject "Inquire" button globally
     Object.keys(modalData).forEach(k => {
       modalData[k].content += `<div style="margin-top:36px;">
         <button class="btn btn-primary" data-action="inquire-from-modal" style="min-width:220px;">Inquire About This Service</button>
       </div>`;
     });
-
+ 
     // ── 2. GLOBAL ELEMENTS ─────────────────────────────────────────
     const body = document.body;
     const pageModal = document.getElementById('pageModal');
@@ -1093,7 +1093,7 @@
     const mobileOverlayEl = document.getElementById('mobileOverlay');
     const hamburger = document.getElementById('hamburger');
     const matchmakerModal = document.getElementById('matchmakerModal');
-
+ 
     // ── 3. HELPER FUNCTIONS ────────────────────────────────────────
     // Lock scroll on <html> not <body> — avoids position:fixed destroying mobile z-index layers
     const lockScroll   = () => document.documentElement.classList.add('scroll-locked');
@@ -1107,7 +1107,7 @@
       clearTimeout(t._tid);
       t._tid = setTimeout(() => t.classList.remove('show'), 3500);
     };
-
+ 
     const scrollToSection = (id) => {
       // kept for form submission usage
       const el = document.getElementById(id);
@@ -1115,7 +1115,7 @@
       const top = id === 'top' ? 0 : (el.getBoundingClientRect().top + window.scrollY - 85);
       try { window.scrollTo({ top, behavior: 'smooth' }); } catch(e) { window.scrollTo(0, top); }
     };
-
+ 
     const openPageModal = (key) => {
       const d = modalData[key];
       if (!d) return;
@@ -1132,7 +1132,7 @@
       const mc = pageModal.querySelector('.modal-content');
       if (mc) mc.scrollTop = 0;
     };
-
+ 
     const toggleNav = () => {
       const isOpen = mobileNav.classList.contains('open');
       if (isOpen) {
@@ -1147,7 +1147,7 @@
         lockScroll();
       }
     };
-
+ 
     // ── 4. DESKTOP DROPDOWN LOGIC ──────────────────────────────────
     const desktopDropdowns = document.querySelectorAll('.links .dropdown');
     
@@ -1162,22 +1162,22 @@
             });
         }
     });
-
+ 
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.links .dropdown')) {
             desktopDropdowns.forEach(drop => drop.classList.remove('active'));
         }
     });
-
+ 
     // ── 5. UNIFIED CLICK DELEGATION (works on mobile & desktop) ────
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-scroll-to],[data-modal-target],[data-action]');
         if (!btn) return;
-
+ 
         const scrollTo  = btn.getAttribute('data-scroll-to');
         const modalKey  = btn.getAttribute('data-modal-target');
         const action    = btn.getAttribute('data-action');
-
+ 
         // ── Scroll to section ──────────────────────────────────────
         if (scrollTo !== null) {
             e.preventDefault();
@@ -1202,14 +1202,14 @@
             }, wasNavOpen ? 400 : 0);
             return;
         }
-
+ 
         // ── Open service/solution modal ────────────────────────────
         if (modalKey !== null) {
             e.preventDefault();
             openPageModal(modalKey);
             return;
         }
-
+ 
         // ── Named actions ──────────────────────────────────────────
         if (action === 'toggle-nav') {
             e.preventDefault();
@@ -1265,7 +1265,7 @@
             return;
         }
     });
-
+ 
     // ── 6. MOBILE ACCORDION ────────────────────────────────────────
     document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -1284,7 +1284,7 @@
             }
         });
     });
-
+ 
     // ── 6. FORM SUBMISSION ─────────────────────────────────────────
     const consultForm = document.getElementById('consultForm');
     if (consultForm) {
@@ -1311,11 +1311,11 @@
             showToast('✓ WhatsApp opened with your message!', 'success');
         });
     }
-
+ 
     // ── 7. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
     const apiKey = ""; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
+ 
     // A. Chatbot
     const chatForm = document.getElementById('chatForm');
     const chatInput = document.getElementById('chatInput');
@@ -1323,13 +1323,13 @@
     const chatTypingInd = document.getElementById('typingIndicator');
     let chatHistory = [];
     const chatSysPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Answer based ONLY on company info. If you can't answer, direct them to +250 782 616 150 or menurealestategroup@gmail.com. Company: Licensed real estate company in Rwanda. Services: Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, Consultation. Contact: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com. Hours: Mon-Sat 8AM-6PM.`;
-
+ 
     if (chatForm) {
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
             if (!text) return;
-
+ 
             const d = document.createElement('div');
             d.className = 'message user';
             d.textContent = text;
@@ -1339,7 +1339,7 @@
             
             chatTypingInd.classList.add('active');
             chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
-
+ 
             let tries = 0, delay = 1000;
             while (tries < 3) {
               try {
@@ -1374,7 +1374,7 @@
             }
         });
     }
-
+ 
     // B. Matchmaker
     const matchmakerBtn = document.getElementById('matchmakerBtn');
     if (matchmakerBtn) {
@@ -1385,13 +1385,13 @@
             const userInput = inputEl.value.trim();
             
             if (!userInput) { showToast('Please describe your real estate goals first.', 'error'); return; }
-
+ 
             matchmakerBtn.style.display = 'none';
             resultEl.style.display = 'none';
             loaderEl.style.display = 'block';
-
+ 
             const matchSysPrompt = "You are a friendly and expert real estate advisor AI for MENU Real Estate Group in Rwanda. Your task is to: 1) Analyze the user's specific request. 2) Identify which 1-2 specific services from MENU Real Estate they need (Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, or Consultation). 3) Provide a brief, promising overview of the Rwandan market related to their request. Output MUST be formatted in clean HTML (using <h4>, <p>, and <ul>). Keep it under 150 words. Do NOT include markdown backticks or ```html formatting wrappers.";
-
+ 
             let tries = 0, delay = 1000, success = false;
             while (tries < 3 && !success) {
               try {
@@ -1401,7 +1401,7 @@
                 const data = await response.json();
                 const replyHTML = data.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (!replyHTML) throw new Error('No reply');
-
+ 
                 resultEl.innerHTML = replyHTML + `
                   <div style="margin-top: 24px;">
                      <button class="btn btn-primary" style="width:100%; background: var(--navy);" data-action="inquire-from-modal">Contact us to make this a reality</button>
@@ -1421,7 +1421,7 @@
             resultEl.style.display = 'block';
         });
     }
-
+ 
     // Escape Key logic added
     document.addEventListener('keydown', e => {
       if (e.key !== 'Escape') return;
@@ -1435,7 +1435,7 @@
           matchmakerModal.classList.remove('active'); unlockScroll();
       }
     });
-
+ 
     // ── 8. BOTTOM TAB BAR ACTIVE STATE ─────────────────────────────
     const tabSections = [
       { id: 'top',           tab: document.getElementById('tab-home') },
@@ -1443,7 +1443,7 @@
       { id: 'solutions',     tab: document.getElementById('tab-solutions') },
       { id: 'contact',       tab: document.getElementById('tab-contact') },
     ];
-
+ 
     const updateActiveTab = () => {
       const scrollMid = window.scrollY + window.innerHeight / 2;
       let activeTab = tabSections[0].tab;
@@ -1454,7 +1454,7 @@
       document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
       if (activeTab) activeTab.classList.add('active');
     };
-
+ 
     window.addEventListener('scroll', updateActiveTab, { passive: true });
     updateActiveTab();
   });
