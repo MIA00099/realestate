@@ -67,7 +67,7 @@
     body.locked { overflow: hidden !important; touch-action: none; }
 
     /* Touch Target Optimization */
-    a, button, .project, .core-service-item { 
+    a, button, .project, .core-service-item, .tab-item, .mobile-overlay { 
       cursor: pointer; 
       -webkit-tap-highlight-color: transparent; 
       touch-action: manipulation;
@@ -367,10 +367,17 @@
     .mobile-accordion-btn.expanded svg { transform: rotate(180deg); }
     
     .mobile-accordion-content {
-      display: flex; flex-direction: column; gap: 4px; overflow: hidden;
-      max-height: 0; transition: max-height 0.4s ease;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
-    .mobile-accordion-content.expanded { max-height: 800px; /* arbitrary large max-height */ }
+    /* expanded class now only rotates icon, max-height set via JS */
+    .mobile-accordion-content.expanded {
+      /* max-height set by JS */
+    }
 
     .mobile-nav-links a {
       display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text);
@@ -553,7 +560,7 @@
     <div class="mobile-nav-links">
       <a href="#about" class="primary-link" data-scroll-to="about">🏢 About Us</a>
 
-      <!-- NEW: Services Accordion -->
+      <!-- Services Accordion (initially expanded) -->
       <button class="mobile-accordion-btn expanded">
         Services 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -570,7 +577,7 @@
         <button class="sub-link" data-modal-target="consultation">💬 Real Estate Consultation</button>
       </div>
 
-      <!-- NEW: Solutions Accordion -->
+      <!-- Solutions Accordion (collapsed) -->
       <button class="mobile-accordion-btn">
         Solutions 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -629,10 +636,8 @@
           <h1>Building <span>Opportunities.</span><br>Creating <span>Futures.</span></h1>
           <p>MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora.</p>
           <div class="hero-actions">
-            <!-- Native Fallback buttons modified with robust data-attributes -->
             <a class="btn btn-primary" href="#solutions" data-scroll-to="solutions">Explore Portfolios</a>
             <a class="btn btn-dark" href="#contact" data-scroll-to="contact">Contact Us</a>
-            <!-- NEW LLM Feature Trigger Button -->
             <button class="btn btn-primary" style="background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); color: var(--white); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);" data-action="open-matchmaker">AI Matchmaker ✨</button>
           </div>
         </div>
@@ -821,13 +826,8 @@
       <h4>Our Partners</h4>
       <div class="ticker-wrap">
         <div class="ticker-track">
-          <!-- First Set -->
           <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
           <div class="ticker-item">ELITE WORKS</div>
-          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
-          <div class="ticker-item">ELITE WORKS</div>
-          
-          <!-- Second Set (Exact duplicate for seamless looping) -->
           <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
           <div class="ticker-item">ELITE WORKS</div>
           <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
@@ -901,7 +901,7 @@
     </div>
   </footer>
 
-  <!-- NEW FEATURE: AI Matchmaker Modal -->
+  <!-- AI Matchmaker Modal -->
   <div id="matchmakerModal" class="modal-overlay" data-action="close-matchmaker-bg">
     <div class="modal-content" role="dialog" aria-modal="true" style="max-width: 600px; padding: 40px;">
       <button class="modal-close" data-action="close-matchmaker" aria-label="Close modal">✕</button>
@@ -921,7 +921,6 @@
         </div>
         
         <div id="matchmakerResult" style="margin-top: 24px; padding: 24px; background: var(--bg); border-radius: var(--radius-md); display: none; border: 1px solid rgba(212, 175, 55, 0.2);">
-          <!-- LLM Response gets injected here -->
         </div>
       </div>
     </div>
@@ -961,10 +960,8 @@
     <div class="modal-content" role="dialog" aria-modal="true">
       <button class="modal-close" data-action="close-page-modal" aria-label="Close modal">✕</button>
       <div id="modalHeader" class="modal-header">
-        <!-- Title injected here via JS -->
       </div>
       <div id="modalBody" class="modal-body">
-        <!-- Content injected here via JS -->
       </div>
     </div>
   </div>
@@ -972,6 +969,7 @@
   <script>
   // ═══════════════════════════════════════════════════════════════
   //  MENU REAL ESTATE GROUP — BULLETPROOF MOBILE EVENT SYSTEM
+  //  With smooth native‑feeling accordions for mobile menu
   // ═══════════════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -1070,7 +1068,66 @@
     const hamburger = document.getElementById('hamburger');
     const matchmakerModal = document.getElementById('matchmakerModal');
 
-    // ── 3. HELPER FUNCTIONS ────────────────────────────────────────
+    // ── 3. SMOOTH ACCORDION (MOBILE MENU) ─────────────────────────
+    const accordionButtons = document.querySelectorAll('.mobile-accordion-btn');
+    
+    function setAccordionHeight(panel, open) {
+      panel.style.transition = 'max-height 0.4s ease';
+      if (open) {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      } else {
+        panel.style.maxHeight = '0px';
+      }
+    }
+
+    function initialiseAccordions() {
+      accordionButtons.forEach(btn => {
+        const panel = btn.nextElementSibling;
+        if (!panel || !panel.classList.contains('mobile-accordion-content')) return;
+        if (btn.classList.contains('expanded') && panel.classList.contains('expanded')) {
+          // set initial height to content
+          panel.style.transition = 'none';
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          // then remove the inline transition so the next toggle uses transition
+          requestAnimationFrame(() => { panel.style.transition = ''; });
+        } else {
+          panel.style.maxHeight = '0px';
+        }
+      });
+    }
+    initialiseAccordions();
+
+    function toggleAccordion(btn) {
+      const panel = btn.nextElementSibling;
+      if (!panel || !panel.classList.contains('mobile-accordion-content')) return;
+      
+      const isOpening = !btn.classList.contains('expanded');
+      
+      // close others
+      accordionButtons.forEach(otherBtn => {
+        if (otherBtn !== btn) {
+          const otherPanel = otherBtn.nextElementSibling;
+          if (otherPanel && otherPanel.classList.contains('mobile-accordion-content')) {
+            otherBtn.classList.remove('expanded');
+            otherPanel.classList.remove('expanded');
+            setAccordionHeight(otherPanel, false);
+          }
+        }
+      });
+      
+      // toggle current
+      if (isOpening) {
+        btn.classList.add('expanded');
+        panel.classList.add('expanded');
+        setAccordionHeight(panel, true);
+      } else {
+        btn.classList.remove('expanded');
+        panel.classList.remove('expanded');
+        setAccordionHeight(panel, false);
+      }
+    }
+
+    // ── 4. HELPER FUNCTIONS ────────────────────────────────────────
     const lockScroll = () => body.classList.add('locked');
     const unlockScroll = () => body.classList.remove('locked');
     
@@ -1094,7 +1151,7 @@
       }
       setTimeout(() => {
           if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-          const offset = 90; // approximate header height
+          const offset = 90;
           const topPos = el.getBoundingClientRect().top + window.scrollY - offset;
           window.scrollTo({ top: topPos, behavior: 'smooth' });
       }, 10);
@@ -1129,9 +1186,17 @@
       }
     };
 
-    // ── 4. EVENT DELEGATION FOR ALL CLICKS (Bulletproof) ─────────
+    // ── 5. EVENT DELEGATION FOR ALL CLICKS ─────────────────────────
     document.addEventListener('click', (e) => {
-        // 1. Data-Modal Triggers (Services, Solutions)
+        // 1. Accordion buttons (must be before data-modal)
+        const accordionBtn = e.target.closest('.mobile-accordion-btn');
+        if (accordionBtn) {
+            e.preventDefault();
+            toggleAccordion(accordionBtn);
+            return;
+        }
+
+        // 2. Data-Modal Triggers (Services, Solutions)
         const modalTrigger = e.target.closest('[data-modal-target]');
         if (modalTrigger) {
             e.preventDefault();
@@ -1139,7 +1204,7 @@
             return;
         }
 
-        // 2. Data-Scroll-To Triggers (Nav Links, Hero Buttons)
+        // 3. Data-Scroll-To Triggers
         const scrollTrigger = e.target.closest('[data-scroll-to]');
         if (scrollTrigger) {
             e.preventDefault();
@@ -1147,7 +1212,7 @@
             return;
         }
 
-        // 3. Specific Actions (Buttons, Overlays, Toggles)
+        // 4. Specific Actions
         const actionTrigger = e.target.closest('[data-action]');
         if (actionTrigger) {
             const action = actionTrigger.getAttribute('data-action');
@@ -1193,19 +1258,9 @@
             }
             return;
         }
-        
-        // 4. Mobile Nav Accordions
-        const accordionBtn = e.target.closest('.mobile-accordion-btn');
-        if (accordionBtn) {
-            e.preventDefault();
-            const content = accordionBtn.nextElementSibling;
-            accordionBtn.classList.toggle('expanded');
-            content.classList.toggle('expanded');
-            return;
-        }
     });
 
-    // ── 5. FORM SUBMISSION ─────────────────────────────────────────
+    // ── 6. FORM SUBMISSION ─────────────────────────────────────────
     const consultForm = document.getElementById('consultForm');
     if (consultForm) {
         consultForm.addEventListener('submit', async (e) => {
@@ -1232,7 +1287,7 @@
         });
     }
 
-    // ── 6. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
+    // ── 7. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
     const apiKey = ""; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
