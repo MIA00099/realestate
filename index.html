@@ -63,25 +63,22 @@
       -webkit-text-size-adjust: 100%;
     }
     
-    /* Bulletproof Mobile Lock */
-    body.locked { 
-      overflow: hidden !important; 
-      touch-action: none; 
-      overscroll-behavior: none; 
-      position: fixed; 
-      width: 100%; 
-      left: 0; right: 0;
-    }
+    /* Mobile scroll lock - simple overflow only, NO position:fixed which breaks z-index on mobile */
+    html.scroll-locked { overflow: hidden; }
 
     /* Touch Target Optimization */
     a, button, .project, .core-service-item { 
       cursor: pointer; 
       -webkit-tap-highlight-color: transparent; 
-      touch-action: manipulation;
     }
-    a { color: inherit; text-decoration: none; display: inline-block; }
+    a { color: inherit; text-decoration: none; }
+    button { touch-action: manipulation; }
     img { max-width: 100%; display: block; }
     .container { width: min(1200px, 90%); margin: 0 auto; }
+    /* Minimum 44px tap target per Apple HIG */
+    @media (max-width: 900px) {
+      .tab-item, .mobile-nav-close, .hamburger { min-height: 44px; min-width: 44px; }
+    }
 
     /* Elegant background glow */
     body::before {
@@ -153,6 +150,7 @@
       display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none;
       padding: 16px 32px; border-radius: var(--radius-pill); font-weight: 700; letter-spacing: 0.5px;
       transition: var(--transition); position: relative; font-size: 15px; text-align: center; min-height: 54px;
+      text-decoration: none; /* for anchor .btn */
     }
     .btn-primary { background: var(--gold); color: var(--white); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); }
     .btn-dark { background: var(--navy); color: var(--white); box-shadow: 0 10px 25px rgba(10, 25, 47, 0.2); }
@@ -280,8 +278,9 @@
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-card, form { background: var(--surface); border-radius: var(--radius-lg); padding: 48px; box-shadow: var(--shadow-md); }
     .contact-card h3, form h3 { color: var(--navy); font-size: 28px; font-weight: 800; margin-bottom: 32px; letter-spacing: -0.5px;}
-    .contact-item { padding: 20px 0; border-bottom: 1px solid rgba(10, 25, 47, 0.06); color: var(--text); font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 16px;}
+    .contact-item { padding: 20px 0; border-bottom: 1px solid rgba(10, 25, 47, 0.06); color: var(--text); font-weight: 600; font-size: 16px; display: flex !important; align-items: center; gap: 16px; width: 100%; text-decoration: none; }
     .contact-item:last-of-type { border-bottom: none; }
+    a.contact-item { display: flex !important; }
 
     input, textarea, select {
       width: 100%; padding: 18px 24px; border: 1px solid rgba(10, 25, 47, 0.08);
@@ -996,7 +995,7 @@
 
   <script>
   // ═══════════════════════════════════════════════════════════════
-  //  MENU REAL ESTATE GROUP — JS LOGIC
+  //  MENU REAL ESTATE GROUP — MOBILE-FIRST JS
   // ═══════════════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -1096,17 +1095,9 @@
     const matchmakerModal = document.getElementById('matchmakerModal');
 
     // ── 3. HELPER FUNCTIONS ────────────────────────────────────────
-    let scrollY = 0;
-    const lockScroll = () => {
-      scrollY = window.scrollY;
-      body.style.top = `-${scrollY}px`;
-      body.classList.add('locked');
-    };
-    const unlockScroll = () => {
-      body.classList.remove('locked');
-      body.style.top = '';
-      window.scrollTo(0, scrollY);
-    };
+    // Lock scroll on <html> not <body> — avoids position:fixed destroying mobile z-index layers
+    const lockScroll   = () => document.documentElement.classList.add('scroll-locked');
+    const unlockScroll = () => document.documentElement.classList.remove('scroll-locked');
     
     const showToast = (msg, type) => {
       const t = document.getElementById('toast');
@@ -1118,45 +1109,26 @@
     };
 
     const scrollToSection = (id) => {
+      // kept for form submission usage
       const el = document.getElementById(id);
       if (!el && id !== 'top') return;
-      
-      const wasNavOpen = mobileNav.classList.contains('open');
-      if (wasNavOpen) {
-          hamburger.classList.remove('open');
-          mobileNav.classList.remove('open');
-          mobileOverlayEl.classList.remove('visible');
-          unlockScroll();
-      }
-      
-      // Give nav close animation time to start before scrolling
-      setTimeout(() => {
-          if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-          const offset = 90;
-          const topPos = el.getBoundingClientRect().top + window.scrollY - offset;
-          try {
-             window.scrollTo({ top: topPos, behavior: 'smooth' });
-          } catch(e) {
-             window.scrollTo(0, topPos);
-          }
-      }, wasNavOpen ? 350 : 50);
+      const top = id === 'top' ? 0 : (el.getBoundingClientRect().top + window.scrollY - 85);
+      try { window.scrollTo({ top, behavior: 'smooth' }); } catch(e) { window.scrollTo(0, top); }
     };
 
     const openPageModal = (key) => {
       const d = modalData[key];
       if (!d) return;
-      modalHeader.innerHTML = `<h3>${d.title}</h3>`;
-      modalBody.innerHTML = d.content;
-      // Close mobile nav cleanly first
+      // Close mobile nav if open
       if (mobileNav.classList.contains('open')) {
           hamburger.classList.remove('open');
           mobileNav.classList.remove('open');
           mobileOverlayEl.classList.remove('visible');
-          unlockScroll();
       }
+      modalHeader.innerHTML = `<h3>${d.title}</h3>`;
+      modalBody.innerHTML = d.content;
       pageModal.classList.add('active');
       lockScroll();
-      // Scroll modal to top
       const mc = pageModal.querySelector('.modal-content');
       if (mc) mc.scrollTop = 0;
     };
@@ -1181,135 +1153,134 @@
     
     desktopDropdowns.forEach(drop => {
         const triggerBtn = drop.querySelector('.drop-trigger');
-        if(triggerBtn) {
+        if (triggerBtn) {
             triggerBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                // Close other open dropdowns
-                desktopDropdowns.forEach(other => {
-                    if (other !== drop) other.classList.remove('active');
-                });
-                
-                // Toggle current
+                desktopDropdowns.forEach(other => { if (other !== drop) other.classList.remove('active'); });
                 drop.classList.toggle('active');
             });
         }
     });
 
-    // Close desktop dropdowns when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.links .dropdown')) {
             desktopDropdowns.forEach(drop => drop.classList.remove('active'));
         }
     });
-    
-    // Close desktop dropdowns when clicking an item inside them
-    document.querySelectorAll('.dropdown-menu .dropdown-item').forEach(item => {
-        item.addEventListener('click', () => {
-            desktopDropdowns.forEach(drop => drop.classList.remove('active'));
-        });
-    });
 
-    // ── 5. DIRECT EVENT BINDINGS ───────────────────────────────────
-    
-    // Smooth Scroll Links
-    document.querySelectorAll('[data-scroll-to]').forEach(el => {
-       el.addEventListener('click', (e) => {
-           e.preventDefault();
-           // If this element also has close-nav, let the action handler deal with close;
-           // scrollToSection internally handles nav close too, so just call it.
-           scrollToSection(el.getAttribute('data-scroll-to'));
-       });
-    });
-
-    // Modals Triggers
-    document.querySelectorAll('[data-modal-target]').forEach(el => {
-       el.addEventListener('click', (e) => {
-           e.preventDefault();
-           openPageModal(el.getAttribute('data-modal-target'));
-       });
-    });
-
-    // Explicit Action Handlers
-    document.querySelectorAll('[data-action]').forEach(el => {
-       el.addEventListener('click', (e) => {
-           const action = el.getAttribute('data-action');
-           
-           if (action === 'toggle-nav') {
-               e.preventDefault();
-               toggleNav();
-           } 
-           else if (action === 'close-nav') {
-               // scrollToSection already handles nav close when data-scroll-to is also present
-               if (!el.hasAttribute('data-scroll-to') && mobileNav.classList.contains('open')) toggleNav();
-           } 
-           else if (action === 'close-page-modal') {
-               e.preventDefault();
-               pageModal.classList.remove('active');
-               unlockScroll();
-           } 
-           else if (action === 'close-page-modal-bg') {
-               if (e.target === pageModal) {
-                   pageModal.classList.remove('active');
-                   unlockScroll();
-               }
-           } 
-           else if (action === 'open-matchmaker') {
-               e.preventDefault();
-               matchmakerModal.classList.add('active');
-               lockScroll();
-           } 
-           else if (action === 'close-matchmaker') {
-               e.preventDefault();
-               matchmakerModal.classList.remove('active');
-               unlockScroll();
-           } 
-           else if (action === 'close-matchmaker-bg') {
-               if (e.target === matchmakerModal) {
-                   matchmakerModal.classList.remove('active');
-                   unlockScroll();
-               }
-           } 
-           else if (action === 'toggle-chat') {
-               e.preventDefault();
-               e.stopPropagation();
-               const cw = document.getElementById('chatWindow');
-               const isOpening = !cw.classList.contains('active');
-               cw.classList.toggle('active');
-               if (isOpening) setTimeout(() => { const ci = document.getElementById('chatInput'); if(ci) ci.focus(); }, 300);
-           }
-       });
-    });
-
-    // Delegation ONLY for dynamically injected elements
+    // ── 5. UNIFIED CLICK DELEGATION (works on mobile & desktop) ────
     document.addEventListener('click', (e) => {
-        const inquireBtn = e.target.closest('[data-action="inquire-from-modal"]');
-        if (inquireBtn) {
+        const btn = e.target.closest('[data-scroll-to],[data-modal-target],[data-action]');
+        if (!btn) return;
+
+        const scrollTo  = btn.getAttribute('data-scroll-to');
+        const modalKey  = btn.getAttribute('data-modal-target');
+        const action    = btn.getAttribute('data-action');
+
+        // ── Scroll to section ──────────────────────────────────────
+        if (scrollTo !== null) {
+            e.preventDefault();
+            const wasNavOpen = mobileNav.classList.contains('open');
+            if (wasNavOpen) {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+                mobileOverlayEl.classList.remove('visible');
+                unlockScroll();
+            }
+            setTimeout(() => {
+                if (scrollTo === 'top') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                const target = document.getElementById(scrollTo);
+                if (!target) return;
+                const offset = 85;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                try { window.scrollTo({ top, behavior: 'smooth' }); }
+                catch (err) { window.scrollTo(0, top); }
+            }, wasNavOpen ? 400 : 0);
+            return;
+        }
+
+        // ── Open service/solution modal ────────────────────────────
+        if (modalKey !== null) {
+            e.preventDefault();
+            openPageModal(modalKey);
+            return;
+        }
+
+        // ── Named actions ──────────────────────────────────────────
+        if (action === 'toggle-nav') {
+            e.preventDefault();
+            toggleNav();
+            return;
+        }
+        if (action === 'close-nav') {
+            e.preventDefault();
+            if (mobileNav.classList.contains('open')) toggleNav();
+            return;
+        }
+        if (action === 'close-page-modal' || (action === 'close-page-modal-bg' && e.target === pageModal)) {
             e.preventDefault();
             pageModal.classList.remove('active');
             unlockScroll();
-            scrollToSection('contact');
+            return;
+        }
+        if (action === 'open-matchmaker') {
+            e.preventDefault();
+            matchmakerModal.classList.add('active');
+            lockScroll();
+            return;
+        }
+        if (action === 'close-matchmaker' || (action === 'close-matchmaker-bg' && e.target === matchmakerModal)) {
+            e.preventDefault();
+            matchmakerModal.classList.remove('active');
+            unlockScroll();
+            return;
+        }
+        if (action === 'toggle-chat') {
+            e.preventDefault();
+            const cw = document.getElementById('chatWindow');
+            const opening = !cw.classList.contains('active');
+            cw.classList.toggle('active');
+            if (opening) {
+                setTimeout(() => {
+                    const ci = document.getElementById('chatInput');
+                    if (ci) ci.focus();
+                }, 300);
+            }
+            return;
+        }
+        if (action === 'inquire-from-modal') {
+            e.preventDefault();
+            pageModal.classList.remove('active');
+            unlockScroll();
+            const contact = document.getElementById('contact');
+            if (contact) {
+                const top = contact.getBoundingClientRect().top + window.scrollY - 85;
+                try { window.scrollTo({ top, behavior: 'smooth' }); }
+                catch (err) { window.scrollTo(0, top); }
+            }
+            return;
         }
     });
 
-    // Mobile Accordions
+    // ── 6. MOBILE ACCORDION ────────────────────────────────────────
     document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.preventDefault();
+            e.stopPropagation(); // don't bubble to the delegated handler
             const panel = btn.nextElementSibling;
-            const isOpening = !btn.classList.contains('expanded');
-
-            document.querySelectorAll('.mobile-accordion-btn').forEach(otherBtn => {
-                otherBtn.classList.remove('expanded');
-                if (otherBtn.nextElementSibling) {
-                    otherBtn.nextElementSibling.classList.remove('expanded');
-                }
+            const isOpen = btn.classList.contains('expanded');
+            // Close all
+            document.querySelectorAll('.mobile-accordion-btn').forEach(b => {
+                b.classList.remove('expanded');
+                if (b.nextElementSibling) b.nextElementSibling.classList.remove('expanded');
             });
-
-            if (isOpening) {
+            // Toggle clicked one
+            if (!isOpen) {
                 btn.classList.add('expanded');
-                panel.classList.add('expanded');
+                if (panel) panel.classList.add('expanded');
             }
         });
     });
