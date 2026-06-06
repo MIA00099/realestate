@@ -2,50 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <!-- ═══════════════════════════════════════════
        PRIMARY SEO META
   ═══════════════════════════════════════════ -->
   <title>MENU Real Estate Group | Complete Property Solutions in Rwanda</title>
-  <meta name="description" content="MENU Real Estate Group is a licensed real estate company in Rwanda, providing end-to-end property solutions — land acquisition, construction, management and investment — to individuals, investors, developers, and the diaspora." />
-  <meta name="keywords" content="real estate Rwanda, Kigali property, buy land Rwanda, sell property Kigali, property management Rwanda, real estate investment Rwanda, construction Rwanda, diaspora real estate, MENU Real Estate Group" />
-  <meta name="author" content="MENU Real Estate Group" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://menurealestate.rw/" />
-
-  <!-- ═══════════════════════════════════════════
-       OPEN GRAPH (Facebook / WhatsApp / LinkedIn)
-  ═══════════════════════════════════════════ -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="MENU Real Estate Group" />
-  <meta property="og:title" content="MENU Real Estate Group | Complete Property Solutions in Rwanda" />
-  <meta property="og:description" content="Licensed and registered real estate company in Rwanda. Buy, sell, develop, manage and invest in property with complete confidence." />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://menurealestate.rw/" />
-  <meta property="og:locale" content="en_RW" />
-
-  <!-- ═══════════════════════════════════════════
-       TWITTER CARD
-  ═══════════════════════════════════════════ -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MENU Real Estate Group | Complete Property Solutions in Rwanda" />
-  <meta name="twitter:description" content="Licensed real estate company in Rwanda — land, construction, management & investment advisory." />
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" />
-
-  <!-- ═══════════════════════════════════════════
-       PWA — iOS / Android "Add to Home Screen"
-  ═══════════════════════════════════════════ -->
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="MENU RE" />
-  <meta name="application-name" content="MENU Real Estate" />
-  <meta name="theme-color" content="#0a192f" />
-  <meta name="msapplication-TileColor" content="#0a192f" />
-  <link rel="manifest" id="pwa-manifest" />
+  <meta name="description" content="MENU Real Estate Group is a licensed real estate company in Rwanda, providing end-to-end property solutions." />
 
   <!-- ═══════════════════════════════════════════
        FONT
@@ -83,7 +46,11 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+    
+    html { 
+      scroll-behavior: smooth; 
+      -webkit-overflow-scrolling: touch; 
+    }
     
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -95,350 +62,138 @@
       overflow-x: hidden;
       -webkit-text-size-adjust: 100%;
     }
+    
+    /* Bulletproof Mobile Lock */
+    body.locked { overflow: hidden !important; touch-action: none; }
 
-    a, button { 
+    /* Touch Target Optimization */
+    a, button, .project, .core-service-item { 
       cursor: pointer; 
       -webkit-tap-highlight-color: transparent; 
       touch-action: manipulation;
     }
-    a { color: inherit; text-decoration: none; }
+    a { color: inherit; text-decoration: none; display: inline-block; }
     img { max-width: 100%; display: block; }
     .container { width: min(1200px, 90%); margin: 0 auto; }
 
     /* Elegant background glow */
     body::before {
-      content: "";
-      position: fixed;
-      top: -20%;
-      right: -10%;
-      width: 80vw;
-      height: 80vh;
+      content: ""; position: fixed; top: -20%; right: -10%; width: 80vw; height: 80vh;
       background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: -1;
+      pointer-events: none; z-index: -1;
     }
 
     /* --- Navigation --- */
     .topbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(10, 25, 47, 0.03);
-      transition: var(--transition);
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(10, 25, 47, 0.03); transition: var(--transition);
     }
 
-    .nav {
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-    }
+    .nav { height: 100px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-weight: 800;
-      color: var(--navy);
-      transition: var(--transition);
-      letter-spacing: -0.5px;
-    }
-
+    .brand { display: flex; align-items: center; gap: 16px; font-weight: 800; color: var(--navy); transition: var(--transition); letter-spacing: -0.5px; }
     .brand:hover { transform: translateY(-1px); }
     
-    .nav-logo {
-      height: 75px;
-      width: auto;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-      transition: var(--transition);
-    }
-
+    .nav-logo { height: 75px; width: auto; object-fit: contain; mix-blend-mode: multiply; transition: var(--transition); }
     .mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      color: var(--white);
+      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: var(--white);
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
-      box-shadow: 0 10px 20px rgba(10, 25, 47, 0.15);
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -2px;
-      transition: var(--transition);
+      box-shadow: 0 10px 20px rgba(10, 25, 47, 0.15); font-size: 24px; font-weight: 800; letter-spacing: -2px; transition: var(--transition);
     }
-
     .brand:hover .mark { transform: rotate(-5deg) scale(1.05); box-shadow: var(--shadow-hover); }
     .brand small { display: block; color: var(--gold); font-size: 10px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 2px;}
 
     .links { display: flex; gap: 32px; align-items: center; color: var(--navy); font-weight: 600; font-size: 15px; }
-    .links a:not(.btn) {
-      position: relative;
-      padding: 8px 0;
-      transition: color 0.3s ease;
-    }
-
+    .links a:not(.btn) { position: relative; padding: 8px 0; transition: color 0.3s ease; }
     .links a:not(.btn)::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--gold);
-      transition: 0.3s ease;
-      border-radius: 2px;
+      content: ""; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
+      background: var(--gold); transition: 0.3s ease; border-radius: 2px;
     }
-    
     .links a:not(.btn):hover { color: var(--gold); }
     .links a:not(.btn):hover::after { width: 100%; }
 
     /* Dropdowns */
     .dropdown { position: relative; }
     .dropdown-menu {
-      position: absolute;
-      top: calc(100% + 20px);
-      left: -20px;
-      background: var(--white);
-      box-shadow: var(--shadow-lg);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      min-width: 300px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(15px) scale(0.98);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      position: absolute; top: calc(100% + 20px); left: -20px; background: var(--white);
+      box-shadow: var(--shadow-lg); border-radius: var(--radius-md); padding: 16px; min-width: 300px;
+      opacity: 0; visibility: hidden; transform: translateY(15px) scale(0.98);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; gap: 4px;
     }
-    
-    .dropdown-menu::before {
-      content: "";
-      position: absolute;
-      top: -20px;
-      left: 0;
-      width: 100%;
-      height: 20px;
-    }
-    
-    .dropdown-menu.dd-open {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateY(0) scale(1) !important;
-    }
-    
+    .dropdown-menu::before { content: ""; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; }
+    .dropdown-menu.dd-open { opacity: 1 !important; visibility: visible !important; transform: translateY(0) scale(1) !important; }
     .links a.dropdown-item {
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      transition: var(--transition);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 14px 20px; font-size: 14px; font-weight: 600; color: var(--text); transition: var(--transition);
+      border-radius: 12px; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left;
     }
-    
     .links a.dropdown-item::after { display: none; }
-    .links a.dropdown-item:hover {
-      background: var(--bg);
-      color: var(--navy);
-      transform: translateX(6px);
-    }
+    .links a.dropdown-item:hover { background: var(--bg); color: var(--navy); transform: translateX(6px); }
 
     /* --- Buttons --- */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: none;
-      cursor: pointer;
-      padding: 16px 32px;
-      border-radius: var(--radius-pill);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      transition: var(--transition);
-      position: relative;
-      font-size: 15px;
-      text-align: center;
-      min-height: 50px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none;
+      padding: 16px 32px; border-radius: var(--radius-pill); font-weight: 700; letter-spacing: 0.5px;
+      transition: var(--transition); position: relative; font-size: 15px; text-align: center; min-height: 54px;
     }
-
-    .btn-primary { 
-      background: var(--gold); 
-      color: var(--white); 
-      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); 
-    }
-    
-    .btn-dark { 
-      background: var(--navy); 
-      color: var(--white); 
-      box-shadow: 0 10px 25px rgba(10, 25, 47, 0.2); 
-    }
-    
-    .btn:hover { 
-      transform: translateY(-4px); 
-      box-shadow: var(--shadow-hover); 
-    }
-    
+    .btn-primary { background: var(--gold); color: var(--white); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); }
+    .btn-dark { background: var(--navy); color: var(--white); box-shadow: 0 10px 25px rgba(10, 25, 47, 0.2); }
+    .btn:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
     .btn:active { transform: translateY(-1px); }
 
     /* --- Hero Section --- */
     .hero {
-      padding: 200px 0 120px;
-      min-height: 100vh;
-      display: grid;
-      align-items: center;
-      background: 
-        linear-gradient(105deg, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0.95) 45%, rgba(248, 250, 252, 0.4) 100%),
+      padding: 200px 0 120px; min-height: 100vh; display: grid; align-items: center;
+      background: linear-gradient(105deg, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0.95) 45%, rgba(248, 250, 252, 0.4) 100%),
         url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
       position: relative;
     }
-
-    .hero-grid { 
-      display: grid; 
-      grid-template-columns: 1fr 1fr; 
-      gap: 60px; 
-      align-items: center; 
-    }
-
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .eyebrow {
-      color: var(--gold);
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      font-size: 12px;
-      background: var(--gold-soft);
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: var(--radius-pill);
+      color: var(--gold); font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase;
+      margin-bottom: 24px; font-size: 12px; background: var(--gold-soft); display: inline-block;
+      padding: 10px 20px; border-radius: var(--radius-pill);
     }
-
-    h1 {
-      font-size: clamp(48px, 6.5vw, 82px);
-      line-height: 1.05;
-      color: var(--navy);
-      letter-spacing: -0.03em;
-      margin-bottom: 30px;
-      font-weight: 800;
-    }
-    
+    h1 { font-size: clamp(48px, 6.5vw, 82px); line-height: 1.05; color: var(--navy); letter-spacing: -0.03em; margin-bottom: 30px; font-weight: 800; }
     h1 span, h2 span { color: var(--gold); }
-
-    .hero p { 
-      max-width: 580px; 
-      font-size: 18px; 
-      color: var(--text); 
-      margin-bottom: 40px; 
-      font-weight: 500; 
-      line-height: 1.8;
-    }
-    
+    .hero p { max-width: 580px; font-size: 18px; color: var(--text); margin-bottom: 40px; font-weight: 500; line-height: 1.8; }
     .hero-actions { display: flex; gap: 20px; flex-wrap: wrap; }
-
-    .hero-card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      transform: translateY(0);
-      transition: var(--transition);
-    }
     
-    .hero-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      pointer-events: none;
-    }
-    
-    .hero-card:hover { 
-      transform: translateY(-12px); 
-      box-shadow: 0 40px 80px -20px rgba(10, 25, 47, 0.25); 
-    }
-    
-    .hero-card img { 
-      height: 540px; 
-      width: 100%; 
-      object-fit: cover; 
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
-    }
-    
+    .hero-card { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); transform: translateY(0); transition: var(--transition); }
+    .hero-card::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.4); pointer-events: none; }
+    .hero-card:hover { transform: translateY(-12px); box-shadow: 0 40px 80px -20px rgba(10, 25, 47, 0.25); }
+    .hero-card img { height: 540px; width: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
     .hero-card:hover img { transform: scale(1.05); }
 
     /* --- Global Sections --- */
     section { padding: 120px 0; }
-    
     .section-title { text-align: center; max-width: 700px; margin: 0 auto 64px; }
-    .section-title h2 { 
-      color: var(--navy); 
-      font-size: clamp(36px, 5vw, 54px); 
-      line-height: 1.1; 
-      margin-bottom: 20px; 
-      letter-spacing: -0.02em; 
-      font-weight: 800; 
-    }
+    .section-title h2 { color: var(--navy); font-size: clamp(36px, 5vw, 54px); line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; font-weight: 800; }
     .section-title p { color: var(--muted); font-size: 18px; line-height: 1.8; }
 
     /* --- About Section --- */
     .about-section { background: var(--bg); position: relative; z-index: 1;}
     .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 32px; }
     .vision-mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-
-    .about-card {
-      background: var(--surface);
-      padding: 48px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
+    .about-card { background: var(--surface); padding: 48px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: var(--transition); position: relative; overflow: hidden; z-index: 1; }
     .about-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
-
-    .about-icon {
-      width: 64px; height: 64px;
-      background: var(--bg); color: var(--gold);
-      border-radius: var(--radius-md); 
-      display: grid; place-items: center;
-      font-size: 28px; margin-bottom: 32px; 
-      transition: var(--transition);
-    }
-    .about-card:hover .about-icon { 
-      transform: scale(1.1) rotate(-5deg); 
-      background: var(--gold); color: var(--white); 
-      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-    }
-
+    .about-icon { width: 64px; height: 64px; background: var(--bg); color: var(--gold); border-radius: var(--radius-md); display: grid; place-items: center; font-size: 28px; margin-bottom: 32px; transition: var(--transition); }
+    .about-card:hover .about-icon { transform: scale(1.1) rotate(-5deg); background: var(--gold); color: var(--white); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
     .about-card h3 { color: var(--navy); font-size: 24px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px;}
     .about-card p { color: var(--muted); font-size: 16px; margin-bottom: 16px; }
     .about-card p:last-child { margin-bottom: 0; }
-
     .vision-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--gold); }
     .mission-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--navy); }
 
     /* --- Core Services --- */
     .core-services { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
-    
     .core-service-item {
       background: var(--surface); padding: 32px; border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm); display: flex; align-items: flex-start; gap: 20px;
       transition: var(--transition); cursor: pointer; -webkit-tap-highlight-color: transparent;
+      border: none; width: 100%; text-align: left; font-family: inherit;
     }
     .core-service-item:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
-    
     .core-service-icon {
       background: var(--bg); color: var(--gold); width: 54px; height: 54px;
       border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 24px;
@@ -446,13 +201,10 @@
     }
     .core-service-item:hover .core-service-icon { background: var(--navy); color: var(--white); }
     .core-service-item h4 { color: var(--navy); font-size: 18px; margin-bottom: 10px; font-weight: 700; line-height: 1.4; }
-    .core-service-item p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+    .core-service-item p { font-size: 15px; color: var(--muted); line-height: 1.6; margin: 0; }
 
     /* --- Solutions Section --- */
-    .solutions { 
-      background: var(--navy); color: var(--white); position: relative; 
-      border-radius: 40px; margin: 0 20px; padding: 120px 0;
-    }
+    .solutions { background: var(--navy); color: var(--white); position: relative; border-radius: 40px; margin: 0 20px; padding: 120px 0; }
     .solutions::before {
       content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1), transparent 60%); 
@@ -466,6 +218,7 @@
       background: var(--white); border-radius: var(--radius-lg); overflow: hidden;
       box-shadow: var(--shadow-lg); transition: var(--transition); cursor: pointer;
       display: flex; flex-direction: column; -webkit-tap-highlight-color: transparent;
+      border: none; padding: 0; text-align: left; font-family: inherit; width: 100%;
     }
     .project:hover { transform: translateY(-12px); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
     .project img { height: 280px; width: 100%; object-fit: cover; transition: 0.6s ease; }
@@ -603,16 +356,38 @@
     .mobile-nav-close { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: none; font-size: 20px; cursor: pointer; display: grid; place-items: center; color: var(--navy); transition: var(--transition);}
     .mobile-nav-links { flex: 1; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;}
     
-    .mobile-nav-links a, .mobile-nav-section-title {
+    /* ACCORDION FIX FOR MOBILE MENU */
+    .mobile-accordion-btn {
+      display: flex; align-items: center; justify-content: space-between; width: 100%;
+      background: transparent; border: none; padding: 18px 16px 10px; font-family: inherit;
+      color: var(--gold); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 800;
+      cursor: pointer; text-align: left; -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-accordion-btn svg { width: 14px; height: 14px; transition: transform 0.3s ease; }
+    .mobile-accordion-btn.expanded svg { transform: rotate(180deg); }
+    
+    .mobile-accordion-content {
+      display: flex; flex-direction: column; gap: 4px; overflow: hidden;
+      max-height: 0; transition: max-height 0.4s ease;
+    }
+    .mobile-accordion-content.expanded { max-height: 800px; /* arbitrary large max-height */ }
+
+    .mobile-nav-links a {
       display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text);
       transition: background 0.2s, color 0.2s; min-height: 52px; cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
     .mobile-nav-links a:active { background: var(--bg); }
     .mobile-nav-links a.primary-link { color: var(--navy); font-size: 17px; font-weight: 700; }
     .mobile-nav-links a.primary-link:hover, .mobile-nav-links a.primary-link:active { background: var(--gold-soft); color: var(--gold); }
-    .mobile-nav-section-title { color: var(--gold); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 800; padding: 20px 16px 8px; min-height: unset; cursor: default;}
-    .mobile-nav-links a.sub-link { padding: 12px 16px 12px 28px; font-size: 15px; font-weight: 600; color: var(--muted); }
-    .mobile-nav-links a.sub-link:hover { color: var(--navy); background: var(--bg); }
+    
+    .mobile-nav-links button.sub-link {
+      display: flex; align-items: center; width: 100%; text-align: left;
+      background: transparent; border: none; font-family: inherit;
+      padding: 14px 16px 14px 28px; border-radius: 14px;
+      font-size: 15px; font-weight: 600; color: var(--muted);
+      transition: background 0.2s, color 0.2s; min-height: 52px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-nav-links button.sub-link:active, .mobile-nav-links button.sub-link:hover { color: var(--navy); background: var(--bg); }
 
     .mobile-nav-cta { padding: 0 16px 24px; display: flex; flex-direction: column; gap: 12px;}
     .mobile-nav-cta a { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; cursor: pointer; -webkit-tap-highlight-color: transparent;}
@@ -650,7 +425,7 @@
       .hero-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
       .hero-actions { justify-content: center; }
       .hero-card img { height: 280px; }
-      .hero p { max-width: 100%; font-size: 16px; }
+      .hero p { max-width: 100%; font-size: 16px; margin-left: auto; margin-right: auto; }
       section { padding: 72px 0; }
       .about-grid, .vision-mission-grid { grid-template-columns: 1fr; }
       .about-card { padding: 32px 24px; }
@@ -722,7 +497,7 @@
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a href="javascript:void(0)" onclick="scrollToSection('top')" class="brand" aria-label="Menu Real Estate Group home">
+      <a href="#top" data-scroll-to="top" class="brand" aria-label="Menu Real Estate Group home">
         <img src="logo.jpg" alt="Menu Real Estate Group Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
         <div id="fallback-logo" style="display: none; align-items: center; gap: 16px;">
           <div class="mark">M</div>
@@ -730,40 +505,40 @@
         </div>
       </a>
       <nav class="links">
-        <a href="javascript:void(0)" onclick="scrollToSection('about')">About Us</a>
+        <a href="#about" data-scroll-to="about">About Us</a>
         <div class="dropdown">
-          <a href="javascript:void(0)" onclick="scrollToSection('core-services')">Services <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <a href="#core-services" data-scroll-to="core-services">Services <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
           <div class="dropdown-menu" style="min-width: 360px; max-height: 70vh; overflow-y: auto;">
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('brokerage')">🤝 Brokerage & Transactions</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('management')">🏢 Property Management & Operations</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('valuation')">📊 Valuation & Advisory</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('development')">🏗️ Development & Project Services</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('architectural')">📐 Architectural & Planning</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('construction')">🚜 Construction Support</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('community')">🏘️ Community & Affordable Housing</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('investment')">📈 Investment Guidance</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('consultation')">💬 Real Estate Consultation</a>
+            <button class="dropdown-item" data-modal-target="brokerage">🤝 Brokerage & Transactions</button>
+            <button class="dropdown-item" data-modal-target="management">🏢 Property Management & Operations</button>
+            <button class="dropdown-item" data-modal-target="valuation">📊 Valuation & Advisory</button>
+            <button class="dropdown-item" data-modal-target="development">🏗️ Development & Project Services</button>
+            <button class="dropdown-item" data-modal-target="architectural">📐 Architectural & Planning</button>
+            <button class="dropdown-item" data-modal-target="construction">🚜 Construction Support</button>
+            <button class="dropdown-item" data-modal-target="community">🏘️ Community & Affordable Housing</button>
+            <button class="dropdown-item" data-modal-target="investment">📈 Investment Guidance</button>
+            <button class="dropdown-item" data-modal-target="consultation">💬 Real Estate Consultation</button>
           </div>
         </div>
         <div class="dropdown">
-          <a href="javascript:void(0)" onclick="scrollToSection('solutions')">Solutions <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <a href="#solutions" data-scroll-to="solutions">Solutions <span style="font-size: 10px; margin-left: 4px; display: inline-block; vertical-align: middle;">▼</span></a>
           <div class="dropdown-menu">
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('commercial')">🏢 Commercial Properties</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('residential')">🏡 Residential Properties</a>
-            <a href="javascript:void(0)" class="dropdown-item" onclick="openPageModal('agricultural')">🌾 Agricultural Land & Farming</a>
+            <button class="dropdown-item" data-modal-target="commercial">🏢 Commercial Properties</button>
+            <button class="dropdown-item" data-modal-target="residential">🏡 Residential Properties</button>
+            <button class="dropdown-item" data-modal-target="agricultural">🌾 Agricultural Land & Farming</button>
           </div>
         </div>
-        <a href="javascript:void(0)" onclick="scrollToSection('why-us')">Why Choose Us</a>
-        <a class="btn btn-primary" href="javascript:void(0)" onclick="scrollToSection('contact')">Get Consultation</a>
+        <a href="#why-us" data-scroll-to="why-us">Why Choose Us</a>
+        <a class="btn btn-primary" href="#contact" data-scroll-to="contact">Get Consultation</a>
       </nav>
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleNav()">
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" data-action="toggle-nav">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
   <!-- Mobile overlay -->
-  <div class="mobile-overlay" id="mobileOverlay" role="presentation" onclick="closeNav()"></div>
+  <div class="mobile-overlay" id="mobileOverlay" role="presentation" data-action="close-nav"></div>
 
   <!-- Mobile slide-in nav -->
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
@@ -772,60 +547,72 @@
         <div class="mark">M</div>
         <div style="font-size:14px;font-weight:800;color:var(--navy);">MENU<br><small style="color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase;">Real Estate Group</small></div>
       </div>
-      <button class="mobile-nav-close" aria-label="Close menu" onclick="closeNav()">✕</button>
+      <button class="mobile-nav-close" aria-label="Close menu" data-action="close-nav">✕</button>
     </div>
+    
     <div class="mobile-nav-links">
-      <a href="javascript:void(0)" class="primary-link" onclick="closeNav(); setTimeout(()=>scrollToSection('about'),300)">🏢 About Us</a>
+      <a href="#about" class="primary-link" data-scroll-to="about">🏢 About Us</a>
 
-      <div class="mobile-nav-section-title">Services</div>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('brokerage'),300)">🤝 Brokerage &amp; Transactions</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('management'),300)">🏢 Property Management</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('valuation'),300)">📊 Valuation &amp; Advisory</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('development'),300)">🏗️ Development &amp; Projects</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('architectural'),300)">📐 Architectural &amp; Planning</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('construction'),300)">🚜 Construction Support</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('community'),300)">🏘️ Community Housing</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('investment'),300)">📈 Investment Guidance</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('consultation'),300)">💬 Real Estate Consultation</a>
+      <!-- NEW: Services Accordion -->
+      <button class="mobile-accordion-btn expanded">
+        Services 
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="mobile-accordion-content expanded">
+        <button class="sub-link" data-modal-target="brokerage">🤝 Brokerage &amp; Transactions</button>
+        <button class="sub-link" data-modal-target="management">🏢 Property Management</button>
+        <button class="sub-link" data-modal-target="valuation">📊 Valuation &amp; Advisory</button>
+        <button class="sub-link" data-modal-target="development">🏗️ Development &amp; Projects</button>
+        <button class="sub-link" data-modal-target="architectural">📐 Architectural &amp; Planning</button>
+        <button class="sub-link" data-modal-target="construction">🚜 Construction Support</button>
+        <button class="sub-link" data-modal-target="community">🏘️ Community Housing</button>
+        <button class="sub-link" data-modal-target="investment">📈 Investment Guidance</button>
+        <button class="sub-link" data-modal-target="consultation">💬 Real Estate Consultation</button>
+      </div>
 
-      <div class="mobile-nav-section-title">Solutions</div>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('commercial'),300)">🏢 Commercial Properties</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('residential'),300)">🏡 Residential Properties</a>
-      <a href="javascript:void(0)" class="sub-link" onclick="closeNav(); setTimeout(()=>openPageModal('agricultural'),300)">🌾 Agricultural Land &amp; Farming</a>
+      <!-- NEW: Solutions Accordion -->
+      <button class="mobile-accordion-btn">
+        Solutions 
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="mobile-accordion-content">
+        <button class="sub-link" data-modal-target="commercial">🏢 Commercial Properties</button>
+        <button class="sub-link" data-modal-target="residential">🏡 Residential Properties</button>
+        <button class="sub-link" data-modal-target="agricultural">🌾 Agricultural Land &amp; Farming</button>
+      </div>
 
-      <a href="javascript:void(0)" class="primary-link" style="margin-top:8px;" onclick="closeNav(); setTimeout(()=>scrollToSection('why-us'),300)">⭐ Why Choose Us</a>
-      <a href="javascript:void(0)" class="primary-link" onclick="closeNav(); setTimeout(()=>scrollToSection('contact'),300)">📞 Contact</a>
+      <a href="#why-us" class="primary-link" style="margin-top:8px;" data-scroll-to="why-us">⭐ Why Choose Us</a>
+      <a href="#contact" class="primary-link" data-scroll-to="contact">📞 Contact</a>
     </div>
     
     <div class="mobile-nav-cta">
-      <!-- Fixed external link behavior -->
-      <a href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener" class="cta-wa" onclick="closeNav()">
+      <a href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener" class="cta-wa" data-action="close-nav">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         WhatsApp Us
       </a>
-      <a href="javascript:void(0)" class="cta-consult" onclick="closeNav(); setTimeout(()=>scrollToSection('contact'),300)">Get Free Consultation</a>
+      <a href="#contact" class="cta-consult" data-scroll-to="contact">Get Free Consultation</a>
     </div>
   </nav>
 
   <!-- Bottom Tab Bar -->
   <nav class="bottom-tab-bar" aria-label="Quick navigation">
-    <button class="tab-item active" id="tab-home" onclick="scrollToSection('top')">
+    <button class="tab-item active" id="tab-home" data-scroll-to="top">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <span>Home</span>
     </button>
-    <button class="tab-item" id="tab-services" onclick="scrollToSection('core-services')">
+    <button class="tab-item" id="tab-services" data-scroll-to="core-services">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
       <span>Services</span>
     </button>
-    <button class="tab-item" id="tab-solutions" onclick="scrollToSection('solutions')">
+    <button class="tab-item" id="tab-solutions" data-scroll-to="solutions">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
       <span>Solutions</span>
     </button>
-    <button class="tab-item" id="tab-contact" onclick="scrollToSection('contact')">
+    <button class="tab-item" id="tab-contact" data-scroll-to="contact">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 11a19.79 19.79 0 01-3.07-8.67A2 2 0 011.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
       <span>Contact</span>
     </button>
-    <button class="tab-item" id="tab-chat" onclick="toggleChat()">
+    <button class="tab-item" id="tab-chat" data-action="toggle-chat">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       <span>Chat</span>
     </button>
@@ -842,11 +629,11 @@
           <h1>Building <span>Opportunities.</span><br>Creating <span>Futures.</span></h1>
           <p>MENU Real Estate Group is a licensed real estate company in Rwanda, providing comprehensive, end-to-end property solutions to individuals, investors, developers, and the diaspora.</p>
           <div class="hero-actions">
-            <!-- Explicit inline scroll functions for guaranteed execution -->
-            <a class="btn btn-primary" href="javascript:void(0)" onclick="scrollToSection('solutions')">Explore Portfolios</a>
-            <a class="btn btn-dark" href="javascript:void(0)" onclick="scrollToSection('contact')">Contact Us</a>
+            <!-- Native Fallback buttons modified with robust data-attributes -->
+            <a class="btn btn-primary" href="#solutions" data-scroll-to="solutions">Explore Portfolios</a>
+            <a class="btn btn-dark" href="#contact" data-scroll-to="contact">Contact Us</a>
             <!-- NEW LLM Feature Trigger Button -->
-            <a class="btn btn-primary" style="background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); color: var(--white); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);" href="javascript:void(0)" onclick="openMatchmakerModal()">AI Matchmaker ✨</a>
+            <button class="btn btn-primary" style="background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); color: var(--white); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);" data-action="open-matchmaker">AI Matchmaker ✨</button>
           </div>
         </div>
         <div class="hero-card">
@@ -907,69 +694,69 @@
           <p>We provide comprehensive property solutions customized for the Rwandan market. Click on any service to learn more.</p>
         </div>
         <div class="core-services">
-          <div class="core-service-item" onclick="openPageModal('brokerage')" role="button" tabindex="0">
+          <button class="core-service-item" data-modal-target="brokerage">
             <div class="core-service-icon">🤝</div>
             <div>
               <h4>Brokerage & Transactions</h4>
               <p>Buying, selling, and renting of residential and commercial properties...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('management')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="management">
             <div class="core-service-icon">🏢</div>
             <div>
               <h4>Property Management & Operations</h4>
               <p>Tenant sourcing, rent collection, maintenance coordination...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('valuation')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="valuation">
             <div class="core-service-icon">📊</div>
             <div>
               <h4>Valuation & Advisory</h4>
               <p>Professional property valuation, market research, feasibility studies...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('development')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="development">
             <div class="core-service-icon">🏗️</div>
             <div>
               <h4>Development & Project Services</h4>
               <p>Building project development, land subdivision, project coordination...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('architectural')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="architectural">
             <div class="core-service-icon">📐</div>
             <div>
               <h4>Architectural & Planning</h4>
               <p>Building design, drafting, planning, and landscape advisory...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('construction')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="construction">
             <div class="core-service-icon">🚜</div>
             <div>
               <h4>Construction Support</h4>
               <p>Leasing of construction and civil engineering machinery...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('community')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="community">
             <div class="core-service-icon">🏘️</div>
             <div>
               <h4>Community & Affordable Housing</h4>
               <p>Volunteer-based low-cost housing development initiatives...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('investment')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="investment">
             <div class="core-service-icon">📈</div>
             <div>
               <h4>Investment Guidance</h4>
               <p>Data-driven advice on high-growth locations, risk assessment...</p>
             </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('consultation')" role="button" tabindex="0">
+          </button>
+          <button class="core-service-item" data-modal-target="consultation">
             <div class="core-service-icon">💬</div>
             <div>
               <h4>Real Estate Consultation</h4>
               <p>Expert guidance on market research, feasibility studies...</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </section>
@@ -981,30 +768,30 @@
           <p>Explore our targeted portfolios designed for investors, businesses, families, and the agricultural sector.</p>
         </div>
         <div class="projects">
-          <article class="project" onclick="openPageModal('commercial')" role="button" tabindex="0">
+          <button class="project" data-modal-target="commercial">
             <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=85" alt="Commercial Building" loading="lazy">
             <div class="project-body">
               <h3>Commercial Property Solutions</h3>
               <p>Strategic, data-driven real estate services designed to support investors, business owners, and commercial landlords across Rwanda.</p>
               <div class="read-more">View Full Details</div>
             </div>
-          </article>
-          <article class="project" onclick="openPageModal('residential')" role="button" tabindex="0">
+          </button>
+          <button class="project" data-modal-target="residential">
             <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85" alt="Residential Home" loading="lazy">
             <div class="project-body">
               <h3>Residential Property Solutions</h3>
               <p>Helping individuals, families, and investors find quality residential properties in Rwanda's most desirable and fast-growing neighborhoods.</p>
               <div class="read-more">View Full Details</div>
             </div>
-          </article>
-          <article class="project" onclick="openPageModal('agricultural')" role="button" tabindex="0">
+          </button>
+          <button class="project" data-modal-target="agricultural">
             <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=85" alt="Agricultural Land" loading="lazy">
             <div class="project-body">
               <h3>Agricultural Land & Farming</h3>
               <p>Expert guidance for buying, leasing, or developing agricultural land, commercial farming, and agribusiness projects.</p>
               <div class="read-more">View Full Details</div>
             </div>
-          </article>
+          </button>
         </div>
       </div>
     </section>
@@ -1056,7 +843,7 @@
             <h2>Let’s build your <span style="color:var(--gold)">future</span> together.</h2>
             <p>Book a consultation today and discover the best path for your real estate, construction, or investment goals in Rwanda.</p>
           </div>
-          <a class="btn btn-primary" style="background: var(--white); color: var(--navy);" href="javascript:void(0)" onclick="scrollToSection('contact')">Contact Us Now</a>
+          <a class="btn btn-primary" style="background: var(--white); color: var(--navy);" href="#contact" data-scroll-to="contact">Contact Us Now</a>
         </div>
       </div>
     </section>
@@ -1088,7 +875,7 @@
             </div>
             <a class="btn btn-dark" style="width: 100%; justify-content: center;" href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
-          <form onsubmit="handleFormSubmit(event)" id="consultForm" novalidate>
+          <form id="consultForm" novalidate>
             <h3>Request Consultation</h3>
             <input type="text" id="formName" placeholder="Full name" required autocomplete="name">
             <input type="tel" id="formPhone" placeholder="Phone number" required autocomplete="tel">
@@ -1115,16 +902,16 @@
   </footer>
 
   <!-- NEW FEATURE: AI Matchmaker Modal -->
-  <div id="matchmakerModal" class="modal-overlay" onclick="if(event.target===this) closeMatchmakerModal()">
+  <div id="matchmakerModal" class="modal-overlay" data-action="close-matchmaker-bg">
     <div class="modal-content" role="dialog" aria-modal="true" style="max-width: 600px; padding: 40px;">
-      <button class="modal-close" onclick="closeMatchmakerModal()" aria-label="Close modal">✕</button>
+      <button class="modal-close" data-action="close-matchmaker" aria-label="Close modal">✕</button>
       <div class="modal-header">
         <h3 style="font-size: 30px;">AI Property <span>Matchmaker ✨</span></h3>
         <p style="color: var(--muted); font-size: 16px; margin-top: 10px;">Describe your ideal property, budget, or investment goals in plain English, and our AI will recommend the perfect solution for you in Rwanda.</p>
       </div>
       <div class="modal-body" style="padding-top: 10px;">
         <textarea id="matchmakerInput" placeholder="E.g., I'm looking for a commercial plot in Kigali for a new hotel development. Budget is flexible but needs good road access..." style="min-height: 140px; font-size: 16px; padding: 20px;"></textarea>
-        <button class="btn btn-primary" onclick="generateMatch()" id="matchmakerBtn" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); border: none; font-size: 16px;">Find My Match ✨</button>
+        <button class="btn btn-primary" id="matchmakerBtn" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); border: none; font-size: 16px;">Find My Match ✨</button>
         
         <div id="matchmakerLoader" style="display: none; text-align: center; padding: 30px;">
           <div class="typing-indicator active" style="justify-content: center; box-shadow: none; background: transparent; border: none; align-self: center;">
@@ -1145,7 +932,7 @@
     <div id="chatWindow" class="chat-window">
       <div class="chat-header">
         <h4>MENU Assistant</h4>
-        <button class="chat-close" onclick="toggleChat()" aria-label="Close Chat">✕</button>
+        <button class="chat-close" data-action="toggle-chat" aria-label="Close Chat">✕</button>
       </div>
       <div id="chatBody" class="chat-body">
         <div class="message bot">
@@ -1157,22 +944,22 @@
           <div class="typing-dot"></div>
         </div>
       </div>
-      <form class="chat-footer" onsubmit="handleChatSubmit(event)">
+      <form class="chat-footer" id="chatForm">
         <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." autocomplete="off">
         <button type="submit" class="chat-send" aria-label="Send message">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--white)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </form>
     </div>
-    <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle Chat">
+    <button class="chat-toggle" data-action="toggle-chat" aria-label="Toggle Chat">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     </button>
   </div>
 
   <!-- Detail Modal -->
-  <div id="pageModal" class="modal-overlay" onclick="handleModalOverlayClick(event)">
+  <div id="pageModal" class="modal-overlay" data-action="close-page-modal-bg">
     <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="modal-close" onclick="closePageModal()" aria-label="Close modal">✕</button>
+      <button class="modal-close" data-action="close-page-modal" aria-label="Close modal">✕</button>
       <div id="modalHeader" class="modal-header">
         <!-- Title injected here via JS -->
       </div>
@@ -1184,410 +971,377 @@
 
   <script>
   // ═══════════════════════════════════════════════════════════════
-  //  MENU REAL ESTATE GROUP — REPAIRED INTERACTION SCRIPT
+  //  MENU REAL ESTATE GROUP — BULLETPROOF MOBILE EVENT SYSTEM
   // ═══════════════════════════════════════════════════════════════
+  document.addEventListener('DOMContentLoaded', () => {
 
-  // ── 1. PWA MANIFEST ────────────────────────────────────────────
-  (function() {
-    try {
-      const m = { name:"MENU Real Estate Group", short_name:"MENU RE",
-        description:"Complete Property Solutions in Rwanda",
-        start_url:"./", display:"standalone", orientation:"portrait",
-        background_color:"#0a192f", theme_color:"#0a192f",
-        icons:[
-          {src:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=192&h=192&q=85",sizes:"192x192",type:"image/jpeg",purpose:"any maskable"},
-          {src:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=512&h=512&q=85",sizes:"512x512",type:"image/jpeg",purpose:"any maskable"}
-        ], categories:["business","finance"], lang:"en" };
-      const el = document.getElementById('pwa-manifest');
-      if (el) el.href = URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/json'}));
-    } catch(e) {}
-  })();
+    // ── 1. MODAL DATA ──────────────────────────────────────────────
+    const modalData = {
+      'brokerage':     { title:'Brokerage & <span>Transactions</span>',            content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Buying, selling, and renting of residential and commercial properties, including negotiation, escrow coordination, and transaction closing.</p>` },
+      'management':    { title:'Property Management <span>& Operations</span>',     content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Tenant sourcing, rent collection, maintenance coordination, inspections, and owner reporting.</p>` },
+      'valuation':     { title:'Valuation <span>& Advisory</span>',                 content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Professional property valuation, market research, feasibility studies, and investment advisory services.</p>` },
+      'development':   { title:'Development <span>& Project Services</span>',       content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Building project development, land subdivision, project coordination, and development advisory.</p>` },
+      'architectural': { title:'Architectural <span>& Planning Consulting</span>',  content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Building design, drafting, planning, and landscape advisory through qualified professionals.</p>` },
+      'construction':  { title:'Construction <span>Support</span>',                 content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Leasing of construction and civil engineering machinery and wholesale supply of construction materials.</p>` },
+      'community':     { title:'Community <span>& Affordable Housing</span>',       content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Volunteer-based low-cost housing development and repair initiatives in partnership with homeowners.</p>` },
+      'investment':    { title:'Investment <span>Guidance</span>',                  content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Data-driven advice on high-growth locations, risk assessment, and portfolio diversification to help individuals and the diaspora maximize long-term property returns in Rwanda.</p>` },
+      'consultation':  { title:'Real Estate <span>Consultation</span>',             content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Expert guidance on market research, feasibility studies, legal due diligence, and land mutation to ensure secure, high-value investments and compliant project development.</p>` },
+      'commercial': {
+        title: 'Commercial Property <span>Solutions</span>',
+        content: `<p>At MENU Real Estate Group, we provide strategic, data-driven real estate services designed to support investors, business owners, property developers, and commercial landlords across Rwanda.</p>
+          <p>This portfolio reflects our commitment to delivering high-value commercial properties — from office buildings and retail spaces to hotels, restaurants, and mixed-use developments.</p>
+          <h4>For Investors</h4><ul>
+            <li>Commercial property acquisition support</li><li>Market research &amp; investment analysis</li>
+            <li>Portfolio development &amp; diversification strategies</li><li>Due diligence and valuation guidance</li>
+            <li>High-return rental property sourcing</li></ul>
+          <h4>For Property Owners &amp; Developers</h4><ul>
+            <li>Property listing, marketing &amp; exposure across multiple platforms</li><li>Tenant sourcing and screening</li>
+            <li>Property management solutions</li><li>Renovation, upgrade &amp; development advisory</li>
+            <li>Asset appreciation strategies</li></ul>
+          <h4>For Business Clients</h4><ul>
+            <li>Assistance in securing office space, retail shops, restaurants, and hospitality facilities</li>
+            <li>Lease negotiation &amp; contract support</li><li>Site selection for expansion</li>
+            <li>Long-term occupancy planning</li></ul>
+          <h4>For Buyers &amp; Sellers</h4><ul>
+            <li>Transaction coordination</li><li>Professional pricing guidance</li>
+            <li>Document assistance (including mutation support)</li>
+            <li>Seamless representation from viewing to closing</li></ul>
+          <h4>Our Commitment</h4>
+          <p>MENU Real Estate Group is dedicated to helping clients navigate Rwanda's fast-growing commercial real estate sector with confidence, transparency, and expert guidance.</p>`
+      },
+      'residential': {
+        title: 'Residential Property <span>Solutions</span>',
+        content: `<p>At MENU Real Estate Group, we help individuals, families, and investors find quality residential properties in Rwanda's most desirable and fast-growing neighborhoods.</p>
+          <h4>For Home Buyers</h4><ul>
+            <li>Verified residential property listings</li><li>Guidance on location, pricing, and development potential</li>
+            <li>Viewing coordination and support</li><li>Offer and negotiation assistance</li>
+            <li>End-to-end support from search to ownership</li></ul>
+          <h4>For Property Owners &amp; Sellers</h4><ul>
+            <li>Professional property valuation guidance</li><li>High-quality listing and marketing services</li>
+            <li>Buyer sourcing and screening</li><li>Transaction support and documentation guidance</li>
+            <li>Strategies to maximize selling value</li></ul>
+          <h4>For Tenants &amp; Landlords</h4><ul>
+            <li>Rental property sourcing</li><li>Lease documentation assistance</li>
+            <li>Tenant Screening Support</li><li>Property management solutions</li></ul>
+          <h4>For Residential Investors</h4><ul>
+            <li>Assistance in identifying high-yield residential opportunities</li>
+            <li>Market trend and area growth analysis</li>
+            <li>Portfolio development strategies</li>
+            <li>Advisory on renovations and value-adding upgrades</li></ul>
+          <h4>Our Commitment</h4>
+          <p>Whether you are buying your first home, investing in rental units, or selling a residential property, MENU Real Estate Group provides the expertise and reliability needed to make every decision confident and informed.</p>`
+      },
+      'agricultural': {
+        title: 'Agricultural Land <span>&amp; Farming</span>',
+        content: `<p>At MENU Real Estate Group, we support investors, cooperatives, and landowners looking to buy, lease, or develop agricultural land across Rwanda.</p>
+          <h4>For Agricultural Investors</h4><ul>
+            <li>Sourcing fertile, well-located farmland</li><li>Land suitability assessments (soil, topography, access)</li>
+            <li>Investment analysis for short- and long-term agribusiness projects</li>
+            <li>Advisory on crop selection and land use optimization</li></ul>
+          <h4>For Landowners</h4><ul>
+            <li>Farmland valuation guidance</li><li>Professional listing &amp; marketing for agricultural land</li>
+            <li>Tenant or buyer sourcing</li><li>Support with leasing agreements and sale procedures</li></ul>
+          <h4>For Farmers &amp; Agribusiness Projects</h4><ul>
+            <li>Assistance in accessing farming plots</li><li>Support with cooperative partnerships</li>
+            <li>Guidance on infrastructure needs (water access, roads, storage)</li>
+            <li>Expansion planning for medium to large-scale farming</li></ul>
+          <h4>For Developers</h4><ul>
+            <li>Feasibility studies for agricultural estates</li><li>Coordination with agronomists and land planners</li>
+            <li>Advisory on sustainable farming models</li></ul>
+          <h4>Our Commitment</h4>
+          <p>MENU Real Estate Group connects clients with the right agricultural opportunities — ensuring productivity, growth, and sustainable land use.</p>`
+      }
+    };
 
-  // ── 2. SCROLL LOCK MANAGER ─────────────────────────────────────
-  let _locks = 0;
-  function lockScroll()   { if (++_locks === 1) document.body.style.overflow = 'hidden'; }
-  function unlockScroll() { if (--_locks <= 0) { _locks = 0; document.body.style.overflow = ''; } }
+    // Inject "Inquire" button globally
+    Object.keys(modalData).forEach(k => {
+      modalData[k].content += `<div style="margin-top:36px;">
+        <button class="btn btn-primary" data-action="inquire-from-modal" style="min-width:220px;">Inquire About This Service</button>
+      </div>`;
+    });
 
-  // ── 3. ROBUST SMOOTH SCROLL UTILITY (Global) ───────────────────
-  window.scrollToSection = function(id) {
-    if (id === 'top') { 
-      window.scrollTo({ top: 0, behavior: 'smooth' }); 
-      return; 
-    }
-    const el = document.getElementById(id);
-    if (!el) return;
-    const offset = (document.querySelector('.topbar')?.offsetHeight || 80) + 16;
-    const topPosition = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top: topPosition, behavior: 'smooth' });
-  };
+    // ── 2. GLOBAL ELEMENTS ─────────────────────────────────────────
+    const body = document.body;
+    const pageModal = document.getElementById('pageModal');
+    const modalHeader = document.getElementById('modalHeader');
+    const modalBody = document.getElementById('modalBody');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileOverlayEl = document.getElementById('mobileOverlay');
+    const hamburger = document.getElementById('hamburger');
+    const matchmakerModal = document.getElementById('matchmakerModal');
 
-  // ── 4. TOAST ───────────────────────────────────────────────────
-  window.showToast = function(msg, type) {
-    const t = document.getElementById('toast');
-    if (!t) return;
-    t.textContent = msg;
-    t.className = 'toast' + (type ? ' ' + type : '');
-    t.classList.add('show');
-    clearTimeout(t._tid);
-    t._tid = setTimeout(() => t.classList.remove('show'), 3500);
-  };
+    // ── 3. HELPER FUNCTIONS ────────────────────────────────────────
+    const lockScroll = () => body.classList.add('locked');
+    const unlockScroll = () => body.classList.remove('locked');
+    
+    const showToast = (msg, type) => {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.className = 'toast show ' + (type || '');
+      clearTimeout(t._tid);
+      t._tid = setTimeout(() => t.classList.remove('show'), 3500);
+    };
 
-  // ── 5. MODAL LOGIC ─────────────────────────────────────────────
-  const modalData = {
-    'brokerage':     { title:'Brokerage & <span>Transactions</span>',            content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Buying, selling, and renting of residential and commercial properties, including negotiation, escrow coordination, and transaction closing.</p>` },
-    'management':    { title:'Property Management <span>& Operations</span>',     content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Tenant sourcing, rent collection, maintenance coordination, inspections, and owner reporting.</p>` },
-    'valuation':     { title:'Valuation <span>& Advisory</span>',                 content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Professional property valuation, market research, feasibility studies, and investment advisory services.</p>` },
-    'development':   { title:'Development <span>& Project Services</span>',       content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Building project development, land subdivision, project coordination, and development advisory.</p>` },
-    'architectural': { title:'Architectural <span>& Planning Consulting</span>',  content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Building design, drafting, planning, and landscape advisory through qualified professionals.</p>` },
-    'construction':  { title:'Construction <span>Support</span>',                 content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Leasing of construction and civil engineering machinery and wholesale supply of construction materials.</p>` },
-    'community':     { title:'Community <span>& Affordable Housing</span>',       content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Volunteer-based low-cost housing development and repair initiatives in partnership with homeowners.</p>` },
-    'investment':    { title:'Investment <span>Guidance</span>',                  content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Data-driven advice on high-growth locations, risk assessment, and portfolio diversification to help individuals and the diaspora maximize long-term property returns in Rwanda.</p>` },
-    'consultation':  { title:'Real Estate <span>Consultation</span>',             content:`<p style="font-size:19px;line-height:1.8;color:var(--navy);font-weight:500;">Expert guidance on market research, feasibility studies, legal due diligence, and land mutation to ensure secure, high-value investments and compliant project development.</p>` },
-    'commercial': {
-      title: 'Commercial Property <span>Solutions</span>',
-      content: `<p>At MENU Real Estate Group, we provide strategic, data-driven real estate services designed to support investors, business owners, property developers, and commercial landlords across Rwanda.</p>
-        <p>This portfolio reflects our commitment to delivering high-value commercial properties — from office buildings and retail spaces to hotels, restaurants, and mixed-use developments.</p>
-        <h4>For Investors</h4><ul>
-          <li>Commercial property acquisition support</li><li>Market research &amp; investment analysis</li>
-          <li>Portfolio development &amp; diversification strategies</li><li>Due diligence and valuation guidance</li>
-          <li>High-return rental property sourcing</li></ul>
-        <h4>For Property Owners &amp; Developers</h4><ul>
-          <li>Property listing, marketing &amp; exposure across multiple platforms</li><li>Tenant sourcing and screening</li>
-          <li>Property management solutions</li><li>Renovation, upgrade &amp; development advisory</li>
-          <li>Asset appreciation strategies</li></ul>
-        <h4>For Business Clients</h4><ul>
-          <li>Assistance in securing office space, retail shops, restaurants, and hospitality facilities</li>
-          <li>Lease negotiation &amp; contract support</li><li>Site selection for expansion</li>
-          <li>Long-term occupancy planning</li></ul>
-        <h4>For Buyers &amp; Sellers</h4><ul>
-          <li>Transaction coordination</li><li>Professional pricing guidance</li>
-          <li>Document assistance (including mutation support)</li>
-          <li>Seamless representation from viewing to closing</li></ul>
-        <h4>Our Commitment</h4>
-        <p>MENU Real Estate Group is dedicated to helping clients navigate Rwanda's fast-growing commercial real estate sector with confidence, transparency, and expert guidance.</p>`
-    },
-    'residential': {
-      title: 'Residential Property <span>Solutions</span>',
-      content: `<p>At MENU Real Estate Group, we help individuals, families, and investors find quality residential properties in Rwanda's most desirable and fast-growing neighborhoods.</p>
-        <h4>For Home Buyers</h4><ul>
-          <li>Verified residential property listings</li><li>Guidance on location, pricing, and development potential</li>
-          <li>Viewing coordination and support</li><li>Offer and negotiation assistance</li>
-          <li>End-to-end support from search to ownership</li></ul>
-        <h4>For Property Owners &amp; Sellers</h4><ul>
-          <li>Professional property valuation guidance</li><li>High-quality listing and marketing services</li>
-          <li>Buyer sourcing and screening</li><li>Transaction support and documentation guidance</li>
-          <li>Strategies to maximize selling value</li></ul>
-        <h4>For Tenants &amp; Landlords</h4><ul>
-          <li>Rental property sourcing</li><li>Lease documentation assistance</li>
-          <li>Tenant Screening Support</li><li>Property management solutions</li></ul>
-        <h4>For Residential Investors</h4><ul>
-          <li>Assistance in identifying high-yield residential opportunities</li>
-          <li>Market trend and area growth analysis</li>
-          <li>Portfolio development strategies</li>
-          <li>Advisory on renovations and value-adding upgrades</li></ul>
-        <h4>Our Commitment</h4>
-        <p>Whether you are buying your first home, investing in rental units, or selling a residential property, MENU Real Estate Group provides the expertise and reliability needed to make every decision confident and informed.</p>`
-    },
-    'agricultural': {
-      title: 'Agricultural Land <span>&amp; Farming</span>',
-      content: `<p>At MENU Real Estate Group, we support investors, cooperatives, and landowners looking to buy, lease, or develop agricultural land across Rwanda.</p>
-        <h4>For Agricultural Investors</h4><ul>
-          <li>Sourcing fertile, well-located farmland</li><li>Land suitability assessments (soil, topography, access)</li>
-          <li>Investment analysis for short- and long-term agribusiness projects</li>
-          <li>Advisory on crop selection and land use optimization</li></ul>
-        <h4>For Landowners</h4><ul>
-          <li>Farmland valuation guidance</li><li>Professional listing &amp; marketing for agricultural land</li>
-          <li>Tenant or buyer sourcing</li><li>Support with leasing agreements and sale procedures</li></ul>
-        <h4>For Farmers &amp; Agribusiness Projects</h4><ul>
-          <li>Assistance in accessing farming plots</li><li>Support with cooperative partnerships</li>
-          <li>Guidance on infrastructure needs (water access, roads, storage)</li>
-          <li>Expansion planning for medium to large-scale farming</li></ul>
-        <h4>For Developers</h4><ul>
-          <li>Feasibility studies for agricultural estates</li><li>Coordination with agronomists and land planners</li>
-          <li>Advisory on sustainable farming models</li></ul>
-        <h4>Our Commitment</h4>
-        <p>MENU Real Estate Group connects clients with the right agricultural opportunities — ensuring productivity, growth, and sustainable land use.</p>`
-    }
-  };
-
-  // Inject the "Inquire" CTA button into every modal content
-  Object.keys(modalData).forEach(k => {
-    modalData[k].content += `<div style="margin-top:36px;">
-      <button class="btn btn-primary" onclick="closePageModal(); setTimeout(()=>scrollToSection('contact'),350);" style="min-width:220px;">Inquire About This Service</button>
-    </div>`;
-  });
-
-  const modalOverlay = document.getElementById('pageModal');
-  const modalHeader  = document.getElementById('modalHeader');
-  const modalBody    = document.getElementById('modalBody');
-
-  window.openPageModal = function(key) {
-    const d = modalData[key];
-    if (!d || !modalOverlay) return;
-    modalHeader.innerHTML = `<h3>${d.title}</h3>`;
-    modalBody.innerHTML   = d.content;
-    modalOverlay.classList.add('active');
-    lockScroll();
-  };
-
-  window.closePageModal = function() {
-    modalOverlay?.classList.remove('active');
-    unlockScroll();
-  };
-
-  window.handleModalOverlayClick = function(event) {
-    if (event.target === modalOverlay) closePageModal();
-  };
-
-  // ── 6. MOBILE NAV LOGIC (Globally accessible) ──────────────────
-  const hamburger      = document.getElementById('hamburger');
-  const mobileNav      = document.getElementById('mobileNav');
-  const mobileOverlayEl = document.getElementById('mobileOverlay');
-
-  window.openNav = function() {
-    hamburger?.classList.add('open');
-    hamburger?.setAttribute('aria-expanded', 'true');
-    mobileNav?.classList.add('open');
-    if (mobileOverlayEl) { mobileOverlayEl.style.display = 'block'; requestAnimationFrame(() => mobileOverlayEl.classList.add('visible')); }
-    lockScroll();
-  };
-
-  window.closeNav = function() {
-    hamburger?.classList.remove('open');
-    hamburger?.setAttribute('aria-expanded', 'false');
-    mobileNav?.classList.remove('open');
-    mobileOverlayEl?.classList.remove('visible');
-    setTimeout(() => { if (mobileOverlayEl) mobileOverlayEl.style.display = 'none'; }, 400);
-    unlockScroll();
-  };
-
-  window.toggleNav = function() {
-    if (mobileNav?.classList.contains('open')) { closeNav(); } else { openNav(); }
-  };
-
-  // ── 7. ESCAPE KEY TO CLOSE EVERYTHING ──────────────────────────
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape') return;
-    if (modalOverlay?.classList.contains('active')) closePageModal();
-    else if (mobileNav?.classList.contains('open')) closeNav();
-    else if (document.getElementById('matchmakerModal')?.classList.contains('active')) closeMatchmakerModal();
-  });
-
-  // ── 8. BOTTOM TAB BAR ACTIVE STATE LOGIC ───────────────────────
-  const tabSections = [
-    { tab:'tab-home',      id: null },
-    { tab:'tab-services',  id: 'core-services' },
-    { tab:'tab-solutions', id: 'solutions' },
-    { tab:'tab-contact',   id: 'contact' },
-  ];
-  function updateTabs() {
-    const mid = window.scrollY + window.innerHeight * 0.4;
-    let active = 'tab-home';
-    tabSections.forEach(({ tab, id }) => {
-      if (!id) return;
+    const scrollToSection = (id) => {
       const el = document.getElementById(id);
-      if (el && el.offsetTop <= mid) active = tab;
-    });
-    tabSections.forEach(({ tab }) => {
-        const t = document.getElementById(tab);
-        if(t) {
-            if (tab === active) { t.classList.add('active'); }
-            else { t.classList.remove('active'); }
-        }
-    });
-  }
-  window.addEventListener('scroll', updateTabs, { passive: true });
-
-  // ── 9. TOPBAR SHADOW ON SCROLL ─────────────────────────────────
-  const topbar = document.querySelector('.topbar');
-  window.addEventListener('scroll', () => {
-    if (topbar) topbar.style.boxShadow = window.scrollY > 10 ? '0 4px 24px rgba(10,25,47,0.08)' : 'none';
-  }, { passive: true });
-
-  // ── 10. DESKTOP DROPDOWN LOGIC ─────────────────────────────────
-  document.querySelectorAll('.dropdown').forEach(dd => {
-    const trigger = dd.querySelector(':scope > a');
-    const menu    = dd.querySelector('.dropdown-menu');
-    if (!trigger || !menu) return;
-    trigger.addEventListener('click', e => {
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return; 
-      e.preventDefault();
-      const isOpen = menu.classList.contains('dd-open');
-      document.querySelectorAll('.dropdown-menu.dd-open').forEach(m => m.classList.remove('dd-open'));
-      if (!isOpen) menu.classList.add('dd-open');
-    });
-  });
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-menu.dd-open').forEach(m => m.classList.remove('dd-open'));
-    }
-  });
-
-  // ── 11. KEYBOARD NAV FOR CARDS ─────────────────────────────────
-  document.querySelectorAll('[role="button"]').forEach(el => {
-    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
-  });
-
-  // ── 12. CONTACT FORM → WHATSAPP ────────────────────────────────
-  window.handleFormSubmit = async function(e) {
-    e.preventDefault();
-    const btn  = document.getElementById('formSubmitBtn');
-    const name = document.getElementById('formName')?.value.trim();
-    const phone= document.getElementById('formPhone')?.value.trim();
-    const svc  = document.getElementById('formService')?.value;
-    const msg  = document.getElementById('formMessage')?.value.trim();
-    if (!name || !phone || !svc) { window.showToast('Please fill in all required fields.', 'error'); return; }
-    btn.textContent = 'Opening WhatsApp…';
-    btn.disabled = true;
-    const text = encodeURIComponent(`Hello MENU Real Estate Group,\n\nName: ${name}\nPhone: ${phone}\nInterest: ${svc}${msg ? '\nMessage: '+msg : ''}\n\nI would like to request a consultation.`);
-    window.open(`https://wa.me/250782616150?text=${text}`, '_blank', 'noopener');
-    await new Promise(r => setTimeout(r, 600));
-    e.target.reset();
-    btn.textContent = 'Send Request';
-    btn.disabled = false;
-    window.showToast('✓ WhatsApp opened with your message!', 'success');
-  };
-
-  // ── 13. CHATBOT ────────────────────────────────────────────────
-  const chatWindow = document.getElementById('chatWindow');
-  const chatBodyEl = document.getElementById('chatBody');
-  const chatInput  = document.getElementById('chatInput');
-  const chatTypingInd  = document.getElementById('typingIndicator');
-
-  window.toggleChat = function() {
-    chatWindow?.classList.toggle('active');
-    if (chatWindow?.classList.contains('active')) setTimeout(() => chatInput?.focus(), 300);
-  };
-
-  function addMsg(text, sender) {
-    const d = document.createElement('div');
-    d.className = `message ${sender}`;
-    d.innerHTML = sender === 'bot' ? text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>') : text;
-    chatBodyEl?.insertBefore(d, chatTypingInd);
-    chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
-  }
-
-  let chatHistory = [];
-  const chatSysPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Answer based ONLY on company info. If you can't answer, direct them to +250 782 616 150 or menurealestategroup@gmail.com. Company: Licensed real estate company in Rwanda. Services: Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, Consultation. Contact: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com. Hours: Mon-Sat 8AM-6PM.`;
-
-  window.handleChatSubmit = async function(e) {
-    e.preventDefault();
-    const text = chatInput?.value.trim();
-    if (!text) return;
-    addMsg(text, 'user');
-    chatInput.value = '';
-    chatHistory.push({ role:'user', parts:[{text}] });
-    chatTypingInd?.classList.add('active');
-    chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
-    
-    const apiKey = ""; 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    
-    let tries = 0, delay = 1000;
-    while (tries < 3) {
-      try {
-        const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ contents: chatHistory, systemInstruction:{ parts:[{text: chatSysPrompt}] } }) });
-        if (!r.ok) throw new Error(r.status >= 500 || r.status === 429 ? 'retry' : 'fatal');
-        const j = await r.json();
-        const reply = j.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!reply) throw new Error('retry');
-        chatTypingInd?.classList.remove('active');
-        addMsg(reply, 'bot');
-        chatHistory.push({ role:'model', parts:[{text:reply}] });
-        break;
-      } catch(err) {
-        tries++;
-        if (err.message === 'fatal' || tries >= 3) {
-          chatTypingInd?.classList.remove('active');
-          addMsg("Sorry, I'm having trouble connecting. Please call us at +250 782 616 150.", 'bot');
-          chatHistory.pop();
-          break;
-        }
-        await new Promise(r => setTimeout(r, delay));
-        delay *= 1.5;
+      if (!el && id !== 'top') return;
+      if (mobileNav.classList.contains('open')) {
+          hamburger.classList.remove('open');
+          mobileNav.classList.remove('open');
+          mobileOverlayEl.classList.remove('visible');
+          unlockScroll();
       }
-    }
-  };
+      setTimeout(() => {
+          if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+          const offset = 90; // approximate header height
+          const topPos = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: topPos, behavior: 'smooth' });
+      }, 10);
+    };
 
-  // ── 14. NEW FEATURE: AI PROPERTY MATCHMAKER ✨ ────────────────
-  const matchmakerModal = document.getElementById('matchmakerModal');
-  const matchmakerInput = document.getElementById('matchmakerInput');
-  const matchmakerBtn = document.getElementById('matchmakerBtn');
-  const matchmakerLoader = document.getElementById('matchmakerLoader');
-  const matchmakerResult = document.getElementById('matchmakerResult');
+    const openPageModal = (key) => {
+      const d = modalData[key];
+      if (!d) return;
+      modalHeader.innerHTML = `<h3>${d.title}</h3>`;
+      modalBody.innerHTML = d.content;
+      pageModal.classList.add('active');
+      lockScroll();
+      if (mobileNav.classList.contains('open')) {
+          hamburger.classList.remove('open');
+          mobileNav.classList.remove('open');
+          mobileOverlayEl.classList.remove('visible');
+      }
+    };
 
-  window.openMatchmakerModal = function() {
-    matchmakerModal?.classList.add('active');
-    lockScroll();
-  };
+    const toggleNav = () => {
+      const isOpen = mobileNav.classList.contains('open');
+      if (isOpen) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        mobileOverlayEl.classList.remove('visible');
+        unlockScroll();
+      } else {
+        hamburger.classList.add('open');
+        mobileNav.classList.add('open');
+        mobileOverlayEl.classList.add('visible');
+        lockScroll();
+      }
+    };
 
-  window.closeMatchmakerModal = function() {
-    matchmakerModal?.classList.remove('active');
-    // Reset view
-    setTimeout(() => {
-        matchmakerInput.value = '';
-        matchmakerResult.style.display = 'none';
-        matchmakerResult.innerHTML = '';
-        matchmakerBtn.style.display = 'block';
-    }, 400);
-    unlockScroll();
-  };
+    // ── 4. EVENT DELEGATION FOR ALL CLICKS (Bulletproof) ─────────
+    document.addEventListener('click', (e) => {
+        // 1. Data-Modal Triggers (Services, Solutions)
+        const modalTrigger = e.target.closest('[data-modal-target]');
+        if (modalTrigger) {
+            e.preventDefault();
+            openPageModal(modalTrigger.getAttribute('data-modal-target'));
+            return;
+        }
 
-  window.generateMatch = async function() {
-    const userInput = matchmakerInput.value.trim();
-    if (!userInput) {
-        window.showToast('Please describe your real estate goals first.', 'error');
-        return;
-    }
+        // 2. Data-Scroll-To Triggers (Nav Links, Hero Buttons)
+        const scrollTrigger = e.target.closest('[data-scroll-to]');
+        if (scrollTrigger) {
+            e.preventDefault();
+            scrollToSection(scrollTrigger.getAttribute('data-scroll-to'));
+            return;
+        }
 
-    matchmakerBtn.style.display = 'none';
-    matchmakerResult.style.display = 'none';
-    matchmakerLoader.style.display = 'block';
-
-    const apiKey = "";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-    const matchmakerSysPrompt = "You are a friendly and expert real estate advisor AI for MENU Real Estate Group in Rwanda. Your task is to: 1) Analyze the user's specific request or dream property. 2) Enthusiastically identify which 1-2 specific services from MENU Real Estate they need (Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, or Consultation). 3) Provide a brief, promising, and realistic overview of the Rwandan market related strictly to their request. Output MUST be formatted in clean HTML (using <h4>, <p>, and <ul>). Keep it under 150 words. Do NOT include markdown backticks or ```html formatting wrappers.";
-
-    let tries = 0, delay = 1000, success = false;
-    while (tries < 4 && !success) {
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: userInput }] }],
-            systemInstruction: { parts: [{ text: matchmakerSysPrompt }] }
-          })
-        });
-
-        if (!response.ok) throw new Error(response.status >= 500 || response.status === 429 ? 'retry' : 'fatal');
-        const data = await response.json();
-        const replyHTML = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        // 3. Specific Actions (Buttons, Overlays, Toggles)
+        const actionTrigger = e.target.closest('[data-action]');
+        if (actionTrigger) {
+            const action = actionTrigger.getAttribute('data-action');
+            if (action === 'toggle-nav') {
+                e.preventDefault();
+                toggleNav();
+            } else if (action === 'close-nav') {
+                if (e.target === mobileOverlayEl || e.target.closest('.mobile-nav-close') || e.target.closest('.cta-wa')) {
+                   if (mobileNav.classList.contains('open')) toggleNav();
+                }
+            } else if (action === 'close-page-modal') {
+                e.preventDefault();
+                pageModal.classList.remove('active');
+                unlockScroll();
+            } else if (action === 'close-page-modal-bg') {
+                if (e.target === pageModal) {
+                    pageModal.classList.remove('active');
+                    unlockScroll();
+                }
+            } else if (action === 'inquire-from-modal') {
+                e.preventDefault();
+                pageModal.classList.remove('active');
+                unlockScroll();
+                setTimeout(() => scrollToSection('contact'), 300);
+            } else if (action === 'open-matchmaker') {
+                e.preventDefault();
+                matchmakerModal.classList.add('active');
+                lockScroll();
+            } else if (action === 'close-matchmaker') {
+                e.preventDefault();
+                matchmakerModal.classList.remove('active');
+                unlockScroll();
+            } else if (action === 'close-matchmaker-bg') {
+                if (e.target === matchmakerModal) {
+                    matchmakerModal.classList.remove('active');
+                    unlockScroll();
+                }
+            } else if (action === 'toggle-chat') {
+                e.preventDefault();
+                const cw = document.getElementById('chatWindow');
+                cw.classList.toggle('active');
+                if (cw.classList.contains('active')) setTimeout(() => document.getElementById('chatInput').focus(), 300);
+            }
+            return;
+        }
         
-        if (!replyHTML) throw new Error('No reply');
-
-        matchmakerResult.innerHTML = replyHTML + `
-          <div style="margin-top: 24px;">
-             <a class="btn btn-primary" style="width:100%; background: var(--navy);" href="javascript:void(0)" onclick="closeMatchmakerModal(); setTimeout(()=>scrollToSection('contact'),300)">Contact us to make this a reality</a>
-             <button class="btn" style="width:100%; margin-top:8px; background: transparent; color: var(--muted); padding: 10px;" onclick="closeMatchmakerModal(); setTimeout(()=>openMatchmakerModal(),400);">Try another search</button>
-          </div>`;
-        success = true;
-      } catch (err) {
-        tries++;
-        if (err.message === 'fatal' || tries >= 4) {
-          matchmakerResult.innerHTML = `<p style="color: #ef4444;">We couldn't reach our AI advisor at the moment. Please try again or contact us directly at +250 782 616 150.</p><button class="btn btn-dark" style="margin-top: 16px; width: 100%;" onclick="closeMatchmakerModal()">Close</button>`;
-          break;
+        // 4. Mobile Nav Accordions
+        const accordionBtn = e.target.closest('.mobile-accordion-btn');
+        if (accordionBtn) {
+            e.preventDefault();
+            const content = accordionBtn.nextElementSibling;
+            accordionBtn.classList.toggle('expanded');
+            content.classList.toggle('expanded');
+            return;
         }
-        await new Promise(r => setTimeout(r, delay));
-        delay *= 1.5;
-      }
+    });
+
+    // ── 5. FORM SUBMISSION ─────────────────────────────────────────
+    const consultForm = document.getElementById('consultForm');
+    if (consultForm) {
+        consultForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('formSubmitBtn');
+            const name = document.getElementById('formName').value.trim();
+            const phone= document.getElementById('formPhone').value.trim();
+            const svc = document.getElementById('formService').value;
+            const msg = document.getElementById('formMessage').value.trim();
+            
+            if (!name || !phone || !svc) { showToast('Please fill in all required fields.', 'error'); return; }
+            
+            btn.textContent = 'Opening WhatsApp…';
+            btn.disabled = true;
+            
+            const text = encodeURIComponent(`Hello MENU Real Estate Group,\n\nName: ${name}\nPhone: ${phone}\nInterest: ${svc}${msg ? '\nMessage: '+msg : ''}\n\nI would like to request a consultation.`);
+            window.open(`https://wa.me/250782616150?text=${text}`, '_blank', 'noopener');
+            
+            await new Promise(r => setTimeout(r, 600));
+            consultForm.reset();
+            btn.textContent = 'Send Request';
+            btn.disabled = false;
+            showToast('✓ WhatsApp opened with your message!', 'success');
+        });
     }
 
-    matchmakerLoader.style.display = 'none';
-    matchmakerResult.style.display = 'block';
-  };
+    // ── 6. LLM FEATURES (MATCHMAKER & CHAT) ─────────────────────────
+    const apiKey = ""; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    // A. Chatbot
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatBodyEl = document.getElementById('chatBody');
+    const chatTypingInd = document.getElementById('typingIndicator');
+    let chatHistory = [];
+    const chatSysPrompt = `You are a helpful, professional customer support AI for MENU Real Estate Group, a licensed real estate company in Rwanda. Answer based ONLY on company info. If you can't answer, direct them to +250 782 616 150 or menurealestategroup@gmail.com. Company: Licensed real estate company in Rwanda. Services: Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, Consultation. Contact: Inyarurembo, Kiyovu, Nyarugenge, Kigali. Phone: +250 782 616 150. Email: menurealestategroup@gmail.com. Hours: Mon-Sat 8AM-6PM.`;
+
+    if (chatForm) {
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            const d = document.createElement('div');
+            d.className = 'message user';
+            d.textContent = text;
+            chatBodyEl.insertBefore(d, chatTypingInd);
+            chatInput.value = '';
+            chatHistory.push({ role:'user', parts:[{text}] });
+            
+            chatTypingInd.classList.add('active');
+            chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
+
+            let tries = 0, delay = 1000;
+            while (tries < 3) {
+              try {
+                const r = await fetch(apiUrl, { method:'POST', headers:{'Content-Type':'application/json'},
+                  body: JSON.stringify({ contents: chatHistory, systemInstruction:{ parts:[{text: chatSysPrompt}] } }) });
+                if (!r.ok) throw new Error('retry');
+                const j = await r.json();
+                const reply = j.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!reply) throw new Error('retry');
+                
+                chatTypingInd.classList.remove('active');
+                const rDiv = document.createElement('div');
+                rDiv.className = 'message bot';
+                rDiv.innerHTML = reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+                chatBodyEl.insertBefore(rDiv, chatTypingInd);
+                chatHistory.push({ role:'model', parts:[{text:reply}] });
+                chatBodyEl.scrollTop = chatBodyEl.scrollHeight;
+                break;
+              } catch(err) {
+                tries++;
+                if (tries >= 3) {
+                  chatTypingInd.classList.remove('active');
+                  const eDiv = document.createElement('div');
+                  eDiv.className = 'message bot';
+                  eDiv.textContent = "Sorry, I'm having trouble connecting. Please call us at +250 782 616 150.";
+                  chatBodyEl.insertBefore(eDiv, chatTypingInd);
+                  chatHistory.pop();
+                  break;
+                }
+                await new Promise(res => setTimeout(r, delay)); delay *= 1.5;
+              }
+            }
+        });
+    }
+
+    // B. Matchmaker
+    const matchmakerBtn = document.getElementById('matchmakerBtn');
+    if (matchmakerBtn) {
+        matchmakerBtn.addEventListener('click', async () => {
+            const inputEl = document.getElementById('matchmakerInput');
+            const loaderEl = document.getElementById('matchmakerLoader');
+            const resultEl = document.getElementById('matchmakerResult');
+            const userInput = inputEl.value.trim();
+            
+            if (!userInput) { showToast('Please describe your real estate goals first.', 'error'); return; }
+
+            matchmakerBtn.style.display = 'none';
+            resultEl.style.display = 'none';
+            loaderEl.style.display = 'block';
+
+            const matchSysPrompt = "You are a friendly and expert real estate advisor AI for MENU Real Estate Group in Rwanda. Your task is to: 1) Analyze the user's specific request. 2) Identify which 1-2 specific services from MENU Real Estate they need (Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, or Consultation). 3) Provide a brief, promising overview of the Rwandan market related to their request. Output MUST be formatted in clean HTML (using <h4>, <p>, and <ul>). Keep it under 150 words. Do NOT include markdown backticks or ```html formatting wrappers.";
+
+            let tries = 0, delay = 1000, success = false;
+            while (tries < 3 && !success) {
+              try {
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ contents: [{ parts: [{ text: userInput }] }], systemInstruction: { parts: [{ text: matchSysPrompt }] } }) });
+                if (!response.ok) throw new Error('retry');
+                const data = await response.json();
+                const replyHTML = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!replyHTML) throw new Error('No reply');
+
+                resultEl.innerHTML = replyHTML + `
+                  <div style="margin-top: 24px;">
+                     <button class="btn btn-primary" style="width:100%; background: var(--navy);" data-action="inquire-from-modal">Contact us to make this a reality</button>
+                     <button class="btn" style="width:100%; margin-top:8px; background: transparent; color: var(--muted); padding: 10px;" onclick="document.getElementById('matchmakerInput').value=''; document.getElementById('matchmakerResult').style.display='none'; document.getElementById('matchmakerBtn').style.display='block';">Try another search</button>
+                  </div>`;
+                success = true;
+              } catch (err) {
+                tries++;
+                if (tries >= 3) {
+                  resultEl.innerHTML = `<p style="color: #ef4444;">We couldn't reach our AI advisor at the moment. Please try again or contact us directly at +250 782 616 150.</p>`;
+                  break;
+                }
+                await new Promise(r => setTimeout(r, delay)); delay *= 1.5;
+              }
+            }
+            loaderEl.style.display = 'none';
+            resultEl.style.display = 'block';
+        });
+    }
+  });
   </script>
 </body>
 </html>
