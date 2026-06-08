@@ -1860,6 +1860,7 @@
     </div>
   </div>
 
+  <script src="js/showToast.js"></script>
   <script>
     // Exact content matching the PDF Portfolios and Core Services
     const modalData = {
@@ -2254,13 +2255,7 @@
     // ═══════════════════════════════════════════
     // TOAST
     // ═══════════════════════════════════════════
-    function showToast(msg, type = '') {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.className = 'toast' + (type ? ' ' + type : '');
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3500);
-    }
+    // showToast is now loaded from js/showToast.js
 
     // ═══════════════════════════════════════════
     // MOBILE NAV
