@@ -2136,16 +2136,30 @@
       }
     }
 
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g,
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+
     function addMessageToUI(text, sender) {
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${sender}`;
       
-      let formattedText = text;
       if (sender === 'bot') {
-        formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        let safeText = escapeHTML(text);
+        let formattedText = safeText.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        messageDiv.innerHTML = formattedText;
+      } else {
+        messageDiv.textContent = text;
       }
       
-      messageDiv.innerHTML = formattedText;
       chatBody.insertBefore(messageDiv, typingIndicator);
       scrollToBottom();
     }

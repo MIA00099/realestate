@@ -1,0 +1,10 @@
+🎯 **What:**
+Fixed a DOM-based Cross-Site Scripting (XSS) vulnerability in the chat widget's `addMessageToUI` function where user input or external API inputs (bot responses) were directly injected via `innerHTML` without prior sanitization.
+
+⚠️ **Risk:**
+If a malicious payload was injected via the chat input or if an attacker could manipulate the backend API response for the bot, it would execute arbitrary JavaScript within the context of the user's browser via the chat widget (DOM-based XSS). This could lead to session hijacking, defacement, or other critical consequences depending on application privileges.
+
+🛡️ **Solution:**
+Updated `addMessageToUI` to handle user and bot messages safely:
+- User messages are now rendered safely by assigning the input directly to `textContent`, which natively prevents HTML injection.
+- Bot messages are first passed through an `escapeHTML` helper to safely encode dangerous HTML entities (`&`, `<`, `>`, `"`, `'`). The encoded strings are then formatted for Markdown-like enhancements (bolding, line breaks) before being set to `innerHTML`. This ensures formatting continues to work while safely neutralizing any potentially malicious payloads embedded in bot responses.
