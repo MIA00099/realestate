@@ -388,6 +388,7 @@
     .why-us { background: var(--bg); padding-top: 140px; }
     .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .why-img { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); position: relative;}
+    .why-img img { width: 100%; height: auto; display: block; object-fit: cover; } /* Explicit constraint to prevent horizontal overflow */
     .why-img::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.4); pointer-events: none;}
     .why-list { list-style: none; display: flex; flex-direction: column; gap: 20px;}
     .why-list li { display: flex; align-items: flex-start; gap: 16px; font-size: 17px; font-weight: 600; color: var(--navy); line-height: 1.6;}
@@ -423,7 +424,7 @@
       width: 100%; padding: 18px 24px; border: 1px solid rgba(10, 25, 47, 0.08);
       border-radius: var(--radius-sm); margin-bottom: 20px; font: inherit; outline: none;
       background: var(--bg); color: var(--navy); transition: var(--transition); font-weight: 500;
-      font-size: 16px; /* Prevent iOS auto-zoom on focus */
+      font-size: 16px; box-sizing: border-box; /* Prevent iOS auto-zoom on focus and stop container padding overflow */
     }
     input::placeholder, textarea::placeholder, select::placeholder { color: var(--muted); font-weight: 400;}
     input:focus, textarea:focus, select:focus { background: var(--white); border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-soft); }
@@ -1255,7 +1256,7 @@
         <p style="color: var(--muted); font-size: 15px; margin-top: 10px;">Describe your ideal property, budget, or investment goals in plain English, and our AI will recommend the perfect solution for you in Rwanda.</p>
       </div>
       <div class="modal-body" style="padding-top: 10px;">
-        <textarea id="matchmakerInput" placeholder="E.g., I'm looking for a commercial plot in Kigali for a new hotel development. Budget is flexible but needs good road access..." style="min-height: 120px; font-size: 16px; padding: 16px;"></textarea>
+        <textarea id="matchmakerInput" placeholder="E.g., I'm looking for a commercial plot in Kigali for a new hotel development. Budget is flexible but needs good road access..." style="width: 100%; box-sizing: border-box; min-height: 120px; font-size: 16px; padding: 16px;"></textarea>
         <button class="btn btn-primary" id="matchmakerBtn" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #d4af37 100%); border: none; font-size: 16px;">Find My Match ✨</button>
         
         <div id="matchmakerLoader" style="display: none; text-align: center; padding: 24px;">
