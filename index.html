@@ -7,25 +7,22 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-MCWMVLH5C8');
   </script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <!-- ═══════════════════════════════════════════
-       PRIMARY SEO META
+       PRIMARY SEO META 
   ═══════════════════════════════════════════ -->
   <title>MENU Real Estate Group | Buy, Sell & Manage Property in Rwanda</title>
   <meta name="description" content="Discover top-tier real estate services in Kigali and across Rwanda. MENU Real Estate Group offers expert brokerage, property management, land development, and investment advisory." />
   <meta name="keywords" content="Real Estate Rwanda, Buy Land Kigali, Property Management Rwanda, Houses for sale Kigali, Commercial Property Rwanda, Land Mutation Rwanda, MENU Real Estate">
   
-  <!-- IMPORTANT: Replace the href below with your actual live website domain once hosted -->
   <link rel="canonical" href="https://www.menurealestategroup.com/" />
 
   <!-- ═══════════════════════════════════════════
-       OPEN GRAPH / SOCIAL SHARING SEO
+       OPEN GRAPH / SOCIAL SHARING SEO 
   ═══════════════════════════════════════════ -->
   <meta property="og:title" content="MENU Real Estate Group | Top Property Solutions in Rwanda">
   <meta property="og:description" content="Expert real estate brokerage, property management, and land development in Kigali, Rwanda.">
@@ -34,7 +31,7 @@
   <meta property="og:type" content="website">
 
   <!-- ═══════════════════════════════════════════
-       STRUCTURED DATA (SCHEMA MARKUP) FOR GOOGLE
+       STRUCTURED DATA (SCHEMA MARKUP) FOR GOOGLE 
   ═══════════════════════════════════════════ -->
   <script type="application/ld+json">
   {
@@ -71,15 +68,18 @@
   </script>
 
   <!-- ═══════════════════════════════════════════
-       FONT
+       FONTS 
   ═══════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Version B Main Font -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Version A Navbar Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      /* Refined Color Palette */
+      /* Refined Color Palette from Version B */
       --navy: #0a192f;
       --navy-soft: #112240;
       --gold: #d4af37;
@@ -109,6 +109,7 @@
     
     html { 
       scroll-behavior: smooth; 
+      scroll-padding-top: 90px;
       -webkit-overflow-scrolling: touch; 
     }
     
@@ -123,7 +124,7 @@
       -webkit-text-size-adjust: 100%;
     }
     
-    /* Mobile scroll lock - simple overflow only, NO position:fixed which breaks z-index on mobile */
+    /* Mobile scroll lock */
     html.scroll-locked { overflow: hidden; }
 
     /* Touch Target Optimization */
@@ -135,6 +136,7 @@
     button { touch-action: manipulation; }
     img { max-width: 100%; display: block; }
     .container { width: min(1200px, 90%); margin: 0 auto; }
+
     /* Minimum 44px tap target per Apple HIG */
     @media (max-width: 900px) {
       .tab-item, .mobile-nav-close, .hamburger { min-height: 44px; min-width: 44px; }
@@ -147,66 +149,100 @@
       pointer-events: none; z-index: -1;
     }
 
-    /* --- Navigation --- */
+    /* ═══════════════════════════════════════════
+       TOPBAR (Imported from Version A)
+    ═══════════════════════════════════════════ */
     .topbar {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(10, 25, 47, 0.03); transition: var(--transition);
+      position: fixed; top: 0; width: 100%; z-index: 200;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(7,29,51,.07);
+      transition: var(--transition);
     }
-
-    .nav { height: 100px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-
-    .brand { display: flex; align-items: center; gap: 16px; font-weight: 800; color: var(--navy); transition: var(--transition); letter-spacing: -0.5px; }
-    .brand:hover { transform: translateY(-1px); }
-    
-    .nav-logo { height: clamp(48px, 8vw, 75px); width: auto; object-fit: contain; mix-blend-mode: multiply; transition: var(--transition); }
+    .topbar.scrolled {
+      background: rgba(255,255,255,.98);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav {
+      height: 80px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
+      color: var(--navy); transition: .2s ease;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: .85; }
+    .nav-logo {
+      height: 58px; width: auto; object-fit: contain;
+      mix-blend-mode: multiply;
+    }
     .mark {
-      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: var(--white);
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
-      box-shadow: 0 10px 20px rgba(10, 25, 47, 0.15); font-size: 24px; font-weight: 800; letter-spacing: -2px; transition: var(--transition);
+      width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: var(--navy); color: var(--gold);
+      font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 800;
+      letter-spacing: -2px;
+      flex-shrink: 0;
     }
-    .brand:hover .mark { transform: rotate(-5deg) scale(1.05); box-shadow: var(--shadow-hover); }
-    .brand small { display: block; color: var(--gold); font-size: 10px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 2px;}
-
-    .links { display: flex; gap: 32px; align-items: center; color: var(--navy); font-weight: 600; font-size: 15px; }
+    .brand-text { line-height: 1.1; }
+    .brand-name { font-size: 16px; font-weight: 700; letter-spacing: .02em; color: var(--navy); }
+    .brand-sub  { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); font-family: 'Outfit', system-ui, sans-serif; font-weight: 600; }
     
+    .links { display: flex; gap: 24px; align-items: center; font-family: 'Outfit', system-ui, sans-serif; }
     .nav-link-btn {
       background: none; border: none; font: inherit; cursor: pointer;
       color: var(--navy); font-weight: 700; font-size: 15px;
       padding: 8px 0; position: relative; transition: color 0.3s ease;
-      display: flex; align-items: center; gap: 6px;
+      display: flex; align-items: center; gap: 6px; text-decoration: none;
     }
     .nav-link-btn::after {
       content: ""; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
       background: var(--gold); transition: 0.3s ease; border-radius: 2px;
     }
     .nav-link-btn:not(.drop-trigger):hover::after { width: 100%; }
-    .nav-link-btn:hover, .dropdown.active .nav-link-btn { color: var(--gold); }
+    .nav-link-btn:hover, .dropdown:hover .nav-link-btn { color: var(--gold); }
     
     .caret { font-size: 10px; transition: transform 0.3s ease; }
-    .dropdown.active .caret { transform: rotate(180deg); }
-
-    /* Dropdowns */
     .dropdown { position: relative; }
+    .dropdown:hover .caret { transform: rotate(180deg); }
     .dropdown-menu {
-      position: absolute; top: calc(100% + 20px); left: -20px; background: var(--white);
-      box-shadow: var(--shadow-lg); border-radius: var(--radius-md); padding: 16px; min-width: 300px;
-      opacity: 0; visibility: hidden; transform: translateY(15px) scale(0.98);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; gap: 4px;
+      position: absolute; top: calc(100% + 10px); left: -10px;
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-md);
+      padding: 8px;
+      min-width: 260px;
+      opacity: 0; visibility: hidden;
+      transform: translateY(8px) scale(.98);
+      transform-origin: top left;
+      transition: all .25s var(--transition);
+      border: 1px solid rgba(7,29,51,.06);
+      display: block; /* Ensure it overrides B's flex layout */
     }
-    .dropdown-menu::before { content: ""; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; }
-    
-    /* Click to open logic applied via JS adding .active class */
-    .dropdown.active .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; z-index: 1000; }
-    
+    .dropdown-menu.wide { min-width: 320px; max-height: 75vh; overflow-y: auto; }
+    .dropdown:hover .dropdown-menu,
+    .dropdown.dropdown-open .dropdown-menu {
+      opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto;
+    }
+    .dropdown-menu::before {
+      content: ''; position: absolute; top: -12px; left: 0; width: 100%; height: 12px;
+    }
     .dropdown-item {
-      padding: 14px 20px; font-size: 14px; font-weight: 600; color: var(--text); transition: var(--transition);
-      border-radius: 12px; display: flex; align-items: center; gap: 12px; border: none; background: transparent; width: 100%; text-align: left; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: var(--radius-sm);
+      font-size: 13.5px; font-weight: 600; color: var(--text);
+      transition: background .18s, color .18s, transform .18s;
+      background: transparent; border: none; width: 100%; text-align: left; cursor: pointer;
+      font-family: 'Outfit', system-ui, sans-serif;
     }
-    .dropdown-item:hover { background: var(--bg); color: var(--navy); transform: translateX(6px); }
+    .dropdown-item:hover { background: var(--gold-soft); color: var(--navy); transform: translateX(3px); }
+    .dropdown-item .di-icon { font-size: 16px; width: 20px; text-align: center; }
 
     /* ═══════════════════════════════════════════
-       ENHANCED BUTTON SYSTEM
+       ENHANCED BUTTON SYSTEM 
     ═══════════════════════════════════════════ */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -216,7 +252,6 @@
       text-decoration: none; border: none; overflow: hidden; cursor: pointer; font-family: inherit;
       -webkit-tap-highlight-color: transparent;
     }
-
     /* Ripple layer */
     .btn::before {
       content: ''; position: absolute; inset: 0; border-radius: inherit;
@@ -224,7 +259,6 @@
       opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
     }
     .btn:active::before { opacity: 1; transition: opacity 0s; }
-
     /* Shimmer sweep on hover */
     .btn::after {
       content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
@@ -259,7 +293,6 @@
     }
     .btn-dark:active { transform: translateY(-1px) scale(0.99); }
 
-    /* Disabled / loading state */
     .btn:disabled {
       opacity: 0.65; cursor: not-allowed; transform: none !important;
       box-shadow: none !important;
@@ -276,7 +309,6 @@
       100% { background-position: 200% 0; }
     }
 
-    /* Pulse glow on CTA buttons for attention */
     .btn-pulse {
       animation: btnPulse 2.8s cubic-bezier(0.4,0,0.6,1) infinite;
     }
@@ -285,7 +317,6 @@
       50% { box-shadow: 0 8px 20px rgba(212,175,55,0.35), 0 0 0 10px rgba(212,175,55,0); }
     }
 
-    /* Icon arrow bounce on hover */
     .btn .btn-arrow { display: inline-block; transition: transform 0.3s ease; }
     .btn:hover .btn-arrow { transform: translateX(4px); }
 
@@ -307,6 +338,7 @@
     h1 span, h2 span { color: var(--gold); }
     .hero p { max-width: 580px; font-size: 18px; color: var(--text); margin-bottom: 40px; font-weight: 500; line-height: 1.8; }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    
     @media (max-width: 480px) {
       .hero-actions { flex-direction: column; align-items: stretch; }
       .hero-actions .btn { width: 100%; justify-content: center; }
@@ -365,7 +397,6 @@
     }
     .solutions .section-title h2, .solutions .section-title p { color: var(--white); }
     .solutions .section-title p { opacity: 0.8; }
-
     .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; z-index: 2; }
     .project {
       background: var(--white); border-radius: var(--radius-lg); overflow: hidden;
@@ -376,7 +407,6 @@
     .project:hover { transform: translateY(-12px); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
     .project img { height: 280px; width: 100%; object-fit: cover; transition: 0.6s ease; }
     .project:hover img { transform: scale(1.05); }
-
     .project-body { padding: 40px; flex-grow: 1; display: flex; flex-direction: column; }
     .project h3 { color: var(--navy); margin-bottom: 16px; font-weight: 800; font-size: 24px; letter-spacing: -0.5px;}
     .project p { color: var(--muted); margin-bottom: 24px; font-size: 16px; flex-grow: 1; }
@@ -388,7 +418,7 @@
     .why-us { background: var(--bg); padding-top: 140px; }
     .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .why-img { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); position: relative;}
-    .why-img img { width: 100%; height: auto; display: block; object-fit: cover; } /* Explicit constraint to prevent horizontal overflow */
+    .why-img img { width: 100%; height: auto; display: block; object-fit: cover; } 
     .why-img::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.4); pointer-events: none;}
     .why-list { list-style: none; display: flex; flex-direction: column; gap: 20px;}
     .why-list li { display: flex; align-items: flex-start; gap: 16px; font-size: 17px; font-weight: 600; color: var(--navy); line-height: 1.6;}
@@ -419,12 +449,12 @@
     .contact-item { padding: 18px 0; border-bottom: 1px solid rgba(10, 25, 47, 0.06); color: var(--text); font-weight: 600; font-size: 15px; display: flex !important; align-items: center; gap: 12px; width: 100%; text-decoration: none; word-break: break-all; overflow-wrap: anywhere; }
     .contact-item:last-of-type { border-bottom: none; }
     a.contact-item { display: flex !important; }
-
+    
     input, textarea, select {
       width: 100%; padding: 18px 24px; border: 1px solid rgba(10, 25, 47, 0.08);
       border-radius: var(--radius-sm); margin-bottom: 20px; font: inherit; outline: none;
       background: var(--bg); color: var(--navy); transition: var(--transition); font-weight: 500;
-      font-size: 16px; box-sizing: border-box; /* Prevent iOS auto-zoom on focus and stop container padding overflow */
+      font-size: 16px; box-sizing: border-box; 
     }
     input::placeholder, textarea::placeholder, select::placeholder { color: var(--muted); font-weight: 400;}
     input:focus, textarea:focus, select:focus { background: var(--white); border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-soft); }
@@ -469,6 +499,7 @@
       color: var(--navy); transition: var(--transition);
     }
     .modal-close:hover { background: #fee2e2; color: #dc2626; transform: rotate(90deg); }
+    
     .modal-header h3 { font-size: clamp(22px, 5vw, 36px); color: var(--navy); font-weight: 800; line-height: 1.1; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(10, 25, 47, 0.08); letter-spacing: -0.02em;}
     .modal-header h3 span { color: var(--gold); }
     .modal-body { color: var(--text); font-size: 17px; line-height: 1.8; }
@@ -477,13 +508,14 @@
     .modal-body ul { margin-bottom: 32px; padding-left: 0; }
     .modal-body li { list-style: none; margin: 16px 0; display: flex; align-items: flex-start; gap: 16px; font-weight: 500; }
     .modal-body li::before { content: "•"; color: var(--gold); font-weight: 900; font-size: 24px; line-height: 1; margin-top: -2px;}
+
     ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
     /* ═══════════════════════════════════════════
-       HAMBURGER / MOBILE NAV
+       HAMBURGER / MOBILE NAV 
     ═══════════════════════════════════════════ */
     .hamburger {
       display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
@@ -509,8 +541,10 @@
       display: flex; flex-direction: column;
     }
     .mobile-nav.open { transform: translateX(0); }
+    
     .mobile-nav-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 24px 20px; border-bottom: 1px solid rgba(10, 25, 47, 0.06);}
     .mobile-nav-close { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: none; font-size: 20px; cursor: pointer; display: grid; place-items: center; color: var(--navy); transition: var(--transition);}
+    
     .mobile-nav-links { flex: 1; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;}
     
     .mobile-accordion-btn {
@@ -527,15 +561,16 @@
       max-height: 0; transition: max-height 0.4s ease-in-out;
     }
     .mobile-accordion-content.expanded { max-height: 1000px; }
-
+    
     .mobile-nav-links a {
       display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; font-size: 16px; font-weight: 600; color: var(--text);
       transition: background 0.2s, color 0.2s; min-height: 52px; cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
     .mobile-nav-links a:active { background: var(--bg); }
+    
     .mobile-nav-links a.primary-link { color: var(--navy); font-size: 17px; font-weight: 700; }
     .mobile-nav-links a.primary-link:hover, .mobile-nav-links a.primary-link:active { background: var(--gold-soft); color: var(--gold); }
-    /* Fix: primary-link buttons (not anchors) need same styles */
+    
     .mobile-nav-links button.primary-link {
       display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px;
       font-size: 17px; font-weight: 700; color: var(--navy); font-family: inherit;
@@ -552,14 +587,14 @@
       transition: background 0.2s, color 0.2s; min-height: 52px; cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
     .mobile-nav-links button.sub-link:active, .mobile-nav-links button.sub-link:hover { color: var(--navy); background: var(--bg); }
-
+    
     .mobile-nav-cta { padding: 0 16px 24px; display: flex; flex-direction: column; gap: 12px;}
     .mobile-nav-cta a { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; cursor: pointer; -webkit-tap-highlight-color: transparent;}
     .mobile-nav-cta .cta-wa { background: #25D366; color: var(--white);}
     .mobile-nav-cta .cta-consult { background: var(--gold); color: var(--white);}
 
     /* ═══════════════════════════════════════════
-       BOTTOM TAB BAR (App-like navigation)
+       BOTTOM TAB BAR (App-like navigation) 
     ═══════════════════════════════════════════ */
     .bottom-tab-bar {
       display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 120;
@@ -575,7 +610,7 @@
     .tab-item span { font-size: 9px; }
 
     /* ═══════════════════════════════════════════
-       MOBILE-RESPONSIVE OVERRIDES
+       MOBILE-RESPONSIVE OVERRIDES 
     ═══════════════════════════════════════════ */
     @media (max-width: 900px) {
       .links { display: none; }
@@ -583,28 +618,36 @@
       body { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
       .bottom-tab-bar { display: flex; }
       .nav { height: 72px; }
+      
       .hero { padding: 100px 0 60px; min-height: unset; }
       .hero-grid { grid-template-columns: 1fr; gap: 28px; text-align: center; }
       .hero-actions { justify-content: center; }
       .hero-card img { height: 260px; }
       .hero p { max-width: 100%; font-size: 16px; margin-left: auto; margin-right: auto; }
+      
       section { padding: 64px 0; }
       .about-grid, .vision-mission-grid { grid-template-columns: 1fr; }
       .about-card { padding: 28px 22px; }
+      
       .projects { grid-template-columns: 1fr; gap: 20px; }
       .solutions { margin: 0 8px; border-radius: 24px; padding: 64px 0; }
+      
       .core-services { grid-template-columns: 1fr; }
       .why-grid { grid-template-columns: 1fr; gap: 32px; }
       .why-img img { height: 300px; object-fit: cover; width: 100%; }
       .why-us { padding-top: 64px; }
+      
       .cta { grid-template-columns: 1fr; text-align: center; padding: 44px 24px; border-radius: 28px; }
       .cta a, .cta button { width: 100%; }
+      
       .contact-grid { grid-template-columns: 1fr; }
       .contact-card, form { padding: 24px 18px; border-radius: var(--radius-md); }
+      
       .modal-content { padding: 28px 18px; border-radius: 24px; max-height: 88vh; margin: 0; }
       .modal-overlay { align-items: flex-end; padding: 0; }
       .modal-overlay.active .modal-content { border-radius: 24px 24px 0 0; }
       .modal-body { font-size: 15px; }
+      
       input, textarea, select { padding: 14px 16px; font-size: 16px; }
       .footer-flex { flex-direction: column; text-align: center; gap: 8px; }
       .partners-section { padding: 0 0 64px 0; }
@@ -663,20 +706,12 @@
     .toast.error   { background: #ef4444; }
 
     /* ═══════════════════════════════════════════
-       CHAT WIDGET — FULLY RESPONSIVE
+       CHAT WIDGET — FULLY RESPONSIVE 
     ═══════════════════════════════════════════ */
-
-    /* Widget container: fixed to bottom-right, flex column so window stacks above toggle */
     .chat-widget {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+      display: flex; flex-direction: column; align-items: flex-end;
     }
-
     .chat-toggle {
       width: 65px; height: 65px; border-radius: 50%;
       background: linear-gradient(135deg, #1a3a5c 0%, var(--navy) 100%);
@@ -694,72 +729,38 @@
     .chat-toggle:hover  { transform: translateY(-5px) scale(1.1); animation: none; box-shadow: 0 20px 45px rgba(7,29,51,0.4), 0 0 0 4px rgba(212,175,55,0.3); }
     .chat-toggle:active { transform: scale(0.95); }
 
-    /* Chat window: desktop default */
     .chat-window {
-      width: 370px;
-      height: 560px;
-      max-height: calc(100vh - 140px);   /* never taller than viewport */
-      background: var(--white);
-      border-radius: 24px;
-      box-shadow: 0 25px 65px rgba(7,29,51,0.2);
-      display: flex; flex-direction: column; overflow: hidden;
-      margin-bottom: 16px;
-      opacity: 0; visibility: hidden;
-      transform: translateY(16px) scale(0.97);
+      width: 370px; height: 560px; max-height: calc(100vh - 140px);
+      background: var(--white); border-radius: 24px; box-shadow: 0 25px 65px rgba(7,29,51,0.2);
+      display: flex; flex-direction: column; overflow: hidden; margin-bottom: 16px;
+      opacity: 0; visibility: hidden; transform: translateY(16px) scale(0.97);
       transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), visibility 0s 0.35s;
-      transform-origin: bottom right;
-      border: 1px solid rgba(7,29,51,0.06);
+      transform-origin: bottom right; border: 1px solid rgba(7,29,51,0.06);
     }
     .chat-window.active {
-      opacity: 1; visibility: visible;
-      transform: translateY(0) scale(1);
+      opacity: 1; visibility: visible; transform: translateY(0) scale(1);
       transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), visibility 0s 0s;
     }
 
-    /* ── Mobile: shift widget up above bottom tab bar ── */
     @media (max-width: 900px) {
-      .chat-widget {
-        bottom: calc(74px + env(safe-area-inset-bottom, 0px));
-        right: 16px;
-      }
+      .chat-widget { bottom: calc(74px + env(safe-area-inset-bottom, 0px)); right: 16px; }
       .chat-toggle { width: 54px; height: 54px; }
       .chat-window {
-        width: calc(100vw - 32px);   /* 16px margin each side */
-        max-width: 400px;
-        height: calc(100vh - 200px); /* viewport minus tab bar + toggle + gaps */
-        max-height: 520px;
-        border-radius: 20px;
-        margin-bottom: 12px;
+        width: calc(100vw - 32px); max-width: 400px;
+        height: calc(100vh - 200px); max-height: 520px;
+        border-radius: 20px; margin-bottom: 12px;
       }
     }
-
     @media (max-width: 480px) {
       .chat-widget {
-        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
-        right: 12px;
-        left: 12px;              /* let widget span full width for alignment */
-        align-items: flex-end;   /* window still anchors right */
+        bottom: calc(72px + env(safe-area-inset-bottom, 0px)); right: 12px; left: 12px;
+        align-items: flex-end;
       }
       .chat-toggle { width: 52px; height: 52px; }
-      .chat-window {
-        width: 100%;             /* fills the 12px-inset widget width */
-        max-width: 100%;
-        height: calc(100vh - 180px);
-        max-height: 480px;
-        border-radius: 18px;
-        margin-bottom: 10px;
-      }
+      .chat-window { width: 100%; max-width: 100%; height: calc(100vh - 180px); max-height: 480px; border-radius: 18px; margin-bottom: 10px; }
     }
+    @media (max-width: 380px) { .chat-window { height: calc(100vh - 170px); max-height: 440px; border-radius: 16px; } }
 
-    @media (max-width: 380px) {
-      .chat-window {
-        height: calc(100vh - 170px);
-        max-height: 440px;
-        border-radius: 16px;
-      }
-    }
-
-    /* ── Chat inner elements ── */
     .chat-header {
       background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
       color: var(--white); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
@@ -771,17 +772,15 @@
       box-shadow: 0 0 0 3px rgba(16,185,129,0.25); flex-shrink: 0;
       animation: statusPulse 2s ease-in-out infinite;
     }
-    @keyframes statusPulse {
-      0%,100% { box-shadow: 0 0 0 3px rgba(16,185,129,0.25); }
-      50%      { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
-    }
+    @keyframes statusPulse { 0%,100% { box-shadow: 0 0 0 3px rgba(16,185,129,0.25); } 50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); } }
+    
     .chat-close {
       background: rgba(255,255,255,0.12); border: none; color: var(--white); font-size: 17px;
       cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
       transition: background 0.2s, transform 0.2s; flex-shrink: 0;
     }
     .chat-close:hover { background: rgba(255,255,255,0.22); transform: rotate(90deg); }
-
+    
     .chat-body {
       flex: 1; padding: 16px; overflow-y: auto; overflow-x: hidden;
       display: flex; flex-direction: column; gap: 12px; background: #f1f5f9;
@@ -793,36 +792,28 @@
       animation: fadeIn 0.3s ease forwards;
     }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    
     .message.bot  { background: var(--white); color: var(--text); border-bottom-left-radius: 4px; box-shadow: 0 2px 10px rgba(7,29,51,0.07); align-self: flex-start; border: 1px solid rgba(7,29,51,0.05); }
     .message.user { background: linear-gradient(135deg, #e2c040, var(--gold)); color: var(--white); border-bottom-right-radius: 4px; align-self: flex-end; box-shadow: 0 4px 14px rgba(200,146,47,0.25); }
-
-    .chat-footer {
-      padding: 12px 14px; background: var(--white);
-      border-top: 1px solid rgba(7,29,51,0.07);
-      display: flex; gap: 8px; align-items: center; flex-shrink: 0;
-    }
+    
+    .chat-footer { padding: 12px 14px; background: var(--white); border-top: 1px solid rgba(7,29,51,0.07); display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
     .chat-input {
-      flex: 1; min-width: 0;   /* allow shrinking inside flex */
-      padding: 11px 16px; border: 1.5px solid #e2e8f0; border-radius: 99px; outline: none;
-      font-family: inherit; font-size: 14px; transition: border-color 0.25s, box-shadow 0.25s;
-      margin-bottom: 0; background: #f8fafc; color: var(--navy);
+      flex: 1; min-width: 0; padding: 11px 16px; border: 1.5px solid #e2e8f0; border-radius: 99px; outline: none;
+      font-family: inherit; font-size: 14px; transition: border-color 0.25s, box-shadow 0.25s; margin-bottom: 0; background: #f8fafc; color: var(--navy);
     }
     .chat-input:focus { border-color: var(--gold); background: var(--white); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+    
     .chat-send {
-      width: 42px; height: 42px; min-width: 42px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--navy), #1a3a5c);
-      color: var(--white); border: none; cursor: pointer; display: grid; place-items: center;
-      transition: all 0.25s ease; flex-shrink: 0;
+      width: 42px; height: 42px; min-width: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), #1a3a5c); color: var(--white); border: none; cursor: pointer; display: grid; place-items: center; transition: all 0.25s ease; flex-shrink: 0;
     }
     .chat-send:hover  { background: linear-gradient(135deg, #e2c040, var(--gold)); transform: scale(1.08); box-shadow: 0 6px 18px rgba(212,175,55,0.35); }
     .chat-send:active { transform: scale(0.94); }
     .chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
+    
     .typing-indicator {
       display: none; align-self: flex-start; background: var(--white);
       padding: 12px 16px; border-radius: 18px; border-bottom-left-radius: 4px;
-      box-shadow: 0 2px 10px rgba(7,29,51,0.07); gap: 5px; align-items: center;
-      border: 1px solid rgba(7,29,51,0.05);
+      box-shadow: 0 2px 10px rgba(7,29,51,0.07); gap: 5px; align-items: center; border: 1px solid rgba(7,29,51,0.05);
     }
     .typing-indicator.active { display: flex; }
     .typing-dot { width: 7px; height: 7px; background: #94a3b8; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
@@ -830,57 +821,56 @@
     .typing-dot:nth-child(2) { animation-delay: -0.16s; }
     @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0.5); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
 
-    .message.error-msg { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; align-self: flex-start; border-bottom-left-radius: 4px; }
-    .chat-offline-banner {
-      background: linear-gradient(135deg, #fff7ed, #fef3c7);
-      border: 1px solid rgba(212,175,55,0.3); border-radius: 12px;
-      padding: 12px 14px; font-size: 13px; color: #92400e;
-      display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; flex-shrink: 0;
-    }
   </style>
 </head>
 <body>
-  <header class="topbar">
+
+  <!-- ═══════════════════════════════════════════
+       NEW HEADER IMPORTED FROM VERSION A
+  ═══════════════════════════════════════════ -->
+  <header class="topbar" id="topbar">
     <div class="container nav">
-      <button data-scroll-to="top" class="brand" aria-label="Menu Real Estate Group home" style="background:transparent; border:none; padding:0;">
-        <img src="logo.jpg" alt="Menu Real Estate Group Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
-        <div id="fallback-logo" style="display: none; align-items: center; gap: 16px;">
+      <a href="#top" class="brand" aria-label="Menu Real Estate Group home" data-scroll-to="top">
+        <img src="logo.jpg" alt="Menu Real Estate Group" class="nav-logo"
+             onerror="this.style.display='none'; document.getElementById('fb-logo').style.display='flex';">
+        <div id="fb-logo" style="display:none; align-items:center; gap:12px;">
           <div class="mark">M</div>
-          <div style="text-align:left;">MENU<br><small>REAL ESTATE GROUP</small></div>
-        </div>
-      </button>
-      
-      <nav class="links">
-        <button data-scroll-to="about" class="nav-link-btn">About Us</button>
-        
-        <div class="dropdown">
-          <button class="nav-link-btn drop-trigger">Services <span class="caret">▼</span></button>
-          <div class="dropdown-menu" style="min-width: 360px; max-height: 70vh; overflow-y: auto;">
-            <button class="dropdown-item" data-modal-target="brokerage">🤝 Brokerage & Transactions</button>
-            <button class="dropdown-item" data-modal-target="management">🏢 Property Management & Operations</button>
-            <button class="dropdown-item" data-modal-target="valuation">📊 Valuation & Advisory</button>
-            <button class="dropdown-item" data-modal-target="development">🏗️ Development & Project Services</button>
-            <button class="dropdown-item" data-modal-target="architectural">📐 Architectural & Planning</button>
-            <button class="dropdown-item" data-modal-target="construction">🚜 Construction Support</button>
-            <button class="dropdown-item" data-modal-target="community">🏘️ Community & Affordable Housing</button>
-            <button class="dropdown-item" data-modal-target="investment">📈 Investment Guidance</button>
-            <button class="dropdown-item" data-modal-target="consultation">💬 Real Estate Consultation</button>
+          <div class="brand-text">
+            <div class="brand-name">MENU</div>
+            <div class="brand-sub">Real Estate Group</div>
           </div>
         </div>
-        
+      </a>
+      
+      <nav class="links" aria-label="Main navigation">
+        <a href="#about" class="nav-link-btn">About Us</a>
+        <div class="dropdown">
+          <button class="nav-link-btn drop-trigger">Services <span class="caret">▼</span></button>
+          <div class="dropdown-menu wide">
+            <button class="dropdown-item" data-modal-target="brokerage"><span class="di-icon">🤝</span> Brokerage &amp; Transactions</button>
+            <button class="dropdown-item" data-modal-target="management"><span class="di-icon">🏢</span> Property Management</button>
+            <button class="dropdown-item" data-modal-target="valuation"><span class="di-icon">📊</span> Valuation &amp; Advisory</button>
+            <button class="dropdown-item" data-modal-target="development"><span class="di-icon">🏗️</span> Development &amp; Projects</button>
+            <button class="dropdown-item" data-modal-target="architectural"><span class="di-icon">📐</span> Architectural &amp; Planning</button>
+            <button class="dropdown-item" data-modal-target="construction"><span class="di-icon">🚜</span> Construction Support</button>
+            <button class="dropdown-item" data-modal-target="community"><span class="di-icon">🏘️</span> Community Housing</button>
+            <button class="dropdown-item" data-modal-target="investment"><span class="di-icon">📈</span> Investment Guidance</button>
+            <button class="dropdown-item" data-modal-target="consultation"><span class="di-icon">💬</span> Real Estate Consultation</button>
+          </div>
+        </div>
         <div class="dropdown">
           <button class="nav-link-btn drop-trigger">Solutions <span class="caret">▼</span></button>
           <div class="dropdown-menu">
-            <button class="dropdown-item" data-modal-target="commercial">🏢 Commercial Properties</button>
-            <button class="dropdown-item" data-modal-target="residential">🏡 Residential Properties</button>
-            <button class="dropdown-item" data-modal-target="agricultural">🌾 Agricultural Land & Farming</button>
+            <button class="dropdown-item" data-modal-target="commercial"><span class="di-icon">🏢</span> Commercial Properties</button>
+            <button class="dropdown-item" data-modal-target="residential"><span class="di-icon">🏡</span> Residential Properties</button>
+            <button class="dropdown-item" data-modal-target="agricultural"><span class="di-icon">🌾</span> Agricultural &amp; Farming</button>
           </div>
         </div>
-        
-        <button data-scroll-to="why-us" class="nav-link-btn">Why Choose Us</button>
-        <button class="btn btn-primary btn-pulse" data-scroll-to="contact">Get Consultation <span class="btn-arrow">→</span></button>
+        <a href="#why-us" class="nav-link-btn">Why Choose Us</a>
+        <a href="#contact" class="btn btn-primary btn-pulse">Get Consultation <span class="btn-arrow">→</span></a>
       </nav>
 
+      <!-- Kept from Version B: The Hamburger menu for mobile access -->
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" data-action="toggle-nav">
         <span></span><span></span><span></span>
       </button>
@@ -894,7 +884,7 @@
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
     <div class="mobile-nav-header">
       <div class="brand" style="gap:12px;">
-        <div class="mark">M</div>
+        <div class="mark" style="font-family:'Playfair Display',serif;">M</div>
         <div style="font-size:14px;font-weight:800;color:var(--navy);">MENU<br><small style="color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase;">Real Estate Group</small></div>
       </div>
       <button class="mobile-nav-close" aria-label="Close menu" data-action="close-nav">✕</button>
@@ -902,7 +892,6 @@
     
     <div class="mobile-nav-links">
       <button class="primary-link" data-scroll-to="about" data-action="close-nav" style="background:transparent; border:none; text-align:left; width:100%;">🏢 About Us</button>
-
       <button class="mobile-accordion-btn expanded">
         Services 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -918,7 +907,7 @@
         <button class="sub-link" data-modal-target="investment">📈 Investment Guidance</button>
         <button class="sub-link" data-modal-target="consultation">💬 Real Estate Consultation</button>
       </div>
-
+      
       <button class="mobile-accordion-btn">
         Solutions 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -928,7 +917,7 @@
         <button class="sub-link" data-modal-target="residential">🏡 Residential Properties</button>
         <button class="sub-link" data-modal-target="agricultural">🌾 Agricultural Land &amp; Farming</button>
       </div>
-
+      
       <button class="primary-link" style="margin-top:8px; background:transparent; border:none; text-align:left; width:100%;" data-scroll-to="why-us" data-action="close-nav">⭐ Why Choose Us</button>
       <button class="primary-link" data-scroll-to="contact" data-action="close-nav" style="background:transparent; border:none; text-align:left; width:100%;">📞 Contact</button>
     </div>
@@ -994,7 +983,6 @@
           <h2>About <span>Us</span></h2>
           <p>Where real estate begins, grows, and is cared for—forever.</p>
         </div>
-
         <div class="about-grid">
           <div class="about-card">
             <div class="about-icon">🏢</div>
@@ -1015,7 +1003,6 @@
             <p>With a strong commitment to professionalism, integrity, and client success, we stand as a trusted partner for all real estate needs in Rwanda.</p>
           </div>
         </div>
-
         <div class="vision-mission-grid">
           <div class="about-card vision-card">
             <div class="about-icon" style="background: var(--gold-soft); color: var(--gold);">👁️</div>
@@ -1316,7 +1303,16 @@
   // ═══════════════════════════════════════════════════════════════
   //  MENU REAL ESTATE GROUP — MOBILE-FIRST JS
   // ═══════════════════════════════════════════════════════════════
+
   document.addEventListener('DOMContentLoaded', () => {
+
+    // ── SCROLL TOPBAR LOGIC (Imported from Version A) ──────────────
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      if (topbar) {
+          topbar.classList.toggle('scrolled', window.scrollY > 30);
+      }
+    }, { passive: true });
 
     // ── 1. MODAL DATA ──────────────────────────────────────────────
     const modalData = {
@@ -1414,7 +1410,6 @@
     const matchmakerModal = document.getElementById('matchmakerModal');
 
     // ── 3. HELPER FUNCTIONS ────────────────────────────────────────
-    // Lock scroll on <html> not <body> — avoids position:fixed destroying mobile z-index layers
     const lockScroll   = () => document.documentElement.classList.add('scroll-locked');
     const unlockScroll = () => document.documentElement.classList.remove('scroll-locked');
     
@@ -1428,7 +1423,6 @@
     };
 
     const scrollToSection = (id) => {
-      // kept for form submission usage
       const el = document.getElementById(id);
       if (!el && id !== 'top') return;
       const top = id === 'top' ? 0 : (el.getBoundingClientRect().top + window.scrollY - 85);
@@ -1444,6 +1438,10 @@
           mobileNav.classList.remove('open');
           mobileOverlayEl.classList.remove('visible');
       }
+      // Close any open desktop dropdowns
+      document.querySelectorAll('.dropdown.dropdown-open').forEach(dd => {
+          dd.classList.remove('dropdown-open');
+      });
       modalHeader.innerHTML = `<h3>${d.title}</h3>`;
       modalBody.innerHTML = d.content;
       pageModal.classList.add('active');
@@ -1467,28 +1465,7 @@
       }
     };
 
-    // ── 4. DESKTOP DROPDOWN LOGIC ──────────────────────────────────
-    const desktopDropdowns = document.querySelectorAll('.links .dropdown');
-    
-    desktopDropdowns.forEach(drop => {
-        const triggerBtn = drop.querySelector('.drop-trigger');
-        if (triggerBtn) {
-            triggerBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                desktopDropdowns.forEach(other => { if (other !== drop) other.classList.remove('active'); });
-                drop.classList.toggle('active');
-            });
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.links .dropdown')) {
-            desktopDropdowns.forEach(drop => drop.classList.remove('active'));
-        }
-    });
-
-    // ── 5. UNIFIED CLICK DELEGATION (works on mobile & desktop) ────
+    // ── 4. UNIFIED CLICK DELEGATION ────────────────────────────────
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-scroll-to],[data-modal-target],[data-action]');
         if (!btn) return;
@@ -1501,12 +1478,14 @@
         if (scrollTo !== null) {
             e.preventDefault();
             const wasNavOpen = mobileNav.classList.contains('open');
+            
             if (wasNavOpen) {
                 hamburger.classList.remove('open');
                 mobileNav.classList.remove('open');
                 mobileOverlayEl.classList.remove('visible');
                 unlockScroll();
             }
+            
             setTimeout(() => {
                 if (scrollTo === 'top') {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1516,9 +1495,10 @@
                 if (!target) return;
                 const offset = 85;
                 const top = target.getBoundingClientRect().top + window.scrollY - offset;
-                try { window.scrollTo({ top, behavior: 'smooth' }); }
+                try { window.scrollTo({ top, behavior: 'smooth' }); } 
                 catch (err) { window.scrollTo(0, top); }
             }, wasNavOpen ? 400 : 0);
+            
             return;
         }
 
@@ -1531,33 +1511,36 @@
 
         // ── Named actions ──────────────────────────────────────────
         if (action === 'toggle-nav') {
-            e.preventDefault();
             toggleNav();
             return;
         }
+        
         if (action === 'close-nav') {
-            e.preventDefault();
             if (mobileNav.classList.contains('open')) toggleNav();
             return;
         }
+
         if (action === 'close-page-modal' || (action === 'close-page-modal-bg' && e.target === pageModal)) {
             e.preventDefault();
             pageModal.classList.remove('active');
             unlockScroll();
             return;
         }
+
         if (action === 'open-matchmaker') {
             e.preventDefault();
             matchmakerModal.classList.add('active');
             lockScroll();
             return;
         }
+
         if (action === 'close-matchmaker' || (action === 'close-matchmaker-bg' && e.target === matchmakerModal)) {
             e.preventDefault();
             matchmakerModal.classList.remove('active');
             unlockScroll();
             return;
         }
+
         if (action === 'toggle-chat') {
             e.preventDefault();
             const cw = document.getElementById('chatWindow');
@@ -1571,6 +1554,7 @@
             }
             return;
         }
+
         if (action === 'inquire-from-modal') {
             e.preventDefault();
             pageModal.classList.remove('active');
@@ -1578,24 +1562,26 @@
             const contact = document.getElementById('contact');
             if (contact) {
                 const top = contact.getBoundingClientRect().top + window.scrollY - 85;
-                try { window.scrollTo({ top, behavior: 'smooth' }); }
+                try { window.scrollTo({ top, behavior: 'smooth' }); } 
                 catch (err) { window.scrollTo(0, top); }
             }
             return;
         }
     });
 
-    // ── 6. MOBILE ACCORDION ────────────────────────────────────────
+    // ── 5. MOBILE ACCORDION ────────────────────────────────────────
     document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // don't bubble to the delegated handler
+            e.stopPropagation();
             const panel = btn.nextElementSibling;
             const isOpen = btn.classList.contains('expanded');
+            
             // Close all
             document.querySelectorAll('.mobile-accordion-btn').forEach(b => {
                 b.classList.remove('expanded');
                 if (b.nextElementSibling) b.nextElementSibling.classList.remove('expanded');
             });
+            
             // Toggle clicked one
             if (!isOpen) {
                 btn.classList.add('expanded');
@@ -1604,7 +1590,27 @@
         });
     });
 
-    // ── 6. FORM SUBMISSION ─────────────────────────────────────────
+    // ── 6. DROPDOWN CLICK-TOGGLE (touch support) ────────────────────
+    document.querySelectorAll('.drop-trigger').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dd = trigger.closest('.dropdown');
+            if (!dd) return;
+            document.querySelectorAll('.dropdown.dropdown-open').forEach(d => {
+                if (d !== dd) d.classList.remove('dropdown-open');
+            });
+            dd.classList.toggle('dropdown-open');
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown.dropdown-open').forEach(d => {
+                d.classList.remove('dropdown-open');
+            });
+        }
+    });
+
+    // ── 7. FORM SUBMISSION ─────────────────────────────────────────
     const consultForm = document.getElementById('consultForm');
     if (consultForm) {
         consultForm.addEventListener('submit', async (e) => {
@@ -1640,7 +1646,7 @@
       btn.style.setProperty('--ry', ((e.clientY - r.top) / r.height * 100) + '%');
     });
 
-    // ── 7. LLM FEATURES — CLAUDE API (MATCHMAKER & CHAT) ──────────
+    // ── 8. LLM FEATURES — CLAUDE API (MATCHMAKER & CHAT) ──────────
     const CLAUDE_API_URL = 'https://api.anthropic.com/v1/messages';
     const CLAUDE_MODEL   = 'claude-sonnet-4-20250514';
 
@@ -1650,6 +1656,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ model: CLAUDE_MODEL, max_tokens, system, messages })
       });
+
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
         throw new Error(err?.error?.message || `HTTP ${resp.status}`);
@@ -1664,7 +1671,7 @@
     const chatBodyEl   = document.getElementById('chatBody');
     const chatTypingInd= document.getElementById('typingIndicator');
     let chatHistory    = [];
-
+    
     const CHAT_SYSTEM = `You are a warm, professional customer support assistant for MENU Real Estate Group — a licensed real estate company in Rwanda. Keep replies concise (2-4 sentences max unless detail is truly needed). Only answer based on company info below. For anything outside this scope, kindly direct the customer to our team.
 
 COMPANY INFO:
@@ -1696,6 +1703,7 @@ COMPANY INFO:
         const sendBtn = chatForm.querySelector('.chat-send');
         chatInput.value = '';
         sendBtn.disabled = true;
+
         appendMsg(text, 'user');
         chatHistory.push({ role: 'user', content: text });
 
@@ -1731,8 +1739,8 @@ COMPANY INFO:
         const inputEl  = document.getElementById('matchmakerInput');
         const loaderEl = document.getElementById('matchmakerLoader');
         const resultEl = document.getElementById('matchmakerResult');
+        
         const userInput = inputEl.value.trim();
-
         if (!userInput) { showToast('Please describe your real estate goals first.', 'error'); return; }
 
         matchmakerBtn.classList.add('loading');
@@ -1741,12 +1749,10 @@ COMPANY INFO:
         loaderEl.style.display = 'block';
 
         const MATCH_SYSTEM = `You are a friendly expert real estate advisor for MENU Real Estate Group in Rwanda.
-
 Your task:
 1. Understand the user's request.
 2. Identify which 1-2 of MENU's services best fit (Brokerage, Property Management, Valuation, Development, Architectural, Construction Support, Community Housing, Investment Guidance, or Consultation).
 3. Give a short, optimistic overview of the Rwandan market relevant to their request.
-
 Format your response as clean HTML using only <h4>, <p>, <ul>, and <li> tags. Keep it under 160 words. Do NOT wrap in backticks or code fences. No markdown.`;
 
         try {
@@ -1755,7 +1761,7 @@ Format your response as clean HTML using only <h4>, <p>, <ul>, and <li> tags. Ke
             messages: [{ role: 'user', content: userInput }],
             max_tokens: 600
           });
-
+          
           resultEl.innerHTML = replyHTML + `
             <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
               <button class="btn btn-dark" style="width:100%;justify-content:center;" data-action="inquire-from-modal">
@@ -1779,7 +1785,7 @@ Format your response as clean HTML using only <h4>, <p>, <ul>, and <li> tags. Ke
       });
     }
 
-    // Escape Key logic added
+    // Escape Key logic
     document.addEventListener('keydown', e => {
       if (e.key !== 'Escape') return;
       if (pageModal?.classList.contains('active')) {
@@ -1793,25 +1799,27 @@ Format your response as clean HTML using only <h4>, <p>, <ul>, and <li> tags. Ke
       }
     });
 
-    // ── 8. BOTTOM TAB BAR ACTIVE STATE ─────────────────────────────
+    // ── 9. BOTTOM TAB BAR ACTIVE STATE ─────────────────────────────
     const tabSections = [
       { id: 'top',           tab: document.getElementById('tab-home') },
       { id: 'core-services', tab: document.getElementById('tab-services') },
       { id: 'solutions',     tab: document.getElementById('tab-solutions') },
       { id: 'contact',       tab: document.getElementById('tab-contact') },
     ];
-
+    
     const updateActiveTab = () => {
       const scrollMid = window.scrollY + window.innerHeight / 2;
       let activeTab = tabSections[0].tab;
+      
       tabSections.forEach(({ id, tab }) => {
         const el = document.getElementById(id);
         if (el && el.offsetTop <= scrollMid) activeTab = tab;
       });
+      
       document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
       if (activeTab) activeTab.classList.add('active');
     };
-
+    
     window.addEventListener('scroll', updateActiveTab, { passive: true });
     updateActiveTab();
   });
