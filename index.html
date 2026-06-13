@@ -344,7 +344,7 @@
     .solutions .section-title h2, .solutions .section-title p { color: var(--white); }
     .solutions .section-title p { opacity: 0.8; }
     
-    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; position: relative; z-index: 2; }
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 26px; position: relative; z-index: 2; }
     .project {
       background: var(--white);
       border-radius: 30px;
@@ -542,6 +542,33 @@
     .modal-body ul { margin-bottom: 24px; padding-left: 10px; }
     .modal-body li { list-style: none; margin: 12px 0; display: flex; align-items: flex-start; gap: 12px; font-weight: 500; }
     .modal-body li::before { content: "•"; color: var(--gold); font-weight: 900; font-size: 24px; line-height: 1; }
+    .modal-hero-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 26px;
+      box-shadow: 0 18px 42px rgba(7, 29, 51, 0.14);
+    }
+    .modal-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .modal-feature-card {
+      background: var(--bg);
+      border: 1px solid rgba(7, 29, 51, 0.05);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .modal-feature-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .modal-feature-card span { color: var(--muted); font-size: 14px; }
     
     @media (max-width: 980px) {
       .links { display: none; }
@@ -559,7 +586,7 @@
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a href="#" class="brand" aria-label="Menu Real Estate Group home">
+      <a href="index.html" class="brand" aria-label="Menu Real Estate Group home">
         <!-- Replace 'logo.jpg' with the actual filename or URL of your uploaded logo -->
         <img src="logo.jpg" alt="Menu Real Estate Group Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
         
@@ -574,23 +601,24 @@
         <div class="dropdown">
           <a href="#core-services">Services <span style="font-size: 10px; margin-left: 2px; display: inline-block; vertical-align: middle;">▼</span></a>
           <div class="dropdown-menu" style="min-width: 340px; max-height: 70vh; overflow-y: auto;">
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('brokerage')">🤝 Brokerage & Transactions</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('management')">🏢 Property Management & Operations</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('valuation')">📊 Valuation & Advisory</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('development')">🏗️ Development & Project Services</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('architectural')">📐 Architectural & Planning Consulting</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('construction')">🚜 Construction Support</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('community')">🏘️ Community & Affordable Housing</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('investment')">📈 Investment Guidance</a>
-            <a href="#core-services" class="dropdown-item" onclick="openPageModal('consultation')">💬 Real Estate Consultation</a>
+            <a href="services/real-estate-consultation.html" class="dropdown-item">💬 Real Estate Consultation</a>
+            <a href="services/brokerage-transactions.html" class="dropdown-item">🤝 Brokerage & Transactions</a>
+            <a href="services/property-management-operations.html" class="dropdown-item">🏢 Property Management & Operations</a>
+            <a href="services/valuation-advisory.html" class="dropdown-item">📊 Valuation & Advisory</a>
+            <a href="services/development-project-services.html" class="dropdown-item">🏗️ Development & Project Services</a>
+            <a href="services/architectural-planning-consulting.html" class="dropdown-item">📐 Architectural & Planning Consulting</a>
+            <a href="services/construction-support.html" class="dropdown-item">🚜 Construction Support</a>
+            <a href="services/community-affordable-housing.html" class="dropdown-item">🏘️ Community & Affordable Housing</a>
+            <a href="services/investment-guidance.html" class="dropdown-item">📈 Investment Guidance</a>
           </div>
         </div>
         <div class="dropdown">
           <a href="#solutions">Solutions <span style="font-size: 10px; margin-left: 2px; display: inline-block; vertical-align: middle;">▼</span></a>
           <div class="dropdown-menu">
-            <a href="#solutions" class="dropdown-item" onclick="openPageModal('commercial')">🏢 Commercial Properties</a>
-            <a href="#solutions" class="dropdown-item" onclick="openPageModal('residential')">🏡 Residential Properties</a>
-            <a href="#solutions" class="dropdown-item" onclick="openPageModal('agricultural')">🌾 Agricultural Land & Farming</a>
+            <a href="services/commercial-property-solutions.html" class="dropdown-item">🏢 Commercial Properties</a>
+            <a href="services/residential-property-solutions.html" class="dropdown-item">🏡 Residential Properties</a>
+            <a href="services/land-property-solutions.html" class="dropdown-item">🏞️ Land Property Solutions</a>
+            <a href="services/agricultural-land-farming.html" class="dropdown-item">🌾 Agricultural Land & Farming</a>
           </div>
         </div>
         <a href="#why-us">Why Choose Us</a>
@@ -669,70 +697,70 @@
       <div class="container">
         <div class="section-title">
           <h2>Our <span>Core Services</span></h2>
-          <p>We provide comprehensive property solutions customized for the Rwandan market. Click on any service to learn more.</p>
+          <p>We provide comprehensive property solutions customized for the Rwandan market. Click on any service to open its dedicated page with images and full details.</p>
         </div>
         <div class="core-services">
-          <div class="core-service-item" onclick="openPageModal('brokerage')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/real-estate-consultation.html'" role="button" tabindex="0">
+            <div class="core-service-icon">💬</div>
+            <div>
+              <h4>Real Estate Consultation</h4>
+              <p>Expert guidance on market research, feasibility studies, legal due diligence, and land mutation...</p>
+            </div>
+          </div>
+          <div class="core-service-item" onclick="window.location.href='services/brokerage-transactions.html'" role="button" tabindex="0">
             <div class="core-service-icon">🤝</div>
             <div>
               <h4>Brokerage & Transactions</h4>
               <p>Buying, selling, and renting of residential and commercial properties...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('management')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/property-management-operations.html'" role="button" tabindex="0">
             <div class="core-service-icon">🏢</div>
             <div>
               <h4>Property Management & Operations</h4>
               <p>Tenant sourcing, rent collection, maintenance coordination...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('valuation')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/valuation-advisory.html'" role="button" tabindex="0">
             <div class="core-service-icon">📊</div>
             <div>
               <h4>Valuation & Advisory</h4>
               <p>Professional property valuation, market research, feasibility studies...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('development')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/development-project-services.html'" role="button" tabindex="0">
             <div class="core-service-icon">🏗️</div>
             <div>
               <h4>Development & Project Services</h4>
               <p>Building project development, land subdivision, project coordination...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('architectural')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/architectural-planning-consulting.html'" role="button" tabindex="0">
             <div class="core-service-icon">📐</div>
             <div>
               <h4>Architectural & Planning Consulting</h4>
               <p>Building design, drafting, planning, and landscape advisory...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('construction')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/construction-support.html'" role="button" tabindex="0">
             <div class="core-service-icon">🚜</div>
             <div>
               <h4>Construction Support</h4>
               <p>Leasing of construction and civil engineering machinery...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('community')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/community-affordable-housing.html'" role="button" tabindex="0">
             <div class="core-service-icon">🏘️</div>
             <div>
               <h4>Community & Affordable Housing</h4>
               <p>Volunteer-based low-cost housing development and repair initiatives...</p>
             </div>
           </div>
-          <div class="core-service-item" onclick="openPageModal('investment')" role="button" tabindex="0">
+          <div class="core-service-item" onclick="window.location.href='services/investment-guidance.html'" role="button" tabindex="0">
             <div class="core-service-icon">📈</div>
             <div>
               <h4>Investment Guidance</h4>
               <p>Data-driven advice on high-growth locations, risk assessment...</p>
-            </div>
-          </div>
-          <div class="core-service-item" onclick="openPageModal('consultation')" role="button" tabindex="0">
-            <div class="core-service-icon">💬</div>
-            <div>
-              <h4>Real Estate Consultation</h4>
-              <p>Expert guidance on market research, feasibility studies...</p>
             </div>
           </div>
         </div>
@@ -743,10 +771,10 @@
       <div class="container">
         <div class="section-title">
           <h2>Specialized <span>Solutions</span></h2>
-          <p>Explore our targeted portfolios designed for investors, businesses, families, and the agricultural sector. Click to learn more.</p>
+          <p>Explore our targeted portfolios designed for investors, businesses, families, and the agricultural sector. Click to open a dedicated page with images and full details.</p>
         </div>
         <div class="projects">
-          <article class="project" onclick="openPageModal('commercial')" role="button" tabindex="0">
+          <article class="project" onclick="window.location.href='services/commercial-property-solutions.html'" role="button" tabindex="0">
             <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=85" alt="Commercial Building" loading="lazy">
             <div class="project-body">
               <h3>Commercial Property Solutions</h3>
@@ -754,7 +782,7 @@
               <div class="read-more">View Full Details</div>
             </div>
           </article>
-          <article class="project" onclick="openPageModal('residential')" role="button" tabindex="0">
+          <article class="project" onclick="window.location.href='services/residential-property-solutions.html'" role="button" tabindex="0">
             <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85" alt="Residential Home" loading="lazy">
             <div class="project-body">
               <h3>Residential Property Solutions</h3>
@@ -762,7 +790,15 @@
               <div class="read-more">View Full Details</div>
             </div>
           </article>
-          <article class="project" onclick="openPageModal('agricultural')" role="button" tabindex="0">
+          <article class="project" onclick="window.location.href='services/land-property-solutions.html'" role="button" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Land plots and development area" loading="lazy">
+            <div class="project-body">
+              <h3>Land Property Solutions</h3>
+              <p>Guidance for finding, verifying, buying, selling, and developing secure land opportunities across Rwanda.</p>
+              <div class="read-more">View Full Details</div>
+            </div>
+          </article>
+          <article class="project" onclick="window.location.href='services/agricultural-land-farming.html'" role="button" tabindex="0">
             <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=85" alt="Agricultural Land" loading="lazy">
             <div class="project-body">
               <h3>Agricultural Land & Farming</h3>
@@ -840,12 +876,7 @@
             <div class="contact-item">📍 Address: Inyarurembo, Kiyovu, Nyarugenge, City of Kigali</div>
             <div class="contact-item">📞 Phone: +250 782 616 150</div>
             <div class="contact-item">✉️ Email: menurealestategroup@gmail.com</div>
-            <br>
-            <a class="btn btn-dark" href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
-            
-            <div class="partners">
-              <h4>Our Partners</h4>
-            <div class="contact-item">⏱️ Working Hours: Mon - Sat, 8:00 AM - 6:00 PM</div>
+            <div class="contact-item">⏱️ Working Hours: Monday - Friday, 9:00 AM - 5:00 PM</div>
             <br>
             <a class="btn btn-dark" href="https://wa.me/250782616150?text=Hello%20Menu%20Real%20Estate%20Group%2C%20I%20want%20a%20consultation." target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
@@ -855,9 +886,12 @@
             <input type="tel" placeholder="Phone number" required>
             <select required>
               <option value="">Choose solution interest</option>
+              <option>Real Estate Consultation</option>
               <option>Commercial Property Solutions</option>
               <option>Residential Property Solutions</option>
+              <option>Land Property Solutions</option>
               <option>Agricultural Land & Farming</option>
+              <option>Architectural & Planning Consulting</option>
               <option>General Real Estate Consultation</option>
             </select>
             <textarea placeholder="Tell us about your project or inquiry..."></textarea>
@@ -914,7 +948,20 @@
       },
       'architectural': {
         title: 'Architectural <span>& Planning Consulting</span>',
-        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Building design, drafting, planning, and landscape advisory through qualified professionals.</p>
+        content: `<img class="modal-hero-image" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=85" alt="Architectural planning table with drawings and tools">
+        <p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">We help clients turn land and property ideas into clear, compliant, and buildable plans through qualified architectural and planning professionals.</p>
+        <div class="modal-feature-grid">
+          <div class="modal-feature-card"><strong>Building Design</strong><span>Concept layouts, floor planning, and modern design direction for residential or commercial projects.</span></div>
+          <div class="modal-feature-card"><strong>Planning Support</strong><span>Guidance for district requirements, construction permits, and architectural compliance.</span></div>
+          <div class="modal-feature-card"><strong>Landscape Advisory</strong><span>Outdoor layout, green areas, access planning, and site-use recommendations.</span></div>
+        </div>
+        <h4>What We Support</h4>
+        <ul>
+          <li>Architectural design concepts and drafting coordination</li>
+          <li>Site planning for land development and construction projects</li>
+          <li>Permit preparation guidance and compliance support</li>
+          <li>Professional advice before construction begins</li>
+        </ul>
         <div style="margin-top: 35px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
       },
       'construction': {
@@ -934,7 +981,20 @@
       },
       'consultation': {
         title: 'Real Estate <span>Consultation</span>',
-        content: `<p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Expert guidance on market research, feasibility studies, legal due diligence, and land mutation to ensure secure, high-value investments and compliant project development.</p>
+        content: `<img class="modal-hero-image" src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1200&q=85" alt="Real estate consultation meeting with documents">
+        <p style="font-size: 20px; line-height: 1.8; color: var(--navy); font-weight: 500;">Our consultation service gives clients clear guidance before they buy, sell, develop, or invest. We help reduce risk, verify opportunities, and choose the right real estate strategy.</p>
+        <div class="modal-feature-grid">
+          <div class="modal-feature-card"><strong>Market Guidance</strong><span>Understand pricing, demand, location potential, and growth areas before making a decision.</span></div>
+          <div class="modal-feature-card"><strong>Legal Due Diligence</strong><span>Support with land title checks, mutation guidance, documentation, and compliance direction.</span></div>
+          <div class="modal-feature-card"><strong>Project Advice</strong><span>Feasibility studies, risk assessment, development planning, and investment strategy.</span></div>
+        </div>
+        <h4>Best For</h4>
+        <ul>
+          <li>Clients buying land or property for the first time</li>
+          <li>Investors comparing different areas or property types</li>
+          <li>Diaspora clients who need trusted local guidance</li>
+          <li>Developers who need planning, feasibility, and documentation advice</li>
+        </ul>
         <div style="margin-top: 35px; text-align: left;"><a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire About This Service</a></div>`
       },
 
@@ -1034,6 +1094,40 @@
           </div>
         `
       },
+      'land': {
+        title: 'Land Property <span>Solutions</span>',
+        content: `
+          <p>At MENU Real Estate Group, we help clients find, verify, buy, sell, and develop land opportunities across Rwanda with confidence and transparency.</p>
+          <p>Our land service focuses on secure documentation, strategic locations, development potential, and long-term value.</p>
+
+          <h4>For Buyers & Investors</h4>
+          <ul>
+            <li>Verified land sourcing in high-growth areas</li>
+            <li>Land title verification and documentation guidance</li>
+            <li>Location, access, zoning, and development potential analysis</li>
+            <li>Negotiation and transaction support from search to closing</li>
+          </ul>
+
+          <h4>For Landowners & Sellers</h4>
+          <ul>
+            <li>Land value guidance and pricing support</li>
+            <li>Professional listing and buyer sourcing</li>
+            <li>Sale procedure and documentation assistance</li>
+            <li>Support for mutation and transfer processes</li>
+          </ul>
+
+          <h4>For Development Projects</h4>
+          <ul>
+            <li>Plot selection for residential, commercial, or mixed-use projects</li>
+            <li>Coordination with planning and architectural consulting</li>
+            <li>Development feasibility guidance before construction</li>
+          </ul>
+
+          <div style="margin-top: 35px; text-align: center;">
+            <a href="#contact" class="btn btn-primary" onclick="closePageModal()">Inquire about Land</a>
+          </div>
+        `
+      },
       'agricultural': {
         title: 'Agricultural Land, Farming <span>& Cultivation Services</span>',
         content: `
@@ -1116,6 +1210,16 @@
       if (event.key === 'Escape' && modal.classList.contains('active')) {
         closePageModal();
       }
+    });
+
+    // Let keyboard users open service and solution cards with Enter or Space
+    document.querySelectorAll('[role="button"]').forEach(function(card) {
+      card.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          card.click();
+        }
+      });
     });
   </script>
 </body>
