@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Real Estate Consultation | Menu Real Estate Group</title>
+  <meta name="description" content="Expert guidance for safe, informed and profitable property decisions in Rwanda." />
+  <style>
+    :root {
+      --navy: #071d33;
+      --navy-soft: #0d2c4b;
+      --gold: #c8922f;
+      --gold-soft: #f4e2bd;
+      --white: #ffffff;
+      --text: #263344;
+      --muted: #6b7280;
+      --bg: #f7f7f5;
+      --shadow: 0 20px 55px rgba(7, 29, 51, 0.18);
+      --shadow-hover: 0 28px 65px rgba(7, 29, 51, 0.25);
+      --radius: 26px;
+      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1200px, 92%); margin: 0 auto; }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: -10%;
+      right: -5%;
+      width: 70vw;
+      height: 70vh;
+      background: radial-gradient(circle at 30% 30%, rgba(200, 146, 47, 0.04), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(7, 29, 51, 0.05);
+      transition: var(--transition);
+    }
+    
+    .nav {
+      height: 115px; /* Increased from 82px to fit the larger logo comfortably */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 900;
+      color: var(--navy);
+      transition: 0.2s ease;
+    }
+    
+    .brand:hover { transform: scale(1.01); }
+
+    .nav-logo {
+      height: 105px; /* Significantly increased from 70px */
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply; /* Blends the logo's light background smoothly into the navbar */
+      transition: transform 0.3s ease;
+    }
+    
+    .mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
+      box-shadow: 0 14px 25px rgba(200, 146, 47, 0.25);
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -4px;
+      transition: 0.3s;
+    }
+    
+    .brand:hover .mark { transform: rotate(-2deg) scale(1.03); }
+    .brand small { display: block; color: var(--gold); font-size: 11px; letter-spacing: 3.5px; font-weight: 600; }
+    
+    .links { display: flex; gap: 26px; align-items: center; color: var(--navy); font-weight: 700; font-size: 14px; }
+    .links a:not(.btn) {
+      position: relative;
+      padding: 6px 2px;
+      transition: color 0.2s;
+    }
+    
+    .links a:not(.btn)::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--gold);
+      transition: 0.25s ease;
+    }
+    .links a:not(.btn):hover { color: var(--gold); }
+    .links a:not(.btn):hover::after { width: 100%; }
+    
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 15px);
+      left: -20px;
+      background: var(--white);
+      box-shadow: 0 15px 40px rgba(7, 29, 51, 0.12);
+      border-radius: 16px;
+      padding: 10px 0;
+      min-width: 260px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(7, 29, 51, 0.05);
+    }
+    .dropdown-menu::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .links a.dropdown-item {
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      transition: 0.2s ease;
+      border-radius: 8px;
+      margin: 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .links a.dropdown-item::after { display: none; }
+    .links a.dropdown-item:hover {
+      background: rgba(200, 146, 47, 0.08);
+      color: var(--navy);
+      transform: translateX(4px);
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      color: inherit;
+      font-size: 14px;
+    }
+    
+    .btn-primary { background: var(--gold); color: var(--white); box-shadow: 0 14px 32px rgba(200, 146, 47, 0.45); }
+    .btn-dark { background: var(--navy); color: var(--white); box-shadow: 0 12px 28px rgba(7, 29, 51, 0.35); }
+    .btn:hover { transform: translateY(-4px); filter: brightness(1.08); }
+    .btn:active { transform: translateY(-1px); }
+    
+    .hero {
+      padding: 180px 0 90px; /* Increased top padding to account for the taller navbar */
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(200,146,47,0.18), transparent 40%),
+        linear-gradient(105deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.9) 45%, rgba(7,29,51,0.12) 100%),
+        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85') center/cover;
+      position: relative;
+    }
+    
+    .hero-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 50px; align-items: center; }
+    
+    .eyebrow {
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-size: 13px;
+      background: rgba(200,146,47,0.08);
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+    }
+    
+    h1 {
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: 0.95;
+      color: var(--navy);
+      letter-spacing: -3.5px;
+      margin-bottom: 24px;
+      font-weight: 800;
+    }
+    h1 span, h2 span { color: var(--gold); }
+    
+    .hero p { max-width: 620px; font-size: 18px; color: #2e3b4e; margin-bottom: 34px; font-weight: 500; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    
+    .hero-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.8);
+      box-shadow: var(--shadow);
+      border-radius: 38px;
+      padding: 30px;
+      transition: var(--transition);
+      transform: translateY(0);
+    }
+    .hero-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+    .hero-card img { border-radius: 28px; height: 440px; width: 100%; object-fit: cover; transition: 0.4s ease; }
+    .hero-card:hover img { transform: scale(1.02); }
+    
+    section { padding: 90px 0; }
+    .section-title { text-align: center; max-width: 800px; margin: 0 auto 54px; }
+    .section-title h2 { color: var(--navy); font-size: clamp(36px, 5.5vw, 58px); line-height: 1.05; margin-bottom: 16px; letter-spacing: -2px; font-weight: 800; }
+    .section-title p { color: var(--muted); font-size: 18px; }
+    
+    /* About & Mission Section */
+    .about-section { background: var(--bg); padding: 100px 0; }
+    .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 30px; }
+    .vision-mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    
+    .about-card {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(7, 29, 51, 0.04);
+      border: 1px solid rgba(7, 29, 51, 0.04);
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .about-card::after {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(200, 146, 47, 0.05) 0%, transparent 100%);
+      opacity: 0; transition: 0.4s ease; z-index: -1;
+    }
+    .about-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 45px rgba(7, 29, 51, 0.12);
+      border-color: rgba(200, 146, 47, 0.3);
+    }
+    .about-card:hover::after { opacity: 1; }
+    
+    .about-icon {
+      width: 58px; height: 58px;
+      background: var(--navy-soft); color: var(--gold);
+      border-radius: 16px; display: grid; place-items: center;
+      font-size: 24px; margin-bottom: 24px; transition: 0.3s;
+    }
+    .about-card:hover .about-icon { transform: scale(1.1) rotate(-5deg); background: var(--gold); color: var(--white); }
+    
+    .about-card h3 { color: var(--navy); font-size: 22px; font-weight: 800; margin-bottom: 16px; }
+    .about-card p { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
+    .about-card p:last-child { margin-bottom: 0; }
+    
+    .vision-card { border-top: 6px solid var(--gold); }
+    .mission-card { border-top: 6px solid var(--navy); }
+
+    .core-services { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .core-service-item {
+      background: var(--white);
+      padding: 26px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(7, 29, 51, 0.04);
+      border: 1px solid rgba(7, 29, 51, 0.04);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .core-service-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(7, 29, 51, 0.1);
+      border-color: rgba(200, 146, 47, 0.3);
+    }
+    .core-service-icon {
+      background: var(--navy-soft);
+      color: var(--gold);
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .core-service-item h4 { color: var(--navy); font-size: 18px; margin-bottom: 8px; font-weight: 800; line-height: 1.3; }
+    .core-service-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .solutions { background: var(--navy); color: var(--white); position: relative; }
+    .solutions::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(200,146,47,0.15), transparent 60%); pointer-events: none;
+    }
+    .solutions .section-title h2, .solutions .section-title p { color: var(--white); }
+    .solutions .section-title p { opacity: 0.8; }
+    
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 26px; position: relative; z-index: 2; }
+    .project {
+      background: var(--white);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.2);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .project:hover { transform: translateY(-12px); box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+    .project img { height: 270px; width: 100%; object-fit: cover; transition: 0.45s ease; }
+    .project:hover img { transform: scale(1.07); }
+    
+    .project-body { padding: 30px; }
+    .project h3 { color: var(--navy); margin-bottom: 12px; font-weight: 800; font-size: 24px; }
+    .project p { color: var(--muted); margin-bottom: 20px; font-size: 15px; }
+    .read-more { color: var(--gold); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 5px; }
+    .read-more::after { content: "→"; transition: 0.2s; }
+    .project:hover .read-more::after { transform: translateX(4px); }
+
+    .why-us { background: var(--bg); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .why-img { border-radius: 36px; overflow: hidden; box-shadow: 0 30px 60px rgba(7,29,51,0.15); }
+    .why-list { list-style: none; }
+    .why-list li {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    .why-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 24px;
+      height: 24px;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, #071d33 0%, #0b3a5c 100%);
+      color: var(--white);
+      border-radius: 44px;
+      padding: 60px 50px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      box-shadow: 0 30px 65px rgba(7,29,51,0.5);
+    }
+    .cta h2 { font-size: clamp(34px, 5vw, 56px); line-height: 1; margin-bottom: 14px; font-weight: 800; }
+    
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .contact-card, form {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 34px;
+      box-shadow: 0 20px 45px rgba(7,29,51,0.08);
+    }
+    
+    .contact-item {
+      padding: 16px 0;
+      border-bottom: 1px solid #eef0f2;
+      color: #354052;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid #dfe3e8;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      font: inherit;
+      outline: none;
+      background: #fbfbfa;
+      transition: 0.25s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(200,146,47,0.15); }
+    textarea { min-height: 125px; resize: vertical; }
+
+    .partners-section {
+      background: var(--white);
+      padding: 60px 0;
+      border-top: 1px solid rgba(7, 29, 51, 0.05);
+      overflow: hidden;
+    }
+    .partners-section h4 {
+      text-align: center;
+      color: var(--gold);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      font-weight: 800;
+    }
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .ticker-wrap::before, .ticker-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 150px;
+      height: 100%;
+      z-index: 2;
+    }
+    .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--white), transparent); }
+    .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--white), transparent); }
+
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      animation: scroll 25s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      padding: 0 40px;
+    }
+    .ticker-item::after {
+      content: "•";
+      color: var(--gold);
+      margin-left: 80px;
+      font-size: 30px;
+      line-height: 0;
+    }
+    
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    footer { background: #03101f; color: #cbd5e1; padding: 36px 0; }
+    .footer-flex { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(7, 29, 51, 0.6);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: 0.35s ease;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content {
+      background: var(--white);
+      border-radius: 30px;
+      padding: 45px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(30px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+    .modal-close {
+      position: absolute; top: 24px; right: 24px;
+      background: var(--bg); border: none; font-size: 24px;
+      width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; display: grid; place-items: center;
+      color: var(--muted); transition: 0.2s;
+    }
+    .modal-close:hover { background: #ffebeb; color: #d93025; }
+    
+    .modal-header h3 { font-size: 32px; color: var(--navy); font-weight: 800; line-height: 1.1; margin-bottom: 20px; border-bottom: 2px solid var(--bg); padding-bottom: 20px; }
+    .modal-header h3 span { color: var(--gold); }
+    .modal-body { color: #354052; font-size: 16px; line-height: 1.7; }
+    .modal-body p { margin-bottom: 20px; font-size: 17px; }
+    .modal-body h4 { color: var(--navy); margin: 30px 0 15px; font-size: 20px; font-weight: 800; background: var(--bg); padding: 10px 15px; border-radius: 8px; border-left: 4px solid var(--gold); }
+    .modal-body ul { margin-bottom: 24px; padding-left: 10px; }
+    .modal-body li { list-style: none; margin: 12px 0; display: flex; align-items: flex-start; gap: 12px; font-weight: 500; }
+    .modal-body li::before { content: "•"; color: var(--gold); font-weight: 900; font-size: 24px; line-height: 1; }
+    .modal-hero-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 26px;
+      box-shadow: 0 18px 42px rgba(7, 29, 51, 0.14);
+    }
+    .modal-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .modal-feature-card {
+      background: var(--bg);
+      border: 1px solid rgba(7, 29, 51, 0.05);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .modal-feature-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .modal-feature-card span { color: var(--muted); font-size: 14px; }
+    
+    @media (max-width: 980px) {
+      .links { display: none; }
+      .hero-grid, .vision-mission-grid, .why-grid, .contact-grid, .cta { grid-template-columns: 1fr; }
+      .projects { grid-template-columns: 1fr; }
+      .hero-card img { height: 340px; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding-top: 140px; } /* Adjusted for taller navbar on mobile */
+      .cta { padding: 38px 26px; border-radius: 30px; }
+      .modal-content { padding: 30px 20px; }
+    }
+  
+
+    .service-page-hero {
+      padding: 170px 0 80px;
+      min-height: 68vh;
+      display: grid;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(105deg, rgba(7,29,51,0.92) 0%, rgba(7,29,51,0.78) 48%, rgba(7,29,51,0.32) 100%),
+        var(--service-bg) center/cover no-repeat;
+      color: var(--white);
+    }
+    .service-page-hero h1 { color: var(--white); max-width: 820px; }
+    .service-page-hero p { max-width: 760px; color: rgba(255,255,255,0.88); font-size: 19px; margin-bottom: 30px; }
+    .service-page-hero .eyebrow { background: rgba(255,255,255,0.12); color: var(--gold-soft); }
+    .breadcrumb { color: rgba(255,255,255,0.75); font-weight: 700; margin-bottom: 18px; font-size: 14px; }
+    .breadcrumb a { color: var(--gold-soft); }
+    .service-detail-grid { display: grid; grid-template-columns: 1fr 0.78fr; gap: 34px; align-items: start; }
+    .service-panel, .service-side-card, .process-card {
+      background: var(--white);
+      border-radius: 28px;
+      box-shadow: 0 20px 45px rgba(7,29,51,0.08);
+      border: 1px solid rgba(7,29,51,0.05);
+      overflow: hidden;
+    }
+    .service-panel { padding: 38px; }
+    .service-panel h2, .service-side-card h3, .process-card h3 { color: var(--navy); font-weight: 800; line-height: 1.1; }
+    .service-panel h2 { font-size: clamp(32px, 4vw, 48px); margin-bottom: 18px; }
+    .service-panel p { color: #354052; font-size: 17px; margin-bottom: 18px; }
+    .service-image-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; margin: 28px 0; }
+    .service-image-grid img { height: 320px; width: 100%; object-fit: cover; border-radius: 24px; box-shadow: 0 16px 38px rgba(7,29,51,0.14); }
+    .service-image-grid img:nth-child(2) { height: 320px; }
+    .feature-list { list-style: none; margin: 24px 0 0; display: grid; gap: 14px; }
+    .feature-list li {
+      background: var(--bg);
+      border: 1px solid rgba(7,29,51,0.05);
+      border-radius: 18px;
+      padding: 16px 18px;
+      color: var(--navy);
+      font-weight: 700;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .feature-list li::before { content: "✓"; color: var(--white); background: var(--gold); border-radius: 50%; width: 24px; height: 24px; display: grid; place-items: center; flex: 0 0 24px; font-size: 12px; margin-top: 1px; }
+    .service-side-card { padding: 28px; position: sticky; top: 135px; }
+    .service-side-card img { height: 250px; width: 100%; object-fit: cover; border-radius: 22px; margin-bottom: 24px; }
+    .service-side-card h3 { font-size: 25px; margin-bottom: 14px; }
+    .service-side-card p { color: var(--muted); margin-bottom: 20px; }
+    .quick-info { display: grid; gap: 12px; margin: 20px 0; }
+    .quick-info div { background: var(--bg); border-radius: 16px; padding: 14px; color: var(--navy); font-weight: 700; }
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 28px; }
+    .process-card { padding: 26px; }
+    .process-card span { color: var(--gold); font-weight: 900; font-size: 14px; letter-spacing: 2px; }
+    .process-card h3 { margin: 10px 0 12px; font-size: 22px; }
+    .process-card p { color: var(--muted); }
+    .related-services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 28px; }
+    .related-card { background: var(--white); border-radius: 20px; padding: 20px; box-shadow: 0 12px 30px rgba(7,29,51,0.06); border: 1px solid rgba(7,29,51,0.05); transition: var(--transition); font-weight: 800; color: var(--navy); }
+    .related-card:hover { transform: translateY(-6px); border-color: rgba(200,146,47,0.3); color: var(--gold); }
+    @media (max-width: 980px) {
+      .service-detail-grid, .process-grid, .related-services { grid-template-columns: 1fr; }
+      .service-side-card { position: static; }
+      .service-image-grid { grid-template-columns: 1fr; }
+      .service-page-hero { padding-top: 145px; }
+    }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="../index.html" class="brand" aria-label="Menu Real Estate Group home">
+        <img src="../logo.jpg" alt="Menu Real Estate Group Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
+        <div id="fallback-logo" style="display: none; align-items: center; gap: 14px;">
+          <div class="mark">M</div>
+          <div>MENU<br><small>REAL ESTATE GROUP</small></div>
+        </div>
+      </a>
+      <nav class="links">
+        <a href="../index.html#about">About Us</a>
+        <div class="dropdown">
+          <a href="../index.html#core-services">Services <span style="font-size: 10px; margin-left: 2px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <div class="dropdown-menu" style="min-width: 340px; max-height: 70vh; overflow-y: auto;">
+            <a href="real-estate-consultation.html" class="dropdown-item">💬 Real Estate Consultation</a>
+            <a href="brokerage-transactions.html" class="dropdown-item">🤝 Brokerage & Transactions</a>
+            <a href="property-management-operations.html" class="dropdown-item">🏢 Property Management & Operations</a>
+            <a href="valuation-advisory.html" class="dropdown-item">📊 Valuation & Advisory</a>
+            <a href="development-project-services.html" class="dropdown-item">🏗️ Development & Project Services</a>
+            <a href="architectural-planning-consulting.html" class="dropdown-item">📐 Architectural & Planning Consulting</a>
+            <a href="construction-support.html" class="dropdown-item">🚜 Construction Support</a>
+            <a href="community-affordable-housing.html" class="dropdown-item">🏘️ Community & Affordable Housing</a>
+            <a href="investment-guidance.html" class="dropdown-item">📈 Investment Guidance</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="../index.html#solutions">Solutions <span style="font-size: 10px; margin-left: 2px; display: inline-block; vertical-align: middle;">▼</span></a>
+          <div class="dropdown-menu">
+            <a href="commercial-property-solutions.html" class="dropdown-item">🏢 Commercial Property Solutions</a>
+            <a href="residential-property-solutions.html" class="dropdown-item">🏡 Residential Property Solutions</a>
+            <a href="land-property-solutions.html" class="dropdown-item">🏞️ Land Property Solutions</a>
+            <a href="agricultural-land-farming.html" class="dropdown-item">🌾 Agricultural Land & Farming</a>
+          </div>
+        </div>
+        <a href="../index.html#why-us">Why Choose Us</a>
+        <a class="btn btn-primary" href="../index.html#contact">Get Consultation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="service-page-hero" style="--service-bg: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=85');">
+      <div class="container">
+        <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="../index.html#core-services">Services</a> / Real Estate Consultation</div>
+        <div class="eyebrow">Core Service</div>
+        <h1>Real Estate Consultation</h1>
+        <p>Expert guidance for safe, informed and profitable property decisions in Rwanda.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="../index.html#contact">Request Consultation</a>
+          <a class="btn btn-dark" href="../index.html#core-services">Back to Services</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container service-detail-grid">
+        <article class="service-panel">
+          <h2>About this service</h2>
+          <p>Our Real Estate Consultation service gives clients clear professional guidance before they buy, sell, develop, or invest. We help you understand the market, verify opportunities, study feasibility, reduce risk, and choose the right path before committing money.</p>
+          <div class="service-image-grid">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1100&q=85" alt="Real Estate Consultation image one" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=900&q=85" alt="Real Estate Consultation image two" loading="lazy">
+          </div>
+          <h2>What we help with</h2>
+          <ul class="feature-list">
+              <li>Market research and location analysis</li>
+              <li>Feasibility studies before purchase or development</li>
+              <li>Legal due diligence and document review guidance</li>
+              <li>Land mutation, permits, and compliance direction</li>
+              <li>Investment risk assessment and practical recommendations</li>
+          </ul>
+        </article>
+
+        <aside class="service-side-card">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=85" alt="Real Estate Consultation preview" loading="lazy">
+          <h3>💬 Real Estate Consultation</h3>
+          <p>Expert guidance for safe, informed and profitable property decisions in Rwanda.</p>
+          <div class="quick-info">
+            <div>📍 Rwanda-focused property support</div>
+            <div>⏱️ Monday - Friday, 9:00 AM - 5:00 PM</div>
+            <div>📞 +250 782 616 150</div>
+          </div>
+          <a class="btn btn-primary" href="../index.html#contact">Book This Service</a>
+        </aside>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+        <div class="section-title">
+          <h2>How <span>We Work</span></h2>
+          <p>Each service follows a simple process designed to protect the client and create lasting value.</p>
+        </div>
+        <div class="process-grid">
+          <div class="process-card">
+            <span>STEP 1</span>
+            <h3>Understand your goal</h3>
+            <p>We keep this stage clear, practical, and transparent so the client understands what is happening before moving forward.</p>
+          </div>
+          <div class="process-card">
+            <span>STEP 2</span>
+            <h3>Analyze market and documents</h3>
+            <p>We keep this stage clear, practical, and transparent so the client understands what is happening before moving forward.</p>
+          </div>
+          <div class="process-card">
+            <span>STEP 3</span>
+            <h3>Recommend the safest path</h3>
+            <p>We keep this stage clear, practical, and transparent so the client understands what is happening before moving forward.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>Ready to start with <span style="color:var(--gold)">Real Estate Consultation</span>?</h2>
+            <p>Contact MENU Real Estate Group and get professional guidance for your next property decision.</p>
+          </div>
+          <a class="btn btn-primary" href="../index.html#contact">Contact Us Now</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+        <div class="section-title">
+          <h2>Other <span>Services</span></h2>
+          <p>Explore more solutions from MENU Real Estate Group.</p>
+        </div>
+        <div class="related-services">
+          <a class="related-card" href="brokerage-transactions.html">🤝 Brokerage & Transactions</a><a class="related-card" href="property-management-operations.html">🏢 Property Management & Operations</a><a class="related-card" href="valuation-advisory.html">📊 Valuation & Advisory</a><a class="related-card" href="development-project-services.html">🏗️ Development & Project Services</a><a class="related-card" href="architectural-planning-consulting.html">📐 Architectural & Planning Consulting</a><a class="related-card" href="construction-support.html">🚜 Construction Support</a><a class="related-card" href="community-affordable-housing.html">🏘️ Community & Affordable Housing</a><a class="related-card" href="investment-guidance.html">📈 Investment Guidance</a><a class="related-card" href="commercial-property-solutions.html">🏢 Commercial Property Solutions</a><a class="related-card" href="residential-property-solutions.html">🏡 Residential Property Solutions</a><a class="related-card" href="land-property-solutions.html">🏞️ Land Property Solutions</a><a class="related-card" href="agricultural-land-farming.html">🌾 Agricultural Land & Farming</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-flex">
+      <div>© 2026 Menu Real Estate Group. All rights reserved.</div>
+      <div>Where real estate begins, grows, and is cared for—forever.</div>
+    </div>
+  </footer>
+</body>
+</html>

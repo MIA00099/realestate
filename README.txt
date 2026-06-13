@@ -1,0 +1,1 @@
+MENU Real Estate Group multi-page website. Open index.html. Every service and solution has a separate page inside the services folder. Keep logo.jpg beside index.html if you want the image logo to appear.
