@@ -75,7 +75,7 @@ const server = http.createServer(async (req, res) => {
     const requestUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const pathname = decodeURIComponent(requestUrl.pathname);
 
-    if (pathname === '/healthz') {
+    if (pathname === '/healthz' || pathname === '/health') {
       await sendHealth(res);
       return;
     }
