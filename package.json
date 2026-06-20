@@ -1,0 +1,14 @@
+{
+  "name": "menu-real-estate-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MENU Real Estate Group static site with a lightweight admin panel.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check assets/admin.js && node --check assets/site-content.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,18 @@
+.env
+.env.*
+!.env.example
+node_modules/
+npm-debug.log*
+*.log
+.DS_Store
+
+# Local runtime data and secrets should not be uploaded.
+data/initial-admin.txt
+data/users.json
+data/server-secret.txt
+data/audit-log.json
+backups/
+
+# Uploaded files are runtime data; keep only the directory placeholder.
+uploads/*
+!uploads/.gitkeep

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/favicon.png">
+  <title>MENU Admin Panel</title>
+  <link rel="stylesheet" href="/assets/admin.css?v=logo-update">
+</head>
+<body>
+  <main class="admin-shell">
+    <section id="loginView" class="login-view">
+      <div class="login-card">
+        <div class="brand-row">
+          <img class="brand-logo" src="/assets/logo.jpg" alt="MENU Real Estate Group logo" width="512" height="512">
+          <div>
+            <strong>MENU</strong>
+            <span>Real Estate Admin</span>
+          </div>
+        </div>
+        <h1>Admin Login</h1>
+        <p>Manage service descriptions, photos, partners, and publishing history.</p>
+        <form id="loginForm">
+          <label>
+            Username
+            <input name="username" autocomplete="username" required>
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="primary-btn" type="submit">Log in</button>
+          <p id="loginStatus" class="status" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="appView" class="app-view" hidden>
+      <aside class="sidebar">
+        <div class="brand-row">
+          <img class="brand-logo" src="/assets/logo.jpg" alt="MENU Real Estate Group logo" width="512" height="512">
+          <div>
+            <strong>MENU</strong>
+            <span>Admin Panel</span>
+          </div>
+        </div>
+        <nav class="admin-nav" aria-label="Admin sections">
+          <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+          <button class="nav-btn" data-tab="services">Services</button>
+          <button class="nav-btn admin-only" data-tab="users">Permissions</button>
+          <button class="nav-btn admin-only" data-tab="audit">Audit Log</button>
+          <button class="nav-btn" data-tab="account">Account</button>
+        </nav>
+        <div class="session-card">
+          <span id="sessionRole">Role</span>
+          <strong id="sessionName">User</strong>
+          <button id="logoutBtn" type="button">Log out</button>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topline">
+          <div>
+            <p class="eyebrow">MENU Real Estate Group</p>
+            <h1 id="panelTitle">Dashboard</h1>
+          </div>
+          <div class="topline-actions">
+            <a class="ghost-btn" href="/" target="_blank" rel="noopener">Preview Site</a>
+            <button id="exportBtn" class="ghost-btn" type="button">Export Backup</button>
+          </div>
+        </header>
+
+        <section id="dashboardTab" class="tab-panel">
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span>Total Services</span>
+              <strong id="metricServices">0</strong>
+            </article>
+            <article class="metric-card">
+              <span>Total Images</span>
+              <strong id="metricImages">0</strong>
+            </article>
+            <article class="metric-card">
+              <span>Hero Images Ready</span>
+              <strong id="metricHeroImages">0</strong>
+            </article>
+            <article class="metric-card">
+              <span>Last Published</span>
+              <strong id="metricLastUpdated">-</strong>
+            </article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel">
+              <h2>Recent Service Updates</h2>
+              <div id="recentServices" class="activity-list"></div>
+            </article>
+            <article class="panel">
+              <h2>Needs Attention</h2>
+              <div id="serviceAttention" class="activity-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="servicesTab" class="tab-panel" hidden>
+          <div class="service-layout">
+            <aside class="service-list-panel">
+              <input id="serviceSearch" class="search-input" placeholder="Search services">
+              <div id="serviceList" class="service-list"></div>
+            </aside>
+            <article class="panel editor-panel">
+              <div class="editor-head">
+                <div>
+                  <p class="eyebrow" id="selectedCategory">Service</p>
+                  <h2 id="selectedTitle">Choose a service</h2>
+                </div>
+                <a id="selectedPreview" class="ghost-btn" href="/" target="_blank" rel="noopener">Preview</a>
+              </div>
+
+              <form id="serviceForm" class="editor-form">
+                <label>
+                  Title
+                  <input name="title" required>
+                </label>
+                <label>
+                  Category
+                  <input name="category" required>
+                </label>
+                <label>
+                  Short summary
+                  <textarea name="summary" rows="3" required></textarea>
+                </label>
+                <label>
+                  Page description
+                  <textarea name="description" rows="6" required></textarea>
+                </label>
+                <button id="saveServiceBtn" class="primary-btn" type="submit">Save Text Changes</button>
+                <p id="serviceStatus" class="status" role="status"></p>
+              </form>
+
+              <section class="image-manager">
+                <div class="section-head">
+                  <h3>Images</h3>
+                  <span id="imagePermissionHint"></span>
+                </div>
+                <form id="uploadForm" class="upload-box">
+                  <input name="image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" required>
+                  <input name="alt" placeholder="Alt text">
+                  <input name="caption" placeholder="Caption">
+                  <label class="inline-check">
+                    <input name="setAsHero" type="checkbox">
+                    Set as hero image
+                  </label>
+                  <button class="primary-btn" type="submit">Upload Image</button>
+                </form>
+                <div id="imageGrid" class="image-grid"></div>
+              </section>
+            </article>
+          </div>
+        </section>
+
+        <section id="usersTab" class="tab-panel" hidden>
+          <div class="two-col">
+            <article class="panel">
+              <h2>Create Partner</h2>
+              <p class="muted">Use "Image Only Partner" when a partner should upload and manage photos but not edit descriptions.</p>
+              <form id="createUserForm" class="editor-form">
+                <label>Username<input name="username" required></label>
+                <label>Display name<input name="displayName"></label>
+                <label>Password<input name="password" type="password" minlength="8" required></label>
+                <label>
+                  Role
+                  <select name="role">
+                    <option value="image_editor">Image Only Partner</option>
+                    <option value="editor">Content Editor</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </label>
+                <button class="primary-btn" type="submit">Create User</button>
+                <p id="userStatus" class="status" role="status"></p>
+              </form>
+            </article>
+            <article class="panel">
+              <h2>Users & Permissions</h2>
+              <div id="userList" class="user-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="auditTab" class="tab-panel" hidden>
+          <article class="panel">
+            <div class="section-head">
+              <h2>Audit Log</h2>
+              <button id="refreshAuditBtn" class="ghost-btn" type="button">Refresh</button>
+            </div>
+            <div id="auditList" class="audit-list"></div>
+          </article>
+        </section>
+
+        <section id="accountTab" class="tab-panel" hidden>
+          <article class="panel narrow-panel">
+            <h2>Change Password</h2>
+            <form id="passwordForm" class="editor-form">
+              <label>Current password<input name="oldPassword" type="password" required></label>
+              <label>New password<input name="newPassword" type="password" minlength="8" required></label>
+              <button class="primary-btn" type="submit">Update Password</button>
+              <p id="passwordStatus" class="status" role="status"></p>
+            </form>
+          </article>
+        </section>
+      </section>
+    </section>
+  </main>
+  <script src="/assets/admin.js?v=logo-update"></script>
+</body>
+</html>

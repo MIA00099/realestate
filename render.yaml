@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: menu-real-estate-group
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SERVER_SECRET
+        generateValue: true
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: IMGBB_API_KEY
+        sync: false
+      - key: SUPABASE_CONTENT_TABLE
+        value: site_content
+      - key: SUPABASE_AUDIT_TABLE
+        value: audit_log
+      - key: SUPABASE_CONTENT_KEY
+        value: menu-real-estate-content
+      - key: SUPABASE_USERS_KEY
+        value: menu-real-estate-users
