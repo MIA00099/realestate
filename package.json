@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check assets/admin.js && node --check assets/site-content.js"
+    "check": "node --check server.js && node --check assets/admin.js && node --check assets/site-content.js && node --check scripts/reset-admin-users.js",
+    "reset:users": "node scripts/reset-admin-users.js"
   },
   "engines": {
     "node": ">=18"
