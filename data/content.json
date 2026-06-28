@@ -101,6 +101,7 @@
       "id": "brokerage-transactions",
       "page": "services/brokerage-transactions.html",
       "title": "Brokerage & Transactions",
+      "heroTitle": "Buy or Sell Property in Rwanda with Confidence",
       "images": [
         {
           "id": "brokerage-transactions-1",
@@ -121,13 +122,14 @@
           "caption": ""
         }
       ],
-      "summary": "Buying, selling, and renting support for residential and commercial properties.",
+      "summary": "Professional real estate brokerage in Rwanda for buyers, sellers, landlords, tenants, and diaspora clients who need verified property guidance, market insight, negotiation support, and clear transaction coordination.",
+      "sideSummary": "Get a clear next step for buying, selling, renting, or investing in Rwanda property.",
       "category": "Core Service",
       "featured": false,
       "heroImage": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=85",
-      "updatedAt": "2026-06-18T23:59:01.702Z",
-      "updatedBy": "system",
-      "description": "We represent buyers, sellers, landlords, and tenants with a transparent transaction process. From property search and viewing to negotiation, documentation support, and closing coordination, our role is to make each deal smoother and safer."
+      "updatedAt": "2026-06-28T17:49:01.717Z",
+      "updatedBy": "admin",
+      "description": "MENU Real Estate Group helps clients buy property in Kigali, sell property in Rwanda, rent with confidence, and move through each transaction with fewer surprises. We combine property search, market price analysis, site visits, buyer or tenant screening, negotiation, documentation coordination, legal due diligence support, and after-sale guidance so clients understand the next step before they commit."
     },
     "land-property-solutions": {
       "id": "land-property-solutions",
@@ -419,5 +421,30 @@
     }
   },
   "siteName": "MENU Real Estate Group",
-  "updatedAt": "2026-06-19T23:26:36.495Z"
+  "companyPhone": "+250 782 616 150",
+  "partners": [
+    {
+      "id": "estate-sovereignty-institute",
+      "name": "Estate Sovereignty Institute",
+      "role": "Real Estate Education Partner",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85",
+      "provider": "seed",
+      "hostedId": "",
+      "createdBy": "system",
+      "createdAt": "2026-06-28T00:00:00.000Z",
+      "updatedAt": "2026-06-28T00:00:00.000Z"
+    },
+    {
+      "id": "elite-works",
+      "name": "Elite Works",
+      "role": "Construction & Project Partner",
+      "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=85",
+      "provider": "seed",
+      "hostedId": "",
+      "createdBy": "system",
+      "createdAt": "2026-06-28T00:00:00.000Z",
+      "updatedAt": "2026-06-28T00:00:00.000Z"
+    }
+  ],
+  "updatedAt": "2026-06-28T19:33:34.561Z"
 }

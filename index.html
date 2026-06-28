@@ -493,62 +493,56 @@
 
     .partners-section {
       background: var(--white);
-      padding: 60px 0;
       border-top: 1px solid rgba(7, 29, 51, 0.05);
-      overflow: hidden;
     }
-    .partners-section h4 {
-      text-align: center;
-      color: var(--gold);
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 30px;
-      font-weight: 800;
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
     }
-    .ticker-wrap {
+    .partner-card {
+      background: var(--white);
+      border: 1px solid rgba(7, 29, 51, 0.06);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: 0 16px 38px rgba(7, 29, 51, 0.08);
+      transition: var(--transition);
+    }
+    .partner-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 52px rgba(7, 29, 51, 0.14);
+      border-color: rgba(200, 146, 47, 0.32);
+    }
+    .partner-card img {
       width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 22px;
+      background: var(--bg);
     }
-    .ticker-wrap::before, .ticker-wrap::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      width: 150px;
-      height: 100%;
-      z-index: 2;
+    .partner-card-body {
+      padding: 20px 6px 4px;
     }
-    .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--white), transparent); }
-    .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--white), transparent); }
-
-    .ticker-track {
-      display: inline-flex;
-      align-items: center;
-      animation: scroll 25s linear infinite;
-    }
-    .ticker-track:hover { animation-play-state: paused; }
-    
-    .ticker-item {
-      display: inline-flex;
-      align-items: center;
-      font-size: 26px;
-      font-weight: 800;
+    .partner-card h3 {
       color: var(--navy);
-      padding: 0 40px;
+      font-size: 22px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      font-weight: 800;
     }
-    .ticker-item::after {
-      content: "•";
+    .partner-role {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .partner-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--gold);
-      margin-left: 80px;
-      font-size: 30px;
-      line-height: 0;
-    }
-    
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      font-weight: 800;
+      font-size: 14px;
     }
     
     footer { background: #03101f; color: #cbd5e1; padding: 36px 0; }
@@ -628,6 +622,8 @@
     .links a:focus-visible,
     .core-service-item:focus-visible,
     .project:focus-visible,
+    .partner-card:focus-visible,
+    .partner-phone:focus-visible,
     input:focus-visible,
     textarea:focus-visible,
     select:focus-visible {
@@ -741,6 +737,7 @@
             <a href="services/agricultural-land-farming.html" class="dropdown-item">🌾 Agricultural Land & Farming</a>
           </div>
         </div>
+        <a href="#partners" data-partners-nav>Partners</a>
         <a href="#why-us">Why Choose Us</a>
         <a class="btn btn-primary" href="#contact">Get Consultation</a>
       </nav>
@@ -952,22 +949,29 @@
       </div>
     </section>
 
-    <!-- MOVED PARTNERS SECTION HERE -->
-    <section class="partners-section" style="background: transparent; border: none; padding-top: 0;">
-      <h4>Our Partners</h4>
-      <div class="ticker-wrap" style="background: transparent;">
-        <div class="ticker-track">
-          <!-- First Set -->
-          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
-          <div class="ticker-item">ELITE WORKS</div>
-          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
-          <div class="ticker-item">ELITE WORKS</div>
-          
-          <!-- Second Set (Exact duplicate for seamless looping) -->
-          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
-          <div class="ticker-item">ELITE WORKS</div>
-          <div class="ticker-item">ESTATE SOVEREIGNTY INSTITUTE</div>
-          <div class="ticker-item">ELITE WORKS</div>
+    <section id="partners" class="partners-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our <span>Partners</span></h2>
+          <p>Trusted people and organizations supporting MENU Real Estate Group clients.</p>
+        </div>
+        <div id="partnersGrid" class="partners-grid">
+          <article class="partner-card">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85" alt="Estate Sovereignty Institute profile" loading="lazy">
+            <div class="partner-card-body">
+              <h3>Estate Sovereignty Institute</h3>
+              <p class="partner-role">Real Estate Education Partner</p>
+              <a class="partner-phone" href="tel:+250782616150">Call MENU: +250 782 616 150</a>
+            </div>
+          </article>
+          <article class="partner-card">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=85" alt="Elite Works profile" loading="lazy">
+            <div class="partner-card-body">
+              <h3>Elite Works</h3>
+              <p class="partner-role">Construction & Project Partner</p>
+              <a class="partner-phone" href="tel:+250782616150">Call MENU: +250 782 616 150</a>
+            </div>
+          </article>
         </div>
       </div>
     </section>

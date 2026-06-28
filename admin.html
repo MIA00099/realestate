@@ -2,215 +2,340 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MENU Modern Admin Dashboard</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png">
-  <link rel="apple-touch-icon" href="/assets/favicon.png">
-  <title>MENU Admin Panel</title>
-  <link rel="stylesheet" href="/assets/admin.css?v=logo-update">
+  <link rel="stylesheet" href="/assets/admin.css">
 </head>
 <body>
-  <main class="admin-shell">
-    <section id="loginView" class="login-view">
-      <div class="login-card">
-        <div class="brand-row">
-          <img class="brand-logo" src="/assets/logo.jpg" alt="MENU Real Estate Group logo" width="512" height="512">
-          <div>
-            <strong>MENU</strong>
-            <span>Real Estate Admin</span>
+  <section id="loginView" class="login">
+    <div class="login-box">
+      <div class="login-art">
+        <div>
+          <div class="brand">
+            <div class="brand-mark">M</div>
+            <div><strong>MENU</strong><span>Real Estate Group</span></div>
+          </div>
+          <h1>Manage your digital property portfolio.</h1>
+          <p>One secure workspace for service pages, property images, user permissions, and website activity.</p>
+        </div>
+        <div class="list">
+          <div class="list-item dark">
+            <div class="list-copy"><strong>Real website content</strong><span>Connected to MENU service pages, uploads, users, and audit records.</span></div>
+            <span class="badge green">Live</span>
           </div>
         </div>
-        <h1>Admin Login</h1>
-        <p>Manage service descriptions, photos, partners, and publishing history.</p>
-        <form id="loginForm">
-          <label>
-            Username
-            <input name="username" autocomplete="username" required>
-          </label>
-          <label>
-            Password
-            <input name="password" type="password" autocomplete="current-password" required>
-          </label>
-          <button class="primary-btn" type="submit">Log in</button>
-          <p id="loginStatus" class="status" role="status"></p>
-        </form>
       </div>
-    </section>
-
-    <section id="appView" class="app-view" hidden>
-      <aside class="sidebar">
-        <div class="brand-row">
-          <img class="brand-logo" src="/assets/logo.jpg" alt="MENU Real Estate Group logo" width="512" height="512">
-          <div>
-            <strong>MENU</strong>
-            <span>Admin Panel</span>
-          </div>
+      <form id="loginForm" class="login-panel" novalidate>
+        <div class="brand">
+          <div class="brand-mark">M</div>
+          <div><strong>MENU</strong><span>Admin Dashboard</span></div>
         </div>
-        <nav class="admin-nav" aria-label="Admin sections">
-          <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
-          <button class="nav-btn" data-tab="services">Services</button>
-          <button class="nav-btn admin-only" data-tab="users">Permissions</button>
-          <button class="nav-btn admin-only" data-tab="audit">Audit Log</button>
-          <button class="nav-btn" data-tab="account">Account</button>
-        </nav>
-        <div class="session-card">
-          <span id="sessionRole">Role</span>
-          <strong id="sessionName">User</strong>
-          <button id="logoutBtn" type="button">Log out</button>
+        <h2>Welcome back</h2>
+        <p>Sign in to manage the public website and team access.</p>
+        <label class="field"><span>Username</span><input id="loginUser" name="username" autocomplete="username" value="admin" required></label>
+        <label class="field"><span>Password</span><input id="loginPass" name="password" type="password" autocomplete="current-password" required></label>
+        <label class="check"><input id="showLoginPass" type="checkbox"> Show password</label>
+        <button id="loginBtn" class="btn btn-primary full" type="submit">Sign in securely</button>
+        <p id="loginStatus" class="form-status" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <section id="appView" hidden>
+    <button id="mobileOverlay" class="overlay" type="button" aria-label="Close navigation" hidden></button>
+    <aside id="sidebar" class="sidebar" aria-label="Admin navigation">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div><strong>MENU</strong><span>Admin Panel</span></div>
+      </div>
+      <nav class="nav">
+        <p class="nav-label">Overview</p>
+        <button class="active" data-page="dashboard" type="button"><span class="nav-icon"><svg class="icon"><use href="#dashboardIcon"/></svg></span>Dashboard</button>
+        <p class="nav-label">Content</p>
+        <button data-page="services" type="button"><span class="nav-icon"><svg class="icon"><use href="#layersIcon"/></svg></span>Services</button>
+        <button data-page="partners" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Partners</button>
+        <p class="nav-label">Administration</p>
+        <button data-page="users" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Users & Roles</button>
+        <button data-page="activity" type="button"><span class="nav-icon"><svg class="icon"><use href="#activityIcon"/></svg></span>Activity Log</button>
+        <p class="nav-label">My account</p>
+        <button data-page="account" type="button"><span class="nav-icon"><svg class="icon"><use href="#lockIcon"/></svg></span>Password & Security</button>
+      </nav>
+      <div class="session">
+        <div class="session-row">
+          <div id="sessionAvatar" class="avatar">SA</div>
+          <div><strong id="sessionName">Site Admin</strong><span id="sessionRole">Administrator</span></div>
         </div>
-      </aside>
+        <button id="logoutBtn" class="btn" type="button"><svg class="icon"><use href="#logoutIcon"/></svg>Log out</button>
+      </div>
+    </aside>
 
-      <section class="workspace">
-        <header class="topline">
-          <div>
-            <p class="eyebrow">MENU Real Estate Group</p>
-            <h1 id="panelTitle">Dashboard</h1>
-          </div>
-          <div class="topline-actions">
-            <a class="ghost-btn" href="/" target="_blank" rel="noopener">Preview Site</a>
-            <button id="exportBtn" class="ghost-btn" type="button">Export Backup</button>
-          </div>
-        </header>
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="icon-btn mobile-menu" type="button" aria-label="Open navigation"><svg class="icon"><use href="#menuIcon"/></svg></button>
+        <div class="page-title"><p id="crumb">Overview</p><h1 id="title">Dashboard</h1></div>
+        <label class="search"><svg class="icon"><use href="#searchIcon"/></svg><input id="globalSearch" placeholder="Search services, users, or activity"></label>
+        <div class="top-actions">
+          <a id="previewBtn" class="btn btn-secondary" href="/" target="_blank" rel="noopener"><svg class="icon"><use href="#eyeIcon"/></svg>Preview site</a>
+          <button id="exportBtn" class="icon-btn" type="button" title="Export backup"><svg class="icon"><use href="#downloadIcon"/></svg></button>
+        </div>
+      </header>
 
-        <section id="dashboardTab" class="tab-panel">
-          <div class="metric-grid">
-            <article class="metric-card">
-              <span>Total Services</span>
-              <strong id="metricServices">0</strong>
-            </article>
-            <article class="metric-card">
-              <span>Total Images</span>
-              <strong id="metricImages">0</strong>
-            </article>
-            <article class="metric-card">
-              <span>Hero Images Ready</span>
-              <strong id="metricHeroImages">0</strong>
-            </article>
-            <article class="metric-card">
-              <span>Last Published</span>
-              <strong id="metricLastUpdated">-</strong>
-            </article>
+      <div class="content">
+        <section id="dashboardPage" class="page">
+          <div class="intro">
+            <div><h2 id="welcomeTitle">Good morning, Site Admin</h2><p>Here is what is happening across the MENU website today.</p></div>
+            <div class="actions"><button class="btn btn-secondary" data-open="activity" type="button">View activity</button><button class="btn btn-primary" data-open="services" type="button">Manage content</button></div>
           </div>
-          <div class="dashboard-grid">
-            <article class="panel">
-              <h2>Recent Service Updates</h2>
-              <div id="recentServices" class="activity-list"></div>
-            </article>
-            <article class="panel">
-              <h2>Needs Attention</h2>
-              <div id="serviceAttention" class="activity-list"></div>
-            </article>
+          <div class="metrics">
+            <article class="card metric"><div class="metric-top"><span class="metric-icon"><svg class="icon"><use href="#layersIcon"/></svg></span><span class="trend">Live</span></div><strong id="metricServices">0</strong><span>Service pages</span></article>
+            <article class="card metric"><div class="metric-top"><span class="metric-icon blue"><svg class="icon"><use href="#imageIcon"/></svg></span><span class="trend">Images</span></div><strong id="metricImages">0</strong><span>Property images</span></article>
+            <article class="card metric"><div class="metric-top"><span class="metric-icon green-icon"><svg class="icon"><use href="#checkIcon"/></svg></span><span class="trend">Ready</span></div><strong id="metricReady">0/0</strong><span>Pages ready</span></article>
+            <article class="card metric"><div class="metric-top"><span class="metric-icon red-icon"><svg class="icon"><use href="#usersIcon"/></svg></span><span class="trend">Team</span></div><strong id="metricUsers">0</strong><span>Active members</span></article>
+          </div>
+          <div class="grid">
+            <div class="stack">
+              <article class="card pad">
+                <div class="section-head"><div><h3>Website activity</h3><p>Content and image updates during the last seven days.</p></div><span class="badge blue">Last 7 days</span></div>
+                <div id="activityChart" class="chart"></div>
+              </article>
+              <article class="card pad">
+                <div class="section-head"><div><h3>Recently updated pages</h3><p>Latest public website changes.</p></div><button class="btn btn-secondary" data-open="services" type="button">View all</button></div>
+                <div id="recentList" class="list"></div>
+              </article>
+            </div>
+            <div class="stack">
+              <article class="card pad">
+                <div class="section-head"><div><h3>Portfolio readiness</h3><p>Current service content status.</p></div></div>
+                <div class="ready-wrap"><div id="readyRing" class="ready-ring"><div><strong id="readyPercent">0%</strong><span>Complete</span></div></div></div>
+              </article>
+              <article class="card pad">
+                <div class="section-head"><div><h3>Needs attention</h3><p>Recommended next actions.</p></div><span id="taskCount" class="badge orange">0 tasks</span></div>
+                <div id="taskList" class="list"></div>
+              </article>
+            </div>
           </div>
         </section>
 
-        <section id="servicesTab" class="tab-panel" hidden>
-          <div class="service-layout">
-            <aside class="service-list-panel">
-              <input id="serviceSearch" class="search-input" placeholder="Search services">
+        <section id="servicesPage" class="page services-workspace" hidden>
+          <div class="intro">
+            <div><h2>Service page manager</h2><p>Edit public service text, upload images, and preview how each page appears on the website.</p></div>
+          </div>
+          <div class="split">
+            <aside class="card service-side">
+              <div class="library-head"><div><h3>Service pages</h3><p>Choose a website page to update.</p></div><span id="serviceCount" class="badge blue">0 services</span></div>
+              <label class="field"><span>Search services</span><input id="serviceSearch" placeholder="Search title or category"></label>
+              <div class="filter-row">
+                <label class="field"><span>Status</span><select id="serviceFilter"><option value="all">All services</option><option value="complete">Complete</option><option value="missing">Needs attention</option></select></label>
+                <label class="field"><span>Sort by</span><select id="serviceSort"><option value="title">Title</option><option value="category">Category</option><option value="score">Completeness</option><option value="updated">Recently updated</option></select></label>
+              </div>
               <div id="serviceList" class="service-list"></div>
             </aside>
-            <article class="panel editor-panel">
-              <div class="editor-head">
-                <div>
-                  <p class="eyebrow" id="selectedCategory">Service</p>
-                  <h2 id="selectedTitle">Choose a service</h2>
+
+            <article class="card editor">
+              <div id="serviceEmpty" class="empty-state" hidden><h2>No service selected</h2><p>Select a service from the library.</p></div>
+              <div id="serviceEditor">
+                <div class="editor-head">
+                  <div class="editor-head-main">
+                    <div id="serviceAvatar" class="service-avatar">S</div>
+                    <div><p id="selectedCategory" class="eyebrow">Service</p><h2 id="selectedTitle">Selected service</h2><p id="selectedMeta">Updated status</p></div>
+                  </div>
+                  <div class="editor-actions-main">
+                    <span id="saveState" class="badge green">Saved</span>
+                    <a id="previewServiceBtn" class="btn btn-secondary" href="/" target="_blank" rel="noopener">Preview page</a>
+                    <button id="saveTopBtn" class="btn btn-primary" type="button">Save changes</button>
+                  </div>
                 </div>
-                <a id="selectedPreview" class="ghost-btn" href="/" target="_blank" rel="noopener">Preview</a>
+
+                <div class="editor-body">
+                  <div class="tabs" role="tablist" aria-label="Service editor sections">
+                    <button class="tab active" data-sub="details" type="button">Content</button>
+                    <button class="tab" data-sub="images" type="button">Upload Images</button>
+                    <button class="tab" data-sub="seo" type="button">SEO & Preview</button>
+                  </div>
+
+                  <section id="detailsPanel" class="subpanel">
+                    <form id="serviceForm" class="form-box" novalidate>
+                      <h3>What visitors see</h3>
+                      <p>Use clear, client-friendly wording that explains the service and invites the next step.</p>
+                      <div class="content-grid">
+                        <label class="field"><span>Menu title</span><input name="title" maxlength="140" required></label>
+                        <label class="field"><span>Service group</span><input name="category" maxlength="80" required></label>
+                        <label class="field wide"><span>Page headline</span><input name="heroTitle" maxlength="160" placeholder="Example: Buy or sell property in Rwanda with confidence"><small class="field-hint">Shown as the main headline on the public service page.</small></label>
+                        <label class="field wide"><span>Short introduction</span><textarea name="summary" maxlength="500" rows="3" required></textarea></label>
+                        <label class="field wide"><span>Booking card text</span><textarea name="sideSummary" maxlength="320" rows="2" placeholder="Short message beside the contact button"></textarea></label>
+                        <label class="field wide"><span>Full service details</span><textarea name="description" maxlength="8000" rows="9" required></textarea></label>
+                      </div>
+                      <p id="serviceStatus" class="form-status" role="status"></p>
+                      <button id="hiddenServiceSubmit" type="submit" hidden>Save</button>
+                    </form>
+                  </section>
+
+                  <section id="imagesPanel" class="subpanel" hidden>
+                    <div class="form-box">
+                      <h3>Upload service images</h3>
+                      <p id="imagePermissionHint">Upload images, choose the hero image, and manage captions for this service page.</p>
+                      <form id="uploadForm" class="media-drop" novalidate>
+                        <div class="metric-icon blue center"><svg class="icon"><use href="#imageIcon"/></svg></div>
+                        <strong>Upload a service image</strong>
+                        <span>PNG, JPG, WEBP, or GIF. Maximum 8 MB.</span>
+                        <input id="imageInput" name="image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" required>
+                        <div class="content-grid">
+                          <label class="field"><span>Alt text</span><input name="alt" maxlength="180" placeholder="Describe the image"></label>
+                          <label class="field"><span>Caption</span><input name="caption" maxlength="240" placeholder="Optional caption"></label>
+                        </div>
+                        <label class="check"><input name="setAsHero" type="checkbox"> Use as hero image</label>
+                        <button id="uploadBtn" class="btn btn-primary" type="submit">Upload image</button>
+                      </form>
+                      <div id="mediaSummary" class="media-summary"></div>
+                      <div id="imageList" class="media-grid"></div>
+                    </div>
+                  </section>
+
+                  <section id="seoPanel" class="subpanel" hidden>
+                    <div class="seo-layout">
+                      <div class="form-box"><h3>Search guidance</h3><p>This preview uses the real title, page headline, summary, and public URL stored for the service.</p><div id="seoSuggestions" class="list"></div></div>
+                      <aside class="seo-preview">
+                        <span class="seo-preview-label">Live search preview</span>
+                        <div class="google-result"><div id="googleUrl" class="google-url">menu.rw/services/service-page</div><div id="googleTitle" class="google-title">Service page title</div><div id="googleDescription" class="google-description">The search description will appear here.</div></div>
+                        <div class="social-preview"><div id="socialArt" class="social-art">MENU</div><div class="social-copy"><strong id="socialTitle">Service page title</strong><span id="socialDescription">The social sharing description will appear here.</span></div></div>
+                      </aside>
+                    </div>
+                  </section>
+
+                </div>
+
+                <div class="sticky-save">
+                  <span id="stickyText">No unsaved changes</span>
+                  <div class="actions"><button id="discardBtn" class="btn btn-secondary" type="button">Discard</button><button id="saveStickyBtn" class="btn btn-primary" type="button">Save changes</button></div>
+                </div>
               </div>
-
-              <form id="serviceForm" class="editor-form">
-                <label>
-                  Title
-                  <input name="title" required>
-                </label>
-                <label>
-                  Category
-                  <input name="category" required>
-                </label>
-                <label>
-                  Short summary
-                  <textarea name="summary" rows="3" required></textarea>
-                </label>
-                <label>
-                  Page description
-                  <textarea name="description" rows="6" required></textarea>
-                </label>
-                <button id="saveServiceBtn" class="primary-btn" type="submit">Save Text Changes</button>
-                <p id="serviceStatus" class="status" role="status"></p>
-              </form>
-
-              <section class="image-manager">
-                <div class="section-head">
-                  <h3>Images</h3>
-                  <span id="imagePermissionHint"></span>
-                </div>
-                <form id="uploadForm" class="upload-box">
-                  <input name="image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" required>
-                  <input name="alt" placeholder="Alt text">
-                  <input name="caption" placeholder="Caption">
-                  <label class="inline-check">
-                    <input name="setAsHero" type="checkbox">
-                    Set as hero image
-                  </label>
-                  <button class="primary-btn" type="submit">Upload Image</button>
-                </form>
-                <div id="imageGrid" class="image-grid"></div>
-              </section>
             </article>
           </div>
         </section>
 
-        <section id="usersTab" class="tab-panel" hidden>
-          <div class="two-col">
-            <article class="panel">
-              <h2>Create Partner</h2>
-              <p class="muted">Use "Image Only Partner" when a partner should upload and manage photos but not edit descriptions.</p>
-              <form id="createUserForm" class="editor-form">
-                <label>Username<input name="username" required></label>
-                <label>Display name<input name="displayName"></label>
-                <label>Password<input name="password" type="password" minlength="8" required></label>
-                <label>
-                  Role
-                  <select name="role">
-                    <option value="image_editor">Image Only Partner</option>
-                    <option value="editor">Content Editor</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </label>
-                <button class="primary-btn" type="submit">Create User</button>
-                <p id="userStatus" class="status" role="status"></p>
+        <section id="partnersPage" class="page partners-workspace" hidden>
+          <div class="intro">
+            <div><h2>Partners</h2><p>Add or remove partner profiles shown on the home page.</p></div>
+            <a class="btn btn-secondary" href="/#partners" target="_blank" rel="noopener"><svg class="icon"><use href="#eyeIcon"/></svg>Preview partners</a>
+          </div>
+          <div class="grid partner-admin-grid">
+            <article class="card pad">
+              <div class="section-head"><div><h3>Add partner</h3><p>Upload a profile image, then add the partner name and role.</p></div></div>
+              <form id="partnerForm" novalidate>
+                <label class="field"><span>Partner name</span><input name="name" maxlength="100" placeholder="Example: Estate Sovereignty Institute" required></label>
+                <label class="field"><span>Role</span><input name="role" maxlength="100" placeholder="Example: Strategic real estate partner" required></label>
+                <label class="field"><span>Profile image</span><input id="partnerImageInput" name="image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" required></label>
+                <div class="partner-phone-note"><span class="metric-icon blue small"><svg class="icon"><use href="#lockIcon"/></svg></span><div><strong>Company phone</strong><p id="partnerPhoneNote">Shown automatically on every partner card.</p></div></div>
+                <button id="addPartnerBtn" class="btn btn-primary" type="submit">Add partner</button>
+                <p id="partnerStatus" class="form-status" role="status"></p>
               </form>
             </article>
-            <article class="panel">
-              <h2>Users & Permissions</h2>
-              <div id="userList" class="user-list"></div>
+            <article class="card pad">
+              <div class="section-head"><div><h3>Home page partners</h3><p>These profiles appear in the Partners section on the public website.</p></div><span id="partnerCount" class="badge blue">0 partners</span></div>
+              <div id="partnerAdminList" class="partner-admin-list"></div>
             </article>
           </div>
         </section>
 
-        <section id="auditTab" class="tab-panel" hidden>
-          <article class="panel">
-            <div class="section-head">
-              <h2>Audit Log</h2>
-              <button id="refreshAuditBtn" class="ghost-btn" type="button">Refresh</button>
+        <section id="usersPage" class="page" hidden>
+          <div class="intro"><div><h2>Users and roles</h2><p>Manage dashboard access without crowding the main table.</p></div><button id="createUserBtn" class="btn btn-primary" type="button">+ Create user</button></div>
+          <article class="card pad">
+            <div class="toolbar">
+              <label class="field"><span>Search users</span><input id="userSearch" placeholder="Name or username"></label>
+              <label class="field"><span>Role</span><select id="roleFilter"><option value="all">All roles</option></select></label>
+              <label class="field"><span>Status</span><select id="statusFilter"><option value="all">All statuses</option><option value="active">Active</option><option value="paused">Paused</option></select></label>
+              <label class="field"><span>Sort</span><select id="userSort"><option value="name">Name</option><option value="role">Role</option><option value="updated">Last updated</option></select></label>
             </div>
-            <div id="auditList" class="audit-list"></div>
+          </article>
+          <article class="card table-card"><div class="table-wrap"><table><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Last updated</th><th class="right">Actions</th></tr></thead><tbody id="userRows"></tbody></table></div></article>
+        </section>
+
+        <section id="activityPage" class="page" hidden>
+          <div class="intro"><div><h2>Activity log</h2><p>Human-readable records with optional technical details.</p></div><div class="actions"><button id="refreshBtn" class="btn btn-secondary" type="button">Refresh</button><button id="exportActivityBtn" class="btn btn-primary" type="button">Export filtered</button></div></div>
+          <article class="card pad">
+            <div class="toolbar">
+              <label class="field"><span>Search activity</span><input id="activitySearch" placeholder="Action, user, or details"></label>
+              <label class="field"><span>Action</span><select id="activityFilter"><option value="all">All actions</option></select></label>
+              <label class="field"><span>Sort</span><select id="activitySort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label>
+            </div>
+            <div id="activityList" class="audit"></div>
           </article>
         </section>
 
-        <section id="accountTab" class="tab-panel" hidden>
-          <article class="panel narrow-panel">
-            <h2>Change Password</h2>
-            <form id="passwordForm" class="editor-form">
-              <label>Current password<input name="oldPassword" type="password" required></label>
-              <label>New password<input name="newPassword" type="password" minlength="8" required></label>
-              <button class="primary-btn" type="submit">Update Password</button>
-              <p id="passwordStatus" class="status" role="status"></p>
-            </form>
-          </article>
+        <section id="accountPage" class="page" hidden>
+          <div class="intro"><div><h2>Password and security</h2><p>Protect your administrator account.</p></div></div>
+          <div class="grid">
+            <article class="card pad">
+              <div class="section-head"><div><h3>Change password</h3><p>Use at least eight characters.</p></div></div>
+              <form id="passwordForm" novalidate>
+                <label class="field"><span>Current password</span><input name="oldPassword" type="password" autocomplete="current-password" required></label>
+                <label class="field"><span>New password</span><input name="newPassword" type="password" autocomplete="new-password" required></label>
+                <label class="field"><span>Confirm new password</span><input name="confirmPassword" type="password" autocomplete="new-password" required></label>
+                <label class="check"><input id="showAccountPass" type="checkbox"> Show password fields</label>
+                <button id="passwordBtn" class="btn btn-primary" type="submit">Update password</button>
+                <p id="passwordStatus" class="form-status" role="status"></p>
+              </form>
+            </article>
+            <article class="card pad">
+              <div class="section-head"><div><h3>Security status</h3><p>Current protection for this account.</p></div></div>
+              <div class="list">
+                <div class="list-item"><span class="metric-icon green-icon small"><svg class="icon"><use href="#checkIcon"/></svg></span><div class="list-copy"><strong>Password protection</strong><span>Password is active and valid.</span></div><span class="badge green">Good</span></div>
+                <div class="list-item"><span class="metric-icon blue small"><svg class="icon"><use href="#lockIcon"/></svg></span><div class="list-copy"><strong id="accountRoleLabel">Admin access</strong><span id="accountPermissionText">Permissions loaded from the server.</span></div><span id="accountRoleBadge" class="badge blue">Role</span></div>
+              </div>
+            </article>
+          </div>
         </section>
-      </section>
-    </section>
-  </main>
-  <script src="/assets/admin.js?v=logo-update"></script>
+
+        <section id="permissionPage" class="page" hidden>
+          <article class="card pad empty-state"><h2>Permission denied</h2><p id="permissionMessage">Your role cannot open this section.</p><button class="btn btn-secondary" data-open="dashboard" type="button">Back to dashboard</button></article>
+        </section>
+      </div>
+    </main>
+  </section>
+
+  <button id="drawerOverlay" class="overlay" type="button" aria-label="Close user drawer" hidden></button>
+  <aside id="userDrawer" class="drawer" hidden>
+    <form id="userDrawerForm" class="drawer-form" novalidate>
+      <div class="drawer-head"><div><h2 id="drawerTitle">Create user</h2><p>Profile, role, password, and status.</p></div><button id="closeDrawerBtn" class="icon-btn" type="button">x</button></div>
+      <div class="drawer-body">
+        <input name="id" type="hidden">
+        <div class="form-box"><h3>Profile</h3><p>Basic account information.</p><label class="field"><span>Username</span><input name="username" autocomplete="off"></label><label class="field"><span>Display name</span><input name="displayName"></label></div>
+        <div class="form-box"><h3>Role and status</h3><p>Control dashboard access.</p><label class="field"><span>Role</span><select name="role"></select></label><label class="check"><input name="active" type="checkbox" checked> User can sign in</label></div>
+        <div class="form-box"><h3>Password</h3><p>Leave blank when editing to keep the current password.</p><label class="field"><span>New password</span><input name="password" type="password" autocomplete="new-password"></label><label class="field"><span>Confirm password</span><input name="confirmPassword" type="password" autocomplete="new-password"></label><label class="check"><input id="showDrawerPass" type="checkbox"> Show password</label></div>
+        <p id="drawerStatus" class="form-status" role="status"></p>
+      </div>
+      <div class="drawer-foot"><button id="cancelDrawerBtn" class="btn btn-secondary" type="button">Cancel</button><button id="saveUserBtn" class="btn btn-primary" type="submit">Create user</button></div>
+    </form>
+  </aside>
+
+  <div id="confirmDialog" class="confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
+    <button id="confirmBackdrop" class="overlay" type="button" aria-label="Cancel"></button>
+    <div class="confirm-card">
+      <h2 id="confirmTitle">Confirm action</h2>
+      <p id="confirmMessage">Are you sure?</p>
+      <p id="confirmDetails"></p>
+      <div class="actions"><button id="confirmCancel" class="btn btn-secondary" type="button">Cancel</button><button id="confirmOk" class="btn btn-danger" type="button">Confirm</button></div>
+    </div>
+  </div>
+
+  <div id="toastWrap" class="toast-wrap" aria-live="polite"></div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="dashboardIcon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></symbol>
+    <symbol id="layersIcon" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></symbol>
+    <symbol id="usersIcon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+    <symbol id="activityIcon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+    <symbol id="lockIcon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="logoutIcon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+    <symbol id="menuIcon" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></symbol>
+    <symbol id="searchIcon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="eyeIcon" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="downloadIcon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+    <symbol id="imageIcon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+    <symbol id="checkIcon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  </svg>
+
+  <script src="/assets/admin.js" defer></script>
 </body>
 </html>

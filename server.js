@@ -14,6 +14,29 @@ const SECRET_FILE = path.join(DATA_DIR, 'server-secret.txt');
 const PORT = Number(process.env.PORT || 3000);
 const SESSION_COOKIE = 'menu_admin_session';
 const SESSION_AGE_SECONDS = 60 * 60 * 8;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const LOGIN_RATE_WINDOW_MS = 15 * 60 * 1000;
+const LOGIN_RATE_MAX = 8;
+const SERVICE_TEXT_LIMITS = {
+  title: 140,
+  heroTitle: 160,
+  category: 80,
+  summary: 500,
+  sideSummary: 320,
+  description: 8000
+};
+const IMAGE_TEXT_LIMITS = {
+  alt: 180,
+  caption: 240,
+  src: 2048,
+  heroImage: 2048
+};
+const PARTNER_TEXT_LIMITS = {
+  name: 100,
+  role: 100,
+  image: 2048
+};
+const DISPLAY_NAME_MAX = 80;
 const IMGBB_API_KEY = process.env.IMGBB_API_KEY || '';
 const IMGBB_EXPIRATION_SECONDS = Number(process.env.IMGBB_EXPIRATION_SECONDS || 0);
 const SUPABASE_URL = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
@@ -30,6 +53,7 @@ let supabaseUsersHydrated = false;
 let supabaseAuditHydrationPromise = null;
 let supabaseAuditHydrated = false;
 let supabaseAuditUsesTable = true;
+const loginAttempts = new Map();
 const supabaseState = {
   contentReady: false,
   usersReady: false,
@@ -42,11 +66,11 @@ const supabaseState = {
 const ROLE_DEFS = {
   admin: {
     label: 'Admin',
-    permissions: ['content:edit', 'images:manage', 'users:manage', 'audit:view']
+    permissions: ['content:edit', 'images:manage', 'partners:manage', 'users:manage', 'audit:view']
   },
   editor: {
     label: 'Content Editor',
-    permissions: ['content:edit', 'images:manage']
+    permissions: ['content:edit', 'images:manage', 'partners:manage']
   },
   image_editor: {
     label: 'Image Only Partner',
@@ -103,7 +127,7 @@ const server = http.createServer(async (req, res) => {
     serveStatic(res, pathname, req.method === 'HEAD');
   } catch (error) {
     console.error(error);
-    sendJson(res, 500, { error: 'Server error' });
+    sendJson(res, error.statusCode || 500, { error: error.publicMessage || error.message || 'Server error' });
   }
 });
 
@@ -118,6 +142,11 @@ server.listen(PORT, () => {
 });
 
 async function handleApi(req, res, pathname) {
+  if (!isSafeMethod(req.method) && !isSameOriginRequest(req)) {
+    sendJson(res, 403, { error: 'Request origin is not allowed.' });
+    return;
+  }
+
   if (req.method === 'GET' && pathname === '/api/health') {
     await sendHealth(res);
     return;
@@ -125,17 +154,24 @@ async function handleApi(req, res, pathname) {
 
   if (req.method === 'POST' && pathname === '/api/login') {
     const body = await readBody(req);
+    const rateKey = loginRateKey(req, body.username);
+    if (isLoginRateLimited(rateKey)) {
+      sendJson(res, 429, { error: 'Too many login attempts. Try again in a few minutes.' });
+      return;
+    }
     await hydrateUsersFromSupabaseOnce();
     const users = readUsers();
     const user = users.find(item => item.username.toLowerCase() === String(body.username || '').toLowerCase());
     if (!user || !user.active || !verifyPassword(String(body.password || ''), user.password)) {
+      recordLoginFailure(rateKey);
       sendJson(res, 401, { error: 'Invalid username or password' });
       return;
     }
 
+    clearLoginFailures(rateKey);
     const session = createSession(user);
     audit(user, 'login', { username: user.username });
-    res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${session}; HttpOnly; Path=/; SameSite=Lax; Max-Age=${SESSION_AGE_SECONDS}`);
+    res.setHeader('Set-Cookie', sessionCookie(session, SESSION_AGE_SECONDS));
     sendJson(res, 200, { user: publicUser(user), roles: publicRoles() });
     return;
   }
@@ -143,7 +179,7 @@ async function handleApi(req, res, pathname) {
   if (req.method === 'POST' && pathname === '/api/logout') {
     const user = getUserFromRequest(req);
     if (user) audit(user, 'logout', {});
-    res.setHeader('Set-Cookie', `${SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`);
+    res.setHeader('Set-Cookie', sessionCookie('', 0));
     sendJson(res, 200, { ok: true });
     return;
   }
@@ -198,6 +234,19 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
+  if (pathname === '/api/partners' && req.method === 'POST') {
+    if (!requirePermission(user, res, 'partners:manage')) return;
+    await createPartner(res, user, await readBody(req, 18 * 1024 * 1024));
+    return;
+  }
+
+  const partnerMatch = pathname.match(/^\/api\/partners\/([^/]+)$/);
+  if (partnerMatch && req.method === 'DELETE') {
+    if (!requirePermission(user, res, 'partners:manage')) return;
+    await deletePartner(res, user, partnerMatch[1]);
+    return;
+  }
+
   if (pathname === '/api/users' && req.method === 'GET') {
     if (!requirePermission(user, res, 'users:manage')) return;
     sendJson(res, 200, { users: readUsers().map(publicUser) });
@@ -241,7 +290,9 @@ async function updateService(res, user, serviceId, body) {
     return;
   }
 
-  const textFields = ['title', 'category', 'summary', 'description'];
+  const requiredTextFields = ['title', 'category', 'summary', 'description'];
+  const optionalTextFields = ['heroTitle', 'sideSummary'];
+  const textFields = [...requiredTextFields, ...optionalTextFields];
   const imageFields = ['heroImage', 'images'];
   const wantsTextEdit = textFields.some(field => Object.prototype.hasOwnProperty.call(body, field));
   const wantsImageEdit = imageFields.some(field => Object.prototype.hasOwnProperty.call(body, field));
@@ -256,11 +307,34 @@ async function updateService(res, user, serviceId, body) {
     return;
   }
 
-  for (const field of textFields) {
-    if (Object.prototype.hasOwnProperty.call(body, field)) service[field] = String(body[field] || '').trim();
+  for (const field of requiredTextFields) {
+    if (!Object.prototype.hasOwnProperty.call(body, field)) continue;
+    const cleaned = cleanRequiredText(body[field], serviceFieldLabel(field), SERVICE_TEXT_LIMITS[field]);
+    if (cleaned.error) {
+      sendJson(res, 400, { error: cleaned.error });
+      return;
+    }
+    service[field] = cleaned.value;
   }
 
-  if (Object.prototype.hasOwnProperty.call(body, 'heroImage')) service.heroImage = String(body.heroImage || '').trim();
+  for (const field of optionalTextFields) {
+    if (!Object.prototype.hasOwnProperty.call(body, field)) continue;
+    const cleaned = cleanOptionalText(body[field], serviceFieldLabel(field), SERVICE_TEXT_LIMITS[field]);
+    if (cleaned.error) {
+      sendJson(res, 400, { error: cleaned.error });
+      return;
+    }
+    service[field] = cleaned.value;
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, 'heroImage')) {
+    const cleaned = cleanOptionalText(body.heroImage, 'Hero image', IMAGE_TEXT_LIMITS.heroImage);
+    if (cleaned.error) {
+      sendJson(res, 400, { error: cleaned.error });
+      return;
+    }
+    service.heroImage = cleaned.value;
+  }
   if (Array.isArray(body.images)) service.images = normalizeImages(body.images);
 
   service.updatedAt = new Date().toISOString();
@@ -281,14 +355,20 @@ async function uploadImage(res, user, serviceId, body) {
 
   const storedImage = await storeUploadedImage(res, serviceId, body);
   if (!storedImage) return;
+  const alt = cleanOptionalText(body.alt, 'Alt text', IMAGE_TEXT_LIMITS.alt);
+  const caption = cleanOptionalText(body.caption, 'Caption', IMAGE_TEXT_LIMITS.caption);
+  if (alt.error || caption.error) {
+    sendJson(res, 400, { error: alt.error || caption.error });
+    return;
+  }
 
   const image = {
     id: crypto.randomUUID(),
     src: storedImage.src,
     provider: storedImage.provider,
     hostedId: storedImage.hostedId || '',
-    alt: String(body.alt || service.title || 'Service image').trim(),
-    caption: String(body.caption || '').trim(),
+    alt: alt.value || service.title || 'Service image',
+    caption: caption.value,
     uploadedBy: user.username,
     uploadedAt: new Date().toISOString()
   };
@@ -316,8 +396,22 @@ async function updateImage(res, user, serviceId, imageId, body) {
     sendJson(res, 404, { error: 'Image not found' });
     return;
   }
-  if (Object.prototype.hasOwnProperty.call(body, 'alt')) image.alt = String(body.alt || '').trim();
-  if (Object.prototype.hasOwnProperty.call(body, 'caption')) image.caption = String(body.caption || '').trim();
+  if (Object.prototype.hasOwnProperty.call(body, 'alt')) {
+    const cleaned = cleanOptionalText(body.alt, 'Alt text', IMAGE_TEXT_LIMITS.alt);
+    if (cleaned.error) {
+      sendJson(res, 400, { error: cleaned.error });
+      return;
+    }
+    image.alt = cleaned.value;
+  }
+  if (Object.prototype.hasOwnProperty.call(body, 'caption')) {
+    const cleaned = cleanOptionalText(body.caption, 'Caption', IMAGE_TEXT_LIMITS.caption);
+    if (cleaned.error) {
+      sendJson(res, 400, { error: cleaned.error });
+      return;
+    }
+    image.caption = cleaned.value;
+  }
   if (body.setAsHero) service.heroImage = image.src;
   service.updatedAt = new Date().toISOString();
   service.updatedBy = user.username;
@@ -343,7 +437,7 @@ async function deleteImage(res, user, serviceId, imageId) {
   if (service.heroImage === removed.src) service.heroImage = service.images[0]?.src || '';
   if (removed.src && removed.src.startsWith('/uploads/')) {
     const full = path.resolve(ROOT, `.${removed.src}`);
-    if (full.startsWith(UPLOAD_DIR) && fs.existsSync(full)) fs.unlinkSync(full);
+    if (isPathInside(UPLOAD_DIR, full) && fs.existsSync(full)) fs.unlinkSync(full);
   }
   service.updatedAt = new Date().toISOString();
   service.updatedBy = user.username;
@@ -353,12 +447,70 @@ async function deleteImage(res, user, serviceId, imageId) {
   sendJson(res, 200, { service });
 }
 
+async function createPartner(res, user, body) {
+  const name = cleanRequiredText(body.name, 'Partner name', PARTNER_TEXT_LIMITS.name);
+  const role = cleanRequiredText(body.role, 'Partner role', PARTNER_TEXT_LIMITS.role);
+  if (name.error || role.error) {
+    sendJson(res, 400, { error: name.error || role.error });
+    return;
+  }
+
+  const storedImage = await storeUploadedImage(res, `partner-${safeFilePart(name.value) || 'profile'}`, body);
+  if (!storedImage) return;
+
+  const content = await getManagedContent();
+  const partner = {
+    id: crypto.randomUUID(),
+    name: name.value,
+    role: role.value,
+    image: storedImage.src,
+    provider: storedImage.provider,
+    hostedId: storedImage.hostedId || '',
+    createdBy: user.username,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+
+  content.partners = normalizePartners(content.partners);
+  content.partners.unshift(partner);
+  content.updatedAt = partner.updatedAt;
+  await saveContent(content);
+  audit(user, 'partner:create', { partnerId: partner.id, name: partner.name, role: partner.role });
+  sendJson(res, 201, { partner, partners: content.partners, updatedAt: content.updatedAt });
+}
+
+async function deletePartner(res, user, partnerId) {
+  const content = await getManagedContent();
+  content.partners = normalizePartners(content.partners);
+  const index = content.partners.findIndex(partner => partner.id === partnerId);
+  if (index === -1) {
+    sendJson(res, 404, { error: 'Partner not found.' });
+    return;
+  }
+
+  const [removed] = content.partners.splice(index, 1);
+  if (removed.image && removed.image.startsWith('/uploads/')) {
+    const full = path.resolve(ROOT, `.${removed.image}`);
+    if (isPathInside(UPLOAD_DIR, full) && fs.existsSync(full)) fs.unlinkSync(full);
+  }
+
+  content.updatedAt = new Date().toISOString();
+  await saveContent(content);
+  audit(user, 'partner:delete', { partnerId, name: removed.name || '' });
+  sendJson(res, 200, { partners: content.partners, updatedAt: content.updatedAt });
+}
+
 async function createUser(res, actor, body) {
   const username = String(body.username || '').trim();
   const password = String(body.password || '');
   const role = String(body.role || 'image_editor');
+  const displayName = cleanOptionalText(body.displayName || username, 'Display name', DISPLAY_NAME_MAX);
   if (!/^[a-z0-9_.-]{3,32}$/i.test(username)) {
     sendJson(res, 400, { error: 'Username must be 3-32 characters and use letters, numbers, dots, dashes, or underscores.' });
+    return;
+  }
+  if (displayName.error) {
+    sendJson(res, 400, { error: displayName.error });
     return;
   }
   if (password.length < 8) {
@@ -377,7 +529,7 @@ async function createUser(res, actor, body) {
   const user = {
     id: crypto.randomUUID(),
     username,
-    displayName: String(body.displayName || username).trim(),
+    displayName: displayName.value || username,
     role,
     active: body.active !== false,
     password: hashPassword(password),
@@ -397,7 +549,14 @@ async function updateUser(res, actor, userId, body) {
     sendJson(res, 404, { error: 'User not found.' });
     return;
   }
-  if (Object.prototype.hasOwnProperty.call(body, 'displayName')) user.displayName = String(body.displayName || user.username).trim();
+  if (Object.prototype.hasOwnProperty.call(body, 'displayName')) {
+    const displayName = cleanOptionalText(body.displayName || user.username, 'Display name', DISPLAY_NAME_MAX);
+    if (displayName.error) {
+      sendJson(res, 400, { error: displayName.error });
+      return;
+    }
+    user.displayName = displayName.value || user.username;
+  }
   if (Object.prototype.hasOwnProperty.call(body, 'role')) {
     if (!ROLE_DEFS[body.role]) {
       sendJson(res, 400, { error: 'Unknown role.' });
@@ -406,6 +565,10 @@ async function updateUser(res, actor, userId, body) {
     user.role = body.role;
   }
   if (Object.prototype.hasOwnProperty.call(body, 'active')) user.active = Boolean(body.active);
+  if (!hasAtLeastOneActiveAdmin(users)) {
+    sendJson(res, 400, { error: 'At least one active admin account is required.' });
+    return;
+  }
   if (body.password) {
     if (String(body.password).length < 8) {
       sendJson(res, 400, { error: 'Password must be at least 8 characters.' });
@@ -480,6 +643,11 @@ async function storeUploadedImage(res, serviceId, body) {
 
   if (!parsed.buffer.length || parsed.buffer.length > 8 * 1024 * 1024) {
     sendJson(res, 400, { error: 'Image must be smaller than 8 MB.' });
+    return null;
+  }
+
+  if (!hasValidImageSignature(parsed)) {
+    sendJson(res, 400, { error: 'Uploaded file content does not match a supported image type.' });
     return null;
   }
 
@@ -715,11 +883,13 @@ async function sendHealth(res) {
   await hydrateUsersFromSupabaseOnce();
   await hydrateAuditFromSupabaseOnce();
   const services = Object.values(content.services || {});
+  const partners = normalizePartners(content.partners);
   sendJson(res, 200, {
     ok: true,
     siteName: content.siteName || 'MENU Real Estate Group',
     updatedAt: content.updatedAt || null,
     services: services.length,
+    partners: partners.length,
     storage: {
       content: supabaseEnabled() && supabaseState.contentReady ? 'supabase' : 'local-json',
       images: IMGBB_API_KEY ? 'imgbb' : 'local-uploads'
@@ -739,6 +909,7 @@ async function getAdminStatus() {
   const users = readUsers();
   const auditRecords = readJson(AUDIT_FILE, []);
   const services = Object.values(content.services || {});
+  const partners = normalizePartners(content.partners);
   const servicesWithHero = services.filter(service => Boolean(service.heroImage)).length;
   const imageCount = services.reduce((sum, service) => sum + (Array.isArray(service.images) ? service.images.length : 0), 0);
   const incompleteServices = services
@@ -761,6 +932,7 @@ async function getAdminStatus() {
       siteName: content.siteName || 'MENU Real Estate Group',
       updatedAt: content.updatedAt || null,
       serviceCount: services.length,
+      partnerCount: partners.length,
       imageCount,
       servicesWithHero,
       incompleteServices,
@@ -839,12 +1011,12 @@ function serveStatic(res, pathname, headOnly = false) {
   if (requested === '/admin') requested = '/admin.html';
 
   const fullPath = path.resolve(ROOT, `.${requested}`);
-  if (!fullPath.startsWith(ROOT)) {
+  if (!isPathInside(ROOT, fullPath)) {
     sendText(res, 403, 'Forbidden');
     return;
   }
 
-  if (fullPath.startsWith(DATA_DIR) && path.basename(fullPath) !== 'content.json') {
+  if (isPathInside(DATA_DIR, fullPath) && path.basename(fullPath) !== 'content.json') {
     sendText(res, 404, 'Not found');
     return;
   }
@@ -857,7 +1029,8 @@ function serveStatic(res, pathname, headOnly = false) {
   const ext = path.extname(fullPath).toLowerCase();
   res.writeHead(200, {
     'Content-Type': MIME_TYPES[ext] || 'application/octet-stream',
-    'Cache-Control': ext === '.json' ? 'no-store' : 'public, max-age=60'
+    'Cache-Control': ext === '.json' ? 'no-store' : 'public, max-age=60',
+    'X-Content-Type-Options': 'nosniff'
   });
   if (!headOnly) fs.createReadStream(fullPath).pipe(res);
   else res.end();
@@ -888,14 +1061,28 @@ function writeJson(file, data) {
 function normalizeImages(images) {
   return images.map(item => ({
     id: String(item.id || crypto.randomUUID()),
-    src: String(item.src || ''),
-    alt: String(item.alt || ''),
-    caption: String(item.caption || ''),
-    uploadedBy: String(item.uploadedBy || ''),
-    uploadedAt: String(item.uploadedAt || ''),
-    provider: String(item.provider || ''),
-    hostedId: String(item.hostedId || '')
+    src: boundedText(item.src, IMAGE_TEXT_LIMITS.src),
+    alt: boundedText(item.alt, IMAGE_TEXT_LIMITS.alt),
+    caption: boundedText(item.caption, IMAGE_TEXT_LIMITS.caption),
+    uploadedBy: boundedText(item.uploadedBy, 80),
+    uploadedAt: boundedText(item.uploadedAt, 80),
+    provider: boundedText(item.provider, 40),
+    hostedId: boundedText(item.hostedId, 160)
   })).filter(item => item.src);
+}
+
+function normalizePartners(partners) {
+  return (Array.isArray(partners) ? partners : []).map(item => ({
+    id: String(item.id || crypto.randomUUID()),
+    name: boundedText(item.name, PARTNER_TEXT_LIMITS.name),
+    role: boundedText(item.role, PARTNER_TEXT_LIMITS.role),
+    image: boundedText(item.image || item.src, PARTNER_TEXT_LIMITS.image),
+    provider: boundedText(item.provider, 40),
+    hostedId: boundedText(item.hostedId, 160),
+    createdBy: boundedText(item.createdBy, 80),
+    createdAt: boundedText(item.createdAt, 80),
+    updatedAt: boundedText(item.updatedAt, 80)
+  })).filter(item => item.name && item.role && item.image);
 }
 
 function ensureSetup() {
@@ -938,6 +1125,18 @@ function createSession(user) {
   const encoded = Buffer.from(JSON.stringify(payload)).toString('base64url');
   const signature = crypto.createHmac('sha256', getSecret()).update(encoded).digest('base64url');
   return `${encoded}.${signature}`;
+}
+
+function sessionCookie(value, maxAge) {
+  const parts = [
+    `${SESSION_COOKIE}=${value}`,
+    'HttpOnly',
+    'Path=/',
+    'SameSite=Lax',
+    `Max-Age=${maxAge}`
+  ];
+  if (IS_PRODUCTION) parts.push('Secure');
+  return parts.join('; ');
 }
 
 function getUserFromRequest(req) {
@@ -1006,7 +1205,10 @@ function verifyPassword(password, saved) {
   const [salt, hash] = String(saved || '').split(':');
   if (!salt || !hash) return false;
   const candidate = crypto.pbkdf2Sync(password, salt, 120000, 32, 'sha256').toString('hex');
-  return crypto.timingSafeEqual(Buffer.from(candidate, 'hex'), Buffer.from(hash, 'hex'));
+  const candidateBuffer = Buffer.from(candidate, 'hex');
+  const savedBuffer = Buffer.from(hash, 'hex');
+  if (candidateBuffer.length !== savedBuffer.length) return false;
+  return crypto.timingSafeEqual(candidateBuffer, savedBuffer);
 }
 
 function parseCookies(header) {
@@ -1023,7 +1225,10 @@ function readBody(req, maxBytes = 1024 * 1024) {
     req.on('data', chunk => {
       body += chunk;
       if (Buffer.byteLength(body) > maxBytes) {
-        reject(new Error('Request body too large'));
+        const error = new Error('Request body too large');
+        error.statusCode = 413;
+        error.publicMessage = 'Request body too large.';
+        reject(error);
         req.destroy();
       }
     });
@@ -1035,7 +1240,10 @@ function readBody(req, maxBytes = 1024 * 1024) {
       try {
         resolve(JSON.parse(body));
       } catch (error) {
-        reject(new Error('Invalid JSON body'));
+        const invalid = new Error('Invalid JSON body');
+        invalid.statusCode = 400;
+        invalid.publicMessage = 'Invalid JSON body.';
+        reject(invalid);
       }
     });
     req.on('error', reject);
@@ -1043,13 +1251,131 @@ function readBody(req, maxBytes = 1024 * 1024) {
 }
 
 function sendJson(res, status, data) {
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff'
+  });
   res.end(JSON.stringify(data));
 }
 
 function sendText(res, status, text) {
-  res.writeHead(status, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.writeHead(status, { 'Content-Type': 'text/plain; charset=utf-8', 'X-Content-Type-Options': 'nosniff' });
   res.end(text);
+}
+
+function isSafeMethod(method) {
+  return method === 'GET' || method === 'HEAD' || method === 'OPTIONS';
+}
+
+function isSameOriginRequest(req) {
+  const origin = req.headers.origin;
+  if (!origin) return true;
+  try {
+    return new URL(origin).host === req.headers.host;
+  } catch {
+    return false;
+  }
+}
+
+function loginRateKey(req, username) {
+  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  const ip = forwarded || req.socket.remoteAddress || 'unknown';
+  const name = String(username || '').trim().toLowerCase().slice(0, 80);
+  return `${ip}:${name}`;
+}
+
+function currentLoginAttempt(key) {
+  const attempt = loginAttempts.get(key);
+  if (!attempt) return null;
+  if (attempt.resetAt <= Date.now()) {
+    loginAttempts.delete(key);
+    return null;
+  }
+  return attempt;
+}
+
+function isLoginRateLimited(key) {
+  const attempt = currentLoginAttempt(key);
+  return Boolean(attempt && attempt.count >= LOGIN_RATE_MAX);
+}
+
+function recordLoginFailure(key) {
+  pruneLoginAttempts();
+  const attempt = currentLoginAttempt(key) || { count: 0, resetAt: Date.now() + LOGIN_RATE_WINDOW_MS };
+  attempt.count += 1;
+  loginAttempts.set(key, attempt);
+}
+
+function clearLoginFailures(key) {
+  loginAttempts.delete(key);
+}
+
+function pruneLoginAttempts() {
+  if (loginAttempts.size < 500) return;
+  const now = Date.now();
+  for (const [key, attempt] of loginAttempts.entries()) {
+    if (attempt.resetAt <= now) loginAttempts.delete(key);
+  }
+}
+
+function cleanRequiredText(value, label, max) {
+  const text = cleanString(value);
+  if (!text) return { error: `${label} is required.` };
+  if (text.length > max) return { error: `${label} must be ${max} characters or less.` };
+  return { value: text };
+}
+
+function cleanOptionalText(value, label, max) {
+  const text = cleanString(value);
+  if (text.length > max) return { error: `${label} must be ${max} characters or less.` };
+  return { value: text };
+}
+
+function cleanString(value) {
+  return String(value || '').replace(/\u0000/g, '').trim();
+}
+
+function boundedText(value, max) {
+  return cleanString(value).slice(0, max);
+}
+
+function serviceFieldLabel(field) {
+  return {
+    title: 'Title',
+    heroTitle: 'Page headline',
+    category: 'Category',
+    summary: 'Short summary',
+    sideSummary: 'Booking card summary',
+    description: 'Page description'
+  }[field] || field;
+}
+
+function hasAtLeastOneActiveAdmin(users) {
+  return users.some(item => item.active && item.role === 'admin');
+}
+
+function hasValidImageSignature(parsed) {
+  const buffer = parsed.buffer;
+  if (parsed.mime === 'image/png') {
+    return buffer.length > 8 && buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4e && buffer[3] === 0x47;
+  }
+  if (parsed.mime === 'image/jpeg') {
+    return buffer.length > 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff;
+  }
+  if (parsed.mime === 'image/gif') {
+    const signature = buffer.slice(0, 6).toString('ascii');
+    return signature === 'GIF87a' || signature === 'GIF89a';
+  }
+  if (parsed.mime === 'image/webp') {
+    return buffer.length > 12 && buffer.slice(0, 4).toString('ascii') === 'RIFF' && buffer.slice(8, 12).toString('ascii') === 'WEBP';
+  }
+  return false;
+}
+
+function isPathInside(parent, target) {
+  const relative = path.relative(path.resolve(parent), path.resolve(target));
+  return relative === '' || (relative && !relative.startsWith('..') && !path.isAbsolute(relative));
 }
 
 function audit(user, action, details) {

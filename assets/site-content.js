@@ -15,9 +15,11 @@
 
   function applyContent(content) {
     const services = content && content.services ? content.services : {};
-    if (!Object.keys(services).length) return;
+    const partners = Array.isArray(content && content.partners) ? content.partners : [];
+    if (!Object.keys(services).length && !partners.length) return;
     ensureManagedStyles();
     updateHomeCards(services);
+    renderPartners(content);
     updateServicePage(services);
   }
 
@@ -44,7 +46,8 @@
     const service = services[slug];
     if (!service) return;
 
-    document.title = `${service.title || 'Service'} | Menu Real Estate Group`;
+    const pageTitle = service.heroTitle || service.title || 'Service';
+    document.title = `${pageTitle} | Menu Real Estate Group`;
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription && service.summary) metaDescription.setAttribute('content', service.summary);
 
@@ -52,11 +55,11 @@
     if (hero && service.heroImage) hero.style.setProperty('--service-bg', `url("${cssUrl(service.heroImage)}")`);
 
     setText('.service-page-hero .eyebrow', service.category);
-    setText('.service-page-hero h1', service.title);
+    setText('.service-page-hero h1', pageTitle);
     setText('.service-page-hero p', service.summary);
     setText('.service-panel h2 + p', service.description);
     setText('.service-side-card h3', service.title);
-    setText('.service-side-card p', service.summary);
+    setText('.service-side-card p', service.sideSummary || service.summary);
 
     const breadcrumb = document.querySelector('.breadcrumb');
     if (breadcrumb) {
@@ -86,6 +89,40 @@
     }).join('');
   }
 
+  function renderPartners(content) {
+    const section = document.getElementById('partners');
+    const grid = document.getElementById('partnersGrid');
+    const navLink = document.querySelector('[data-partners-nav]');
+    if (!section && !grid && !navLink) return;
+
+    const partners = (Array.isArray(content.partners) ? content.partners : []).filter(function(partner) {
+      return partner && partner.name && partner.role && partner.image;
+    });
+    if (!partners.length) {
+      if (section) section.hidden = true;
+      if (navLink) navLink.hidden = true;
+      return;
+    }
+
+    if (section) section.hidden = false;
+    if (navLink) navLink.hidden = false;
+    if (!grid) return;
+
+    const phone = content.companyPhone || '+250 782 616 150';
+    grid.innerHTML = partners.map(function(partner) {
+      return `
+        <article class="partner-card">
+          <img src="${escapeAttr(partner.image)}" alt="${escapeAttr(partner.name)} profile" loading="lazy">
+          <div class="partner-card-body">
+            <h3>${escapeHtml(partner.name)}</h3>
+            <p class="partner-role">${escapeHtml(partner.role)}</p>
+            <a class="partner-phone" href="tel:${escapeAttr(phoneHref(phone))}">Call MENU: ${escapeHtml(phone)}</a>
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
   function serviceFromHref(href, services) {
     if (!href) return null;
     const slug = href.split('#')[0].split('?')[0].split('/').pop().replace(/\.html$/, '');
@@ -109,6 +146,10 @@
 
   function cssUrl(value) {
     return String(value || '').replace(/"/g, '%22').replace(/\n/g, '');
+  }
+
+  function phoneHref(value) {
+    return String(value || '').replace(/[^\d+]/g, '') || '+250782616150';
   }
 
   function escapeHtml(value) {
