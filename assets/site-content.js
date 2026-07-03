@@ -169,9 +169,45 @@
     style.textContent = [
       '.managed-service-gallery{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}',
       '.managed-service-gallery figure{margin:0;}',
-      '.managed-service-gallery img{height:300px;width:100%;object-fit:cover;}',
+      '.managed-service-gallery img{height:320px;width:100%;object-fit:cover;cursor:pointer;border-radius:24px;box-shadow:0 16px 38px rgba(7,29,51,0.14);}',
       '.managed-service-gallery figcaption{margin-top:8px;color:#6b7280;font-size:14px;font-weight:700;}'
     ].join('');
     document.head.appendChild(style);
+  }
+
+  function initLightbox() {
+    var overlay = document.createElement('div');
+    overlay.id = 'imageLightbox';
+    overlay.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;cursor:pointer;align-items:center;justify-content:center;';
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) { overlay.style.display = 'none'; document.body.style.overflow = ''; }
+    });
+    var img = document.createElement('img');
+    img.style.cssText = 'max-width:90%;max-height:90%;object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);cursor:default;';
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+
+    document.addEventListener('click', function(e) {
+      var imgEl = e.target.closest('img');
+      if (!imgEl) return;
+      var container = imgEl.closest('.service-image-grid, .managed-service-gallery, .project, .service-side-card, .hero-card, .partner-card');
+      if (!container) return;
+      img.src = imgEl.src;
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.style.display === 'flex') {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLightbox);
+  } else {
+    initLightbox();
   }
 })();
