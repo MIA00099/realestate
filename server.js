@@ -54,6 +54,7 @@ let supabaseAuditHydrationPromise = null;
 let supabaseAuditHydrated = false;
 let supabaseAuditUsesTable = true;
 const loginAttempts = new Map();
+const serviceRequestAttempts = new Map();
 const supabaseState = {
   contentReady: false,
   usersReady: false,
@@ -141,6 +142,69 @@ server.listen(PORT, () => {
   }
 });
 
+
+async function handleServiceRequest(req, res) {
+  const key = process.env.RESEND_API_KEY;
+  const from = process.env.REQUEST_FROM_EMAIL;
+  const to = process.env.REQUEST_TO_EMAIL || 'menurealestategroup@gmail.com';
+  if (!key || !from) return sendJson(res, 503, { error: 'Email delivery is not configured yet.' });
+  const ip = req.socket.remoteAddress || 'unknown';
+  const now = Date.now();
+  const attempts = (serviceRequestAttempts.get(ip) || []).filter(t => now - t < 3600000);
+  if (attempts.length >= 5) return sendJson(res, 429, { error: 'Too many requests. Try again later.' });
+  let body;
+  try { body = await readBody(req, 12000); }
+  catch { return sendJson(res, 400, { error: 'Invalid request.' }); }
+  if (body.website) return sendJson(res, 200, { ok: true });
+  const limits = { name: 100, phone: 30, email: 160, service: 160, message: 2500 };
+  const values = {};
+  for (const [field, max] of Object.entries(limits)) {
+    if (typeof body[field] !== 'string') return sendJson(res, 400, { error: 'Complete all fields.' });
+    values[field] = body[field].trim();
+    if (!values[field] || values[field].length > max || (field !== 'message' && /[\r\n]/.test(values[field]))) {
+      return sendJson(res, 400, { error: 'Invalid ' + field + '.' });
+    }
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) return sendJson(res, 400, { error: 'Invalid email address.' });
+  serviceRequestAttempts.set(ip, [...attempts, now]);
+  if (serviceRequestAttempts.size > 1000) {
+    for (const [address, times] of serviceRequestAttempts) {
+      if (!times.some(t => now - t < 3600000)) serviceRequestAttempts.delete(address);
+    }
+  }
+  const send = async payload => {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from, ...payload }),
+      signal: AbortSignal.timeout(12000)
+    });
+    if (!response.ok) throw new Error('Email provider HTTP ' + response.status);
+  };
+  try {
+    await send({
+      to: [to], reply_to: values.email, subject: 'Service request: ' + values.service,
+      text: ['New website service request', 'Name: ' + values.name, 'Phone: ' + values.phone,
+        'Email: ' + values.email, 'Service: ' + values.service, 'Message:', values.message].join('\n')
+    });
+  } catch (error) {
+    console.error('Service request failed:', error.message);
+    return sendJson(res, 502, { error: 'Could not send the request. Please try again.' });
+  }
+  let confirmationSent = true;
+  try {
+    await send({
+      to: [values.email], subject: 'Your request was received - MENU Real Estate Group',
+      text: 'Hello ' + values.name + ',\n\nWe received your request for ' + values.service +
+        '. Our team will contact you soon.\n\nMENU Real Estate Group\n+250 782 616 150'
+    });
+  } catch (error) {
+    confirmationSent = false;
+    console.error('Confirmation email failed:', error.message);
+  }
+  sendJson(res, 200, { ok: true, confirmationSent });
+}
+
 async function handleApi(req, res, pathname) {
   if (!isSafeMethod(req.method) && !isSameOriginRequest(req)) {
     sendJson(res, 403, { error: 'Request origin is not allowed.' });
@@ -152,6 +216,10 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
+  if (req.method === 'POST' && pathname === '/api/service-requests') {
+    await handleServiceRequest(req, res);
+    return;
+  }
   if (req.method === 'POST' && pathname === '/api/login') {
     const body = await readBody(req);
     const rateKey = loginRateKey(req, body.username);
