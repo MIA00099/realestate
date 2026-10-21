@@ -1016,6 +1016,15 @@ function serveStatic(res, pathname, headOnly = false) {
     return;
   }
 
+  // Only explicitly public documents and assets may be served over HTTP.
+  const publicPaths = new Set(['/index.html', '/admin.html', '/data/content.json']);
+  const publicDirs = [path.join(ROOT, 'assets'), path.join(ROOT, 'services'), UPLOAD_DIR];
+  const isPublicFile = publicPaths.has(requested) || publicDirs.some(dir => isPathInside(dir, fullPath));
+  if (!isPublicFile || requested.split('/').some(part => part.startsWith('.') && part !== '..')) {
+    sendText(res, 404, 'Not found');
+    return;
+  }
+
   if (isPathInside(DATA_DIR, fullPath) && path.basename(fullPath) !== 'content.json') {
     sendText(res, 404, 'Not found');
     return;
@@ -1093,7 +1102,10 @@ function ensureSetup() {
   if (!fs.existsSync(AUDIT_FILE)) writeJson(AUDIT_FILE, []);
 
   if (!fs.existsSync(USERS_FILE)) {
-    const initialPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
+    const initialPassword = process.env.ADMIN_PASSWORD || (IS_PRODUCTION ? '' : 'Admin123!');
+    if (!initialPassword || (IS_PRODUCTION && initialPassword === 'Admin123!')) {
+      throw new Error('Set a unique ADMIN_PASSWORD before initializing production.');
+    }
     const admin = {
       id: crypto.randomUUID(),
       username: 'admin',
