@@ -358,8 +358,7 @@
    Neither action claims delivery until the visitor sends the message. */
 (function () {
   'use strict';
-  const email = 'menurealestategroup@gmail.com';
-  const whatsapp = '250782616150';
+  
   const servicePage = /^\/services\/[^/]+\.html$/i.test(location.pathname);
   const pageTitle = document.title.split('|')[0].trim();
   const serviceName = servicePage ? pageTitle : '';
@@ -406,10 +405,9 @@
           <label for="msr-service">Service required *</label><input id="msr-service" name="service" required maxlength="160">
           <label for="msr-message">How can we help? *</label><textarea id="msr-message" name="message" required maxlength="2500"></textarea>
           <div class="msr-actions">
-            <button type="button" class="msr-email">Continue via Email</button>
-            <button type="button" class="msr-whatsapp">Continue via WhatsApp</button>
+            <button type="submit" class="msr-email">Send Request</button>
           </div>
-          <p class="msr-status" role="status">Choose a channel, then send the prepared message in your email or WhatsApp app.</p>
+          <p class="msr-status" role="status">Your message will be sent directly from this website.</p>
         </form>
       </section>`;
     document.body.append(trigger, overlay);
@@ -433,26 +431,33 @@
         else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
       }
     });
-    function compose() {
-      if (!form.reportValidity()) return null;
-      const values = new FormData(form);
-      return ['Hello MENU Real Estate Group, I would like to request a service.', '',
-        'Name: ' + values.get('name'), 'Phone: ' + values.get('phone'),
-        'Email: ' + values.get('email'), 'Service: ' + values.get('service'),
-        'Message: ' + values.get('message')].join('\n');
-    }
-    overlay.querySelector('.msr-email').addEventListener('click', () => {
-      const message = compose();
-      if (!message) return;
-      const subject = 'Service request - ' + form.elements.service.value;
-      location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(message);
-    });
-    overlay.querySelector('.msr-whatsapp').addEventListener('click', () => {
-      const message = compose();
-      if (!message) return;
-      const url = 'https://wa.me/' + whatsapp + '?text=' + encodeURIComponent(message);
-      const opened = window.open(url, '_blank', 'noopener,noreferrer');
-      if (!opened) location.href = url;
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const button = form.querySelector('[type="submit"]');
+      const status = form.querySelector('.msr-status');
+      const payload = Object.fromEntries(new FormData(form));
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      status.textContent = 'Sending your request securely...';
+      try {
+        const response = await fetch('/api/service-requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.error || 'Unable to send request.');
+        status.textContent = result.confirmationSent
+          ? 'Your request has been sent successfully. A confirmation email is on its way.'
+          : 'Your request has been sent successfully. We could not send the confirmation email.';
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message || 'Could not send your request. Please try again.';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Send Request';
+      }
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize);
