@@ -1031,6 +1031,8 @@
             <label class="sr-only" for="phoneNumber">Phone number</label>
             <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="Phone number" autocomplete="tel" required>
 
+            <label class="sr-only" for="consultationEmail">Email address</label>
+            <input id="consultationEmail" name="email" type="email" placeholder="Email address" autocomplete="email" maxlength="160" required>
             <label class="sr-only" for="interest">Choose solution interest</label>
             <select id="interest" name="interest" required>
               <option value="">Choose solution interest</option>
@@ -1120,29 +1122,40 @@
     }, { passive: true });
 
     if (consultationForm) {
-      consultationForm.addEventListener('submit', function(event) {
+      consultationForm.addEventListener('submit', async function(event) {
         event.preventDefault();
+        if (!consultationForm.reportValidity()) return;
 
-        if (!consultationForm.checkValidity()) {
-          formStatus.textContent = 'Please complete the required fields before sending.';
-          consultationForm.reportValidity();
-          return;
+        const submitButton = consultationForm.querySelector('[type="submit"]');
+        const fields = new FormData(consultationForm);
+        const payload = {
+          name: String(fields.get('fullName') || '').trim(),
+          phone: String(fields.get('phoneNumber') || '').trim(),
+          email: String(fields.get('email') || '').trim(),
+          service: String(fields.get('interest') || '').trim(),
+          message: String(fields.get('message') || '').trim(),
+          website: ''
+        };
+        submitButton.disabled = true;
+        formStatus.textContent = 'Sending your request...';
+        try {
+          const response = await fetch('/api/service-requests', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const result = await response.json();
+          if (!response.ok || !result.ok) throw new Error(result.error || 'Request could not be sent.');
+          consultationForm.reset();
+          formStatus.textContent = result.confirmationSent
+            ? 'Your request was sent. Check your email for confirmation.'
+            : 'Your request was sent. Email confirmation is currently unavailable.';
+        } catch (error) {
+          formStatus.textContent = error.message || 'Could not send your request. Please try again.';
+        } finally {
+          submitButton.disabled = false;
         }
-
-        const formData = new FormData(consultationForm);
-        const requestMessage = [
-          'Hello MENU Real Estate Group, I would like a consultation.',
-          '',
-          `Name: ${formData.get('fullName')}`,
-          `Phone: ${formData.get('phoneNumber')}`,
-          `Interest: ${formData.get('interest')}`,
-          `Message: ${formData.get('message')}`
-        ].join('\n');
-
-        const whatsappUrl = `https://wa.me/250782616150?text=${encodeURIComponent(requestMessage)}`;
-        window.open(whatsappUrl, '_blank', 'noopener');
-        formStatus.textContent = 'Your request is ready in WhatsApp. Please send it there to complete the inquiry.';
-      });
+      });;
     }
   </script>
   <script src="assets/site-content.js" defer></script>
