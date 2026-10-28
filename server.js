@@ -232,6 +232,10 @@ async function handleApi(req, res, pathname) {
       return;
     }
     await hydrateUsersFromSupabaseOnce();
+    if (supabaseEnabled() && !supabaseState.usersReady) {
+      sendJson(res, 503, { error: 'Authentication storage is temporarily unavailable.' });
+      return;
+    }
     const users = readUsers();
     const user = users.find(item => item.username.toLowerCase() === String(body.username || '').toLowerCase());
     if (!user || !user.active || !verifyPassword(String(body.password || ''), user.password)) {
@@ -257,6 +261,10 @@ async function handleApi(req, res, pathname) {
   }
 
   await hydrateUsersFromSupabaseOnce();
+  if (supabaseEnabled() && !supabaseState.usersReady) {
+    sendJson(res, 503, { error: 'Authentication storage is temporarily unavailable.' });
+    return;
+  }
   const user = requireUser(req, res);
   if (!user) return;
 
@@ -800,7 +808,7 @@ async function hydrateContentFromSupabaseOnce() {
         const rows = await supabaseRest(SUPABASE_CONTENT_TABLE, '?key=eq.' + encodeURIComponent(SUPABASE_CONTENT_KEY) + '&select=value');
         const remoteContent = Array.isArray(rows) ? rows[0]?.value : null;
         if (remoteContent && remoteContent.services) writeJson(CONTENT_FILE, remoteContent);
-        else await syncContentToSupabase(readContent());
+        else await syncContentToSupabase(readContent(), true);
         supabaseState.contentReady = true;
         supabaseState.contentError = '';
       } catch (error) {
@@ -824,7 +832,7 @@ async function hydrateUsersFromSupabaseOnce() {
         const rows = await supabaseRest(SUPABASE_CONTENT_TABLE, '?key=eq.' + encodeURIComponent(SUPABASE_USERS_KEY) + '&select=value');
         const remoteUsers = Array.isArray(rows) ? rows[0]?.value : null;
         if (Array.isArray(remoteUsers) && remoteUsers.length) writeJson(USERS_FILE, remoteUsers);
-        else await syncUsersToSupabase(readUsers());
+        else await syncUsersToSupabase(readUsers(), true);
         supabaseState.usersReady = true;
         supabaseState.usersError = '';
       } catch (error) {
