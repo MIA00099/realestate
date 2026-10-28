@@ -259,7 +259,7 @@
     if (!grid) return;
 
     const phone = content.companyPhone || '+250 782 616 150';
-    grid.innerHTML = partners.map(function(partner) {
+    const cards = partners.map(function(partner) {
       return `
         <article class="partner-card">
           <img src="${escapeAttr(partner.image)}" alt="${escapeAttr(partner.name)} profile" loading="lazy">
@@ -271,6 +271,16 @@
         </article>
       `;
     }).join('');
+
+    // Identical groups form a seamless loop. The second group is decorative,
+    // preventing assistive technology from announcing partners twice.
+    grid.classList.add('partner-marquee');
+    grid.setAttribute('aria-label', 'Our trusted partners');
+    grid.innerHTML = '<div class="partner-marquee-track">' +
+      '<div class="partner-marquee-group">' + cards + '</div>' +
+      '<div class="partner-marquee-group" aria-hidden="true" inert>' + cards + '</div>' +
+      '</div>';
+    grid.style.setProperty('--marquee-duration', Math.max(22, partners.length * 5) + 's');
   }
 
   function serviceFromHref(href, services) {
