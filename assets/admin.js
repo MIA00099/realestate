@@ -21,6 +21,7 @@ const PAGES = {
   dashboard: ['Overview', 'Dashboard'],
   services: ['Content', 'Services'],
   partners: ['Content', 'Partners'],
+  team: ['Content', 'Our Team'],
   users: ['Administration', 'Users & Roles'],
   activity: ['Administration', 'Activity Log'],
   account: ['My account', 'Password & Security'],
@@ -95,6 +96,8 @@ function bindEvents() {
   $('#uploadForm').addEventListener('submit', uploadImage);
   $('#imageList').addEventListener('click', handleImageAction);
 
+  $('#teamForm').addEventListener('submit', addTeamMember);
+  $('#teamAdminList').addEventListener('click', removeTeamMember);
   $('#partnerForm').addEventListener('submit', addPartner);
   $('#partnerAdminList').addEventListener('click', handlePartnerAction);
 
@@ -214,7 +217,8 @@ function renderShell() {
   $('#accountRoleLabel').textContent = role;
   $('#accountRoleBadge').textContent = role;
   $('#accountPermissionText').textContent = `${state.user?.permissions?.length || 0} permissions enabled.`;
-  $$('[data-page="partners"]').forEach(button => button.hidden = !can('partners:manage'));
+  $('[data-page="partners"]').forEach(button => button.hidden = !can('partners:manage'));
+  $('[data-page="team"]').forEach(button => button.hidden = !can('team:manage'));
   $$('[data-page="users"]').forEach(button => button.hidden = !can('users:manage'));
   $$('[data-page="activity"]').forEach(button => button.hidden = !can('audit:view'));
 }
@@ -229,6 +233,7 @@ async function refreshData() {
 async function loadContent() {
   state.content = await api('/api/content');
   state.content.partners = Array.isArray(state.content.partners) ? state.content.partners : [];
+  state.content.team = Array.isArray(state.content.team) ? state.content.team : [];
   const ids = Object.keys(state.content.services || {});
   if (!state.selectedServiceId || !state.content.services[state.selectedServiceId]) {
     state.selectedServiceId = ids[0] || null;
@@ -247,6 +252,7 @@ function renderAll() {
   renderDashboard();
   renderServices();
   renderPartners();
+  renderTeamAdmin();
   if (can('users:manage')) renderUsers();
   if (can('audit:view')) renderActivity();
 }
@@ -265,6 +271,7 @@ async function setPage(page, options = {}) {
   if (page === 'users' && !can('users:manage')) return showPermission('Users & Roles');
   if (page === 'activity' && !can('audit:view')) return showPermission('Activity Log');
   if (page === 'partners' && !can('partners:manage')) return showPermission('Partners');
+  if (page === 'team' && !can('team:manage')) return showPermission('Our Team');
 
   state.page = page;
   closeSidebar();
@@ -941,6 +948,71 @@ function exportContent() {
 
 function exportActivity() {
   downloadJson(`menu-activity-${new Date().toISOString().slice(0, 10)}.json`, filteredActivity());
+}
+
+function renderTeamAdmin() {
+  const members = Array.isArray(state.content?.team) ? state.content.team : [];
+  $('#teamCount').textContent = members.length + (members.length === 1 ? ' person' : ' people');
+  $('#teamAdminList').innerHTML = members.map(member => `
+    <article class="partner-admin-card" data-team-id="${escapeAttr(member.id)}">
+      <img src="${escapeAttr(member.image)}" alt="${escapeAttr(member.name)}" loading="lazy">
+      <div class="partner-admin-copy">
+        <strong>${escapeHtml(member.name)}</strong>
+        <span>${escapeHtml(member.role)}</span>
+        <span>${escapeHtml(member.description)}</span>
+      </div>
+      <button class="btn btn-danger" data-team-delete type="button">Remove</button>
+    </article>
+  `).join('') || emptyHtml('No team members yet. Add the first profile.');
+  $('#teamForm input, #teamForm textarea, #teamForm button, #teamAdminList button')
+    .forEach(node => node.disabled = !can('team:manage'));
+}
+
+async function addTeamMember(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const name = String(data.get('name') || '').trim();
+  const role = String(data.get('role') || '').trim();
+  const description = String(data.get('description') || '').trim();
+  const file = data.get('image');
+  if (!name || !role || !description) { $('#teamStatus').textContent = 'Complete all fields.'; return; }
+  const imageError = validateImageFile(file);
+  if (imageError) { $('#teamStatus').textContent = imageError; return; }
+  try {
+    setBusy($('#addTeamBtn'), true, 'Uploading...');
+    const response = await api('/api/team', { method: 'POST',
+      body: { name, role, description, fileName: file.name, dataUrl: await fileToDataUrl(file) } });
+    state.content.team = response.team || [];
+    form.reset();
+    renderTeamAdmin();
+    $('#teamStatus').textContent = 'Team member published.';
+  } catch (error) {
+    $('#teamStatus').textContent = error.message;
+  } finally {
+    setBusy($('#addTeamBtn'), false);
+  }
+}
+
+async function removeTeamMember(event) {
+  const button = event.target.closest('[data-team-delete]');
+  if (!button) return;
+  const card = button.closest('[data-team-id]');
+  if (!card) return;
+  const member = (state.content.team || []).find(m => m.id === card.dataset.teamId);
+  if (!member) return;
+  const ok = await confirmAction({
+    title: 'Remove team member?', message: 'Remove ' + member.name + ' from the public website?',
+    confirmText: 'Remove', danger: true
+  });
+  if (!ok) return;
+  try {
+    setBusy(button, true, 'Removing...');
+    const result = await api('/api/team/' + encodeURIComponent(member.id), { method: 'DELETE' });
+    state.content.team = result.team || [];
+    renderTeamAdmin();
+  } catch (error) { $('#teamStatus').textContent = error.message; }
+  finally { setBusy(button, false); }
 }
 
 function renderPartners() {

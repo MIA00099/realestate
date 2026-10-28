@@ -67,11 +67,11 @@ const supabaseState = {
 const ROLE_DEFS = {
   admin: {
     label: 'Admin',
-    permissions: ['content:edit', 'images:manage', 'partners:manage', 'users:manage', 'audit:view']
+    permissions: ['content:edit', 'images:manage', 'partners:manage', 'team:manage', 'users:manage', 'audit:view']
   },
   editor: {
     label: 'Content Editor',
-    permissions: ['content:edit', 'images:manage', 'partners:manage']
+    permissions: ['content:edit', 'images:manage', 'partners:manage', 'team:manage']
   },
   image_editor: {
     label: 'Image Only Partner',
@@ -308,6 +308,18 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
+  if (pathname === '/api/team' && req.method === 'POST') {
+    if (!requirePermission(user, res, 'team:manage')) return;
+    await createTeamMember(res, user, await readBody(req, 18 * 1024 * 1024));
+    return;
+  }
+  const teamMatch = pathname.match(/^\/api\/team\/([^/]+)$/);
+  if (teamMatch && req.method === 'DELETE') {
+    if (!requirePermission(user, res, 'team:manage')) return;
+    await deleteTeamMember(res, user, teamMatch[1]);
+    return;
+  }
+
   const partnerMatch = pathname.match(/^\/api\/partners\/([^/]+)$/);
   if (partnerMatch && req.method === 'DELETE') {
     if (!requirePermission(user, res, 'partners:manage')) return;
@@ -513,6 +525,60 @@ async function deleteImage(res, user, serviceId, imageId) {
   await saveContent(content);
   audit(user, 'image:delete', { serviceId, imageId });
   sendJson(res, 200, { service });
+}
+
+async function createTeamMember(res, user, body) {
+  const name = cleanRequiredText(body.name, 'Team member name', 100);
+  const role = cleanRequiredText(body.role, 'Job title', 100);
+  const description = cleanRequiredText(body.description, 'Description', 1200);
+  if (name.error || role.error || description.error) {
+    return sendJson(res, 400, { error: name.error || role.error || description.error });
+  }
+  // Read the authoritative content before storing the image to avoid orphaned files on fetch failures.
+  const content = await getManagedContent();
+  const image = await storeUploadedImage(res, 'team-' + safeFilePart(name.value), body);
+  if (!image) return;
+  const member = {
+    id: crypto.randomUUID(), name: name.value, role: role.value,
+    description: description.value, image: image.src,
+    provider: image.provider, hostedId: image.hostedId || '',
+    createdAt: new Date().toISOString()
+  };
+  content.team = normalizeTeam(content.team);
+  content.team.push(member);
+  content.updatedAt = new Date().toISOString();
+  await saveContent(content);
+  audit(user, 'team:create', { memberId: member.id, name: member.name });
+  sendJson(res, 201, { member, team: content.team, updatedAt: content.updatedAt });
+}
+
+async function deleteTeamMember(res, user, memberId) {
+  const content = await getManagedContent();
+  content.team = normalizeTeam(content.team);
+  const index = content.team.findIndex(member => member.id === memberId);
+  if (index < 0) return sendJson(res, 404, { error: 'Team member not found.' });
+  const removed = content.team.splice(index, 1)[0];
+  content.updatedAt = new Date().toISOString();
+  await saveContent(content);
+  if (removed.image && removed.image.startsWith('/uploads/')) {
+    const full = path.resolve(ROOT, '.' + removed.image);
+    if (isPathInside(UPLOAD_DIR, full) && fs.existsSync(full)) fs.unlinkSync(full);
+  }
+  audit(user, 'team:delete', { memberId, name: removed.name });
+  sendJson(res, 200, { team: content.team, updatedAt: content.updatedAt });
+}
+
+function normalizeTeam(team) {
+  return (Array.isArray(team) ? team : []).map(member => ({
+    id: String(member.id || crypto.randomUUID()),
+    name: boundedText(member.name, 100),
+    role: boundedText(member.role, 100),
+    description: boundedText(member.description, 1200),
+    image: boundedText(member.image, 2048),
+    provider: boundedText(member.provider, 40),
+    hostedId: boundedText(member.hostedId, 160),
+    createdAt: boundedText(member.createdAt, 80)
+  })).filter(member => member.name && member.role && member.description && member.image);
 }
 
 async function createPartner(res, user, body) {
