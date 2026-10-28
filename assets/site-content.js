@@ -17,10 +17,12 @@
   function applyContent(content) {
     const services = content && content.services ? content.services : {};
     const partners = Array.isArray(content && content.partners) ? content.partners : [];
-    if (!Object.keys(services).length && !partners.length) return;
+    const team = Array.isArray(content && content.team) ? content.team : [];
+    if (!Object.keys(services).length && !partners.length && !team.length) return;
     ensureManagedStyles();
     updateHomeCards(services);
     renderPartners(content);
+    renderTeam(content);
     updateServicePage(services);
   }
 
@@ -237,6 +239,36 @@
     if (!node) return;
     node.textContent = value || '';
     node.hidden = !value;
+  }
+
+  function renderTeam(content) {
+    const section = document.getElementById('team');
+    const grid = document.getElementById('teamGrid');
+    const nav = document.querySelector('[data-team-nav]');
+    if (!section || !grid) return;
+    const members = (Array.isArray(content.team) ? content.team : [])
+      .filter(m => m && m.name && m.role && m.description && m.image);
+    section.hidden = !members.length;
+    if (nav) nav.hidden = !members.length;
+    grid.innerHTML = members.map(function(member) {
+      const long = member.description.length > 140;
+      return '<article class="team-card">' +
+        '<img src="' + escapeAttr(member.image) + '" alt="' + escapeAttr(member.name) + '" loading="lazy">' +
+        '<div class="team-card-body"><h3>' + escapeHtml(member.name) + '</h3>' +
+        '<p class="team-title">' + escapeHtml(member.role) + '</p>' +
+        '<p class="team-description' + (long ? ' is-collapsed' : '') + '">' + escapeHtml(member.description) + '</p>' +
+        (long ? '<button type="button" class="team-more" aria-expanded="false">READ MORE →</button>' : '') +
+        '</div></article>';
+    }).join('');
+    grid.querySelectorAll('.team-more').forEach(button => {
+      button.addEventListener('click', function() {
+        const description = button.previousElementSibling;
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        description.classList.toggle('is-collapsed', expanded);
+        button.setAttribute('aria-expanded', String(!expanded));
+        button.textContent = expanded ? 'READ MORE →' : 'READ LESS ↑';
+      });
+    });
   }
 
   function renderPartners(content) {
