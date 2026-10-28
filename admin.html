@@ -55,6 +55,7 @@
         <p class="nav-label">Content</p>
         <button data-page="services" type="button"><span class="nav-icon"><svg class="icon"><use href="#layersIcon"/></svg></span>Services</button>
         <button data-page="partners" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Partners</button>
+        <button data-page="team" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Our Team</button>
         <p class="nav-label">Administration</p>
         <button data-page="users" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Users & Roles</button>
         <button data-page="activity" type="button"><span class="nav-icon"><svg class="icon"><use href="#activityIcon"/></svg></span>Activity Log</button>
@@ -234,6 +235,27 @@
             <article class="card pad">
               <div class="section-head"><div><h3>Home page partners</h3><p>These profiles appear in the Partners section on the public website.</p></div><span id="partnerCount" class="badge blue">0 partners</span></div>
               <div id="partnerAdminList" class="partner-admin-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="teamPage" class="page partners-workspace" hidden>
+          <div class="intro"><div><h2>Our Team</h2><p>Add real staff photos, names, roles, and biographies to the public team section.</p></div><a class="btn btn-secondary" href="/#team" target="_blank" rel="noopener">Preview team</a></div>
+          <div class="grid partner-admin-grid">
+            <article class="card pad">
+              <div class="section-head"><div><h3>Add team member</h3></div></div>
+              <form id="teamForm" novalidate>
+                <label class="field"><span>Full name</span><input name="name" maxlength="100" required></label>
+                <label class="field"><span>Position / role</span><input name="role" maxlength="100" required></label>
+                <label class="field"><span>Description / biography</span><textarea name="description" maxlength="1200" rows="5" required></textarea></label>
+                <label class="field"><span>Portrait image</span><input name="image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" required></label>
+                <button id="addTeamBtn" class="btn btn-primary" type="submit">Add team member</button>
+                <p id="teamStatus" class="form-status" role="status"></p>
+              </form>
+            </article>
+            <article class="card pad">
+              <div class="section-head"><div><h3>Published team</h3></div><span id="teamCount" class="badge blue">0 people</span></div>
+              <div id="teamAdminList" class="partner-admin-list"></div>
             </article>
           </div>
         </section>
