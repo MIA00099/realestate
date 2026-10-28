@@ -123,6 +123,10 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/data/content.json') {
       await hydrateContentFromSupabaseOnce();
+      if (supabaseEnabled() && !supabaseState.contentReady) {
+        sendJson(res, 503, { error: 'Website content is temporarily unavailable.' });
+        return;
+      }
     }
 
     serveStatic(res, pathname, req.method === 'HEAD');
@@ -689,17 +693,33 @@ async function exportContent(res, user) {
 
 async function getManagedContent() {
   await hydrateContentFromSupabaseOnce();
+  if (supabaseEnabled() && !supabaseState.contentReady) {
+    throw serviceUnavailable('Content storage is temporarily unavailable.');
+  }
   return readContent();
 }
 
 async function saveContent(content) {
+  if (supabaseEnabled()) {
+    if (!supabaseState.contentReady) throw serviceUnavailable('Content storage is unavailable; changes were not saved.');
+    await syncContentToSupabase(content, true);
+  }
   writeJson(CONTENT_FILE, content);
-  await syncContentToSupabase(content);
 }
 
 async function saveUsers(users) {
+  if (supabaseEnabled()) {
+    if (!supabaseState.usersReady) throw serviceUnavailable('User storage is unavailable; changes were not saved.');
+    await syncUsersToSupabase(users, true);
+  }
   writeJson(USERS_FILE, users);
-  await syncUsersToSupabase(users);
+}
+
+function serviceUnavailable(message) {
+  const error = new Error(message);
+  error.statusCode = 503;
+  error.publicMessage = message;
+  return error;
 }
 
 async function storeUploadedImage(res, serviceId, body) {
@@ -788,7 +808,8 @@ async function hydrateContentFromSupabaseOnce() {
         supabaseState.contentError = error.message;
         console.warn('Supabase content hydration skipped:', error.message);
       } finally {
-        supabaseHydrated = true;
+        supabaseHydrated = supabaseState.contentReady;
+        supabaseHydrationPromise = null;
       }
     })();
   }
@@ -811,7 +832,8 @@ async function hydrateUsersFromSupabaseOnce() {
         supabaseState.usersError = error.message;
         console.warn('Supabase user hydration skipped:', error.message);
       } finally {
-        supabaseUsersHydrated = true;
+        supabaseUsersHydrated = supabaseState.usersReady;
+        supabaseUsersHydrationPromise = null;
       }
     })();
   }
@@ -834,14 +856,15 @@ async function hydrateAuditFromSupabaseOnce() {
         supabaseState.auditError = error.message;
         console.warn('Supabase audit hydration skipped:', error.message);
       } finally {
-        supabaseAuditHydrated = true;
+        supabaseAuditHydrated = supabaseState.auditReady;
+        supabaseAuditHydrationPromise = null;
       }
     })();
   }
   await supabaseAuditHydrationPromise;
 }
 
-async function syncContentToSupabase(content) {
+async function syncContentToSupabase(content, required = false) {
   if (!supabaseEnabled()) return;
   const updatedAt = new Date().toISOString();
   try {
@@ -863,6 +886,7 @@ async function syncContentToSupabase(content) {
     supabaseState.contentReady = false;
     supabaseState.contentError = error.message;
     console.warn('Supabase content sync skipped:', error.message);
+    if (required) throw serviceUnavailable('Content could not be saved to persistent storage.');
   }
 }
 
@@ -921,7 +945,7 @@ async function syncAuditSnapshotToSupabase() {
   }
 }
 
-async function syncUsersToSupabase(users) {
+async function syncUsersToSupabase(users, required = false) {
   if (!supabaseEnabled()) return;
   const updatedAt = new Date().toISOString();
   try {
@@ -943,6 +967,7 @@ async function syncUsersToSupabase(users) {
     supabaseState.usersReady = false;
     supabaseState.usersError = error.message;
     console.warn('Supabase user sync skipped:', error.message);
+    if (required) throw serviceUnavailable('Users could not be saved to persistent storage.');
   }
 }
 
@@ -1200,7 +1225,8 @@ function createSession(user) {
   const payload = {
     uid: user.id,
     exp: Math.floor(Date.now() / 1000) + SESSION_AGE_SECONDS,
-    nonce: crypto.randomBytes(8).toString('hex')
+    nonce: crypto.randomBytes(8).toString('hex'),
+    credentialVersion: crypto.createHash('sha256').update(user.password).digest('hex')
   };
   const encoded = Buffer.from(JSON.stringify(payload)).toString('base64url');
   const signature = crypto.createHmac('sha256', getSecret()).update(encoded).digest('base64url');
@@ -1230,7 +1256,9 @@ function getUserFromRequest(req) {
     const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
     if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) return null;
     const user = readUsers().find(item => item.id === payload.uid);
-    return user && user.active ? user : null;
+    if (!user || !user.active) return null;
+    const currentVersion = crypto.createHash('sha256').update(user.password).digest('hex');
+    return payload.credentialVersion === currentVersion ? user : null;
   } catch {
     return null;
   }
@@ -1359,8 +1387,8 @@ function isSameOriginRequest(req) {
 }
 
 function loginRateKey(req, username) {
-  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
-  const ip = forwarded || req.socket.remoteAddress || 'unknown';
+  // Never trust a client-supplied forwarding header without an explicit trusted-proxy policy.
+  const ip = req.socket.remoteAddress || 'unknown';
   const name = String(username || '').trim().toLowerCase().slice(0, 80);
   return `${ip}:${name}`;
 }
