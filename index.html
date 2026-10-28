@@ -519,6 +519,42 @@
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 24px;
     }
+    /* Continuous partner marquee; the non-JS fallback remains a normal grid. */
+    .partners-grid.partner-marquee {
+      display: block;
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      padding-block: 10px 18px;
+    }
+    .partner-marquee-track {
+      display: flex;
+      width: max-content;
+      animation: partner-marquee-scroll var(--marquee-duration, 36s) linear infinite;
+      will-change: transform;
+    }
+    .partner-marquee-group {
+      display: flex;
+      flex: none;
+      gap: 24px;
+      padding-right: 24px;
+      align-items: stretch;
+    }
+    .partner-marquee .partner-card {
+      flex: 0 0 clamp(230px, 24vw, 290px);
+      width: clamp(230px, 24vw, 290px);
+    }
+    .partner-marquee:hover .partner-marquee-track,
+    .partner-marquee:focus-within .partner-marquee-track {
+      animation-play-state: paused;
+    }
+    @keyframes partner-marquee-scroll {
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .partner-marquee .partner-marquee-track { animation: none; }
+      .partners-grid.partner-marquee { overflow-x: auto; }
+    }
     .partner-card {
       background: var(--white);
       border: 1px solid rgba(7, 29, 51, 0.06);
