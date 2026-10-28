@@ -104,6 +104,13 @@ const server = http.createServer(async (req, res) => {
       await sendHealth(res);
       return;
     }
+    if (pathname === '/readyz') {
+      await hydrateContentFromSupabaseOnce();
+      await hydrateUsersFromSupabaseOnce();
+      const ready = !supabaseEnabled() || (supabaseState.contentReady && supabaseState.usersReady);
+      sendJson(res, ready ? 200 : 503, { ready, persistentStorageConfigured: supabaseEnabled(), contentReady: supabaseState.contentReady, usersReady: supabaseState.usersReady });
+      return;
+    }
 
     if (pathname.startsWith('/api/')) {
       await handleApi(req, res, pathname);
