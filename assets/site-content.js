@@ -248,8 +248,12 @@
     if (!section || !grid) return;
     const members = (Array.isArray(content.team) ? content.team : [])
       .filter(m => m && m.name && m.role && m.description && m.image);
-    section.hidden = !members.length;
-    if (nav) nav.hidden = !members.length;
+    section.hidden = false;
+    if (nav) nav.hidden = false;
+    if (!members.length) {
+      grid.innerHTML = '<p class="team-empty">Our team profiles are being prepared. Please check back soon.</p>';
+      return;
+    }
     grid.innerHTML = members.map(function(member) {
       const long = member.description.length > 140;
       return '<article class="team-card">' +
