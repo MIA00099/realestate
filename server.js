@@ -859,10 +859,8 @@ async function storeUploadedImage(res, serviceId, body) {
   }
 
   try {
-    if (supabaseEnabled() && process.env.SUPABASE_IMAGE_BUCKET) return await uploadImageToSupabase(parsed, serviceId, body.fileName);
-    if (IMGBB_API_KEY) return await uploadImageToImgBB(parsed, serviceId, body.fileName);
-    if (process.env.NODE_ENV === 'production') throw new Error('Permanent image storage is not configured.');
-    return saveLocalImage(parsed, serviceId, body.fileName);
+    if (!supabaseEnabled()) throw new Error('Supabase Storage is not configured. Contact the website administrator.');
+    return await uploadImageToSupabase(parsed, serviceId, body.fileName);
   } catch (error) {
     console.error('Image upload failed:', error);
     sendJson(res, 502, { error: error.message || 'Image upload failed.' });
@@ -880,7 +878,7 @@ function parseDataImage(dataUrl) {
 }
 
 async function uploadImageToSupabase(parsed, serviceId, originalFileName) {
-  const bucket = process.env.SUPABASE_IMAGE_BUCKET;
+  const bucket = 'menu-public-images';
   const safeName = safeFilePart(path.basename(String(originalFileName || 'image'), path.extname(String(originalFileName || 'image'))));
   const fileKey = safeFilePart(serviceId) + '/' + crypto.randomUUID() + '-' + (safeName || 'photo') + parsed.ext;
   const target = SUPABASE_URL + '/storage/v1/object/' + bucket + '/' + fileKey;
