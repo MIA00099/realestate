@@ -453,6 +453,7 @@
     const style = document.createElement('style');
     style.textContent = [
       '.msr-trigger{position:fixed;right:20px;bottom:20px;z-index:1050;background:#071d33;color:white;border:2px solid #c8922f;border-radius:999px;padding:13px 20px;font:700 15px system-ui,sans-serif;box-shadow:0 12px 28px #071d3355;cursor:pointer}',
+      '.msr-trigger[hidden]{display:none!important}',
       '.msr-trigger:focus-visible,.msr-dialog button:focus-visible,.msr-dialog input:focus-visible,.msr-dialog textarea:focus-visible{outline:3px solid #c8922f;outline-offset:3px}',
       '.msr-overlay[hidden]{display:none!important}.msr-overlay{position:fixed;inset:0;z-index:2000;background:#071d33b8;display:grid;place-items:center;padding:16px;overflow:auto}',
       '.msr-dialog{position:relative;width:min(510px,100%);max-height:calc(100dvh - 32px);overflow-y:auto;background:white;color:#071d33;border-radius:18px;padding:28px;box-shadow:0 20px 70px #0004;font:16px system-ui,sans-serif}',
@@ -473,6 +474,15 @@
     trigger.textContent = 'Request a Service';
     trigger.setAttribute('aria-haspopup', 'dialog');
     trigger.setAttribute('aria-controls', 'menu-service-request');
+    // Keep the floating request button from covering footer social links.
+    // The full contact section remains available when the footer is visible.
+    const pageFooter = document.querySelector('footer');
+    if (pageFooter && typeof IntersectionObserver !== 'undefined') {
+      const footerObserver = new IntersectionObserver(entries => {
+        trigger.hidden = entries.some(entry => entry.isIntersecting);
+      }, { threshold: 0 });
+      footerObserver.observe(pageFooter);
+    }
 
     const overlay = document.createElement('div');
     overlay.id = 'menu-service-request';
