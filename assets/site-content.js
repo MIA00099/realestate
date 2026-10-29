@@ -18,11 +18,12 @@
     const services = content && content.services ? content.services : {};
     const partners = Array.isArray(content && content.partners) ? content.partners : [];
     const team = Array.isArray(content && content.team) ? content.team : [];
-    if (!Object.keys(services).length && !partners.length && !team.length) return;
+    // Empty discovery collections still display public landing sections.
     ensureManagedStyles();
     updateHomeCards(services);
     renderPartners(content);
     renderTeam(content);
+    renderDiscoveries(content);
     updateServicePage(services);
   }
 
@@ -273,6 +274,44 @@
         button.textContent = expanded ? 'READ MORE →' : 'READ LESS ↑';
       });
     });
+  }
+
+  function renderDiscoveries(content) {
+    const listings = Array.isArray(content.listings) ? content.listings : [];
+    const events = Array.isArray(content.events) ? content.events : [];
+    const listGrid = document.getElementById('listingsGrid');
+    const eventGrid = document.getElementById('eventsGrid');
+    const search = document.getElementById('listingSearch');
+    const filter = document.getElementById('listingFilter');
+    const count = document.getElementById('listingCount');
+    if (listGrid) {
+      const render = function() {
+        const term = (search && search.value || '').toLowerCase().trim();
+        const type = filter && filter.value || 'all';
+        const visible = listings.filter(function(item) {
+          return item && item.title && item.image &&
+            (type === 'all' || String(item.type || 'other').toLowerCase() === type) &&
+            (!term || (String(item.title) + ' ' + String(item.location || '')).toLowerCase().includes(term));
+        });
+        if (count) count.textContent = visible.length + ' properties found';
+        listGrid.innerHTML = visible.map(function(item) {
+          const price = Number(item.price);
+          const priceText = Number.isFinite(price) && price > 0 ? 'RWF ' + new Intl.NumberFormat('en-RW').format(price) : 'Contact for price';
+          return '<article class="menu-property-card"><img loading="lazy" src="' + escapeAttr(item.image) + '" alt="' + escapeAttr(item.title) + '">' +
+            '<div class="menu-property-info"><p class="menu-property-price">' + priceText + '</p><h3>' + escapeHtml(item.title) + '</h3>' +
+            '<p>' + escapeHtml(item.location || 'Rwanda') + '</p><p>' + escapeHtml(item.type || 'Property') + '</p>' +
+            '<a class="btn btn-primary" href="#contact">Request Details</a></div></article>';
+        }).join('') || '<p class="menu-empty">No matching properties are published yet. Contact us to discuss available opportunities.</p>';
+      };
+      if (search) search.addEventListener('input', render);
+      if (filter) filter.addEventListener('change', render);
+      render();
+    }
+    if (eventGrid) eventGrid.innerHTML = events.filter(e => e && e.title).map(function(item) {
+      return '<article class="menu-property-card"><div class="menu-property-info"><h3>' + escapeHtml(item.title) + '</h3>' +
+        '<p>' + escapeHtml(item.date || 'Date to be announced') + '</p><p>' + escapeHtml(item.description || '') + '</p>' +
+        '<a class="btn btn-primary" href="#contact">Ask About Event</a></div></article>';
+    }).join('') || '<p class="menu-empty">Upcoming events will be announced here. Contact us to learn about the next webinar.</p>';
   }
 
   function renderPartners(content) {
