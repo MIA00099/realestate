@@ -143,6 +143,22 @@ server.listen(PORT, () => {
 });
 
 
+function escapeEmailHtml(value) {
+  return String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+function brandedEmail(title, message, detailLines) {
+  const logo = 'https://realestate-4ztv.onrender.com/assets/logo.jpg';
+  const website = 'https://realestate-4ztv.onrender.com/';
+  return '<!doctype html><html><body style="margin:0;background:#f5f5f3;font-family:Arial,sans-serif;color:#071d33">' +
+    '<div style="max-width:620px;margin:24px auto;background:#fff;border-radius:18px;overflow:hidden;border:1px solid #e5e5e5">' +
+    '<header style="padding:26px;text-align:center;background:#fff"><img src="' + logo + '" width="105" alt="MENU Real Estate Group" style="max-width:100%;height:auto">' +
+    '<p style="color:#9a682b;font-size:13px;font-weight:bold">Complete Property Solutions in Rwanda</p></header>' +
+    '<main style="padding:8px 30px 30px"><h2>' + escapeEmailHtml(title) + '</h2><p>' + escapeEmailHtml(message) + '</p>' +
+    (detailLines || []).map(line => '<p style="padding:9px 0;border-bottom:1px solid #eee">' + escapeEmailHtml(line) + '</p>').join('') +
+    '</main><footer style="padding:20px 30px;background:#071d33;color:#fff;text-align:center;font-size:13px">' +
+    'MENU Real Estate Group<br>+250 782 616 150<br><a style="color:#f0c37b" href="' + website + '">Visit our website</a></footer></div></body></html>';
+}
+
 async function handleServiceRequest(req, res) {
   const key = process.env.RESEND_API_KEY;
   const from = process.env.REQUEST_FROM_EMAIL;
@@ -185,7 +201,8 @@ async function handleServiceRequest(req, res) {
     await send({
       to: [to], reply_to: values.email, subject: 'Service request: ' + values.service,
       text: ['New website service request', 'Name: ' + values.name, 'Phone: ' + values.phone,
-        'Email: ' + values.email, 'Service: ' + values.service, 'Message:', values.message].join('\n')
+        'Email: ' + values.email, 'Service: ' + values.service, 'Message:', values.message, 'Website: https://realestate-4ztv.onrender.com/'].join('\n'),
+      html: brandedEmail('New client request', 'A customer contacted MENU Real Estate Group.', ['Name: ' + values.name, 'Phone: ' + values.phone, 'Email: ' + values.email, 'Service: ' + values.service, 'Message: ' + values.message])
     });
   } catch (error) {
     console.error('Service request failed:', error.message);
@@ -196,7 +213,8 @@ async function handleServiceRequest(req, res) {
     await send({
       to: [values.email], subject: 'Your request was received - MENU Real Estate Group',
       text: 'Hello ' + values.name + ',\n\nWe received your request for ' + values.service +
-        '. Our team will contact you soon.\n\nMENU Real Estate Group\n+250 782 616 150'
+        '. Our team will contact you soon.\n\nMENU Real Estate Group\n+250 782 616 150\nhttps://realestate-4ztv.onrender.com/',
+      html: brandedEmail('Thank you, ' + values.name, 'We received your request for ' + values.service + '. Our team will contact you soon.', ['Contact: +250 782 616 150'])
     });
   } catch (error) {
     confirmationSent = false;
