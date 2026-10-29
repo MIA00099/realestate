@@ -418,6 +418,14 @@
       "updatedAt": "2026-06-18T23:59:01.705Z",
       "updatedBy": "system",
       "description": "This service helps clients visualize and plan buildings before construction. We support concept design, drafting coordination, space planning, layout improvement, compliance guidance, and landscape advisory to make the project practical and attractive."
+    },
+    "property-inspection": {
+      "id": "property-inspection",
+      "page": "services/property-inspection.html",
+      "title": "Property Inspection Services",
+      "summary": "On-site property condition assessments, visible defect observations and actionable inspection guidance.",
+      "description": "Professional property inspections for buyers, sellers, tenants, and investors. We conduct visual property condition assessments and provide practical observations on building finishes, accessible services, drainage, maintenance concerns and recommended next steps.",
+      "images": []
     }
   },
   "siteName": "MENU Real Estate Group",
