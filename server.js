@@ -320,6 +320,19 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
+  const collectionRoot = pathname.match(/^\/api\/(listings|events)$/);
+  const collectionItem = pathname.match(/^\/api\/(listings|events)\/([a-f0-9-]{36})$/);
+  if (collectionRoot && req.method === 'POST') {
+    if (!requirePermission(user, res, 'content:edit')) return;
+    await savePublicCollectionItem(res, user, collectionRoot[1], await readBody(req, 16000));
+    return;
+  }
+  if (collectionItem && req.method === 'DELETE') {
+    if (!requirePermission(user, res, 'content:edit')) return;
+    await removePublicCollectionItem(res, user, collectionItem[1], collectionItem[2]);
+    return;
+  }
+
   if (pathname === '/api/partners' && req.method === 'POST') {
     if (!requirePermission(user, res, 'partners:manage')) return;
     await createPartner(res, user, await readBody(req, 18 * 1024 * 1024));
@@ -543,6 +556,48 @@ async function deleteImage(res, user, serviceId, imageId) {
   await saveContent(content);
   audit(user, 'image:delete', { serviceId, imageId });
   sendJson(res, 200, { service });
+}
+
+async function savePublicCollectionItem(res, user, kind, body) {
+  const fields = kind === 'listings'
+    ? { title: 120, location: 120, type: 40, image: 2048, price: 20 }
+    : { title: 120, date: 80, description: 1000 };
+  const record = {};
+  for (const [field, max] of Object.entries(fields)) {
+    const value = typeof body[field] === 'string' ? body[field].trim() : '';
+    if (value.length > max) return sendJson(res, 400, { error: field + ' is too long.' });
+    record[field] = value;
+  }
+  if (!record.title) return sendJson(res, 400, { error: 'Title is required.' });
+  if (kind === 'listings') {
+    if (!record.image || !/^https:\/\/[^\s]+$/i.test(record.image))
+      return sendJson(res, 400, { error: 'A valid HTTPS property image URL is required.' });
+    if (!['house','land','commercial','apartment','other'].includes(record.type))
+      return sendJson(res, 400, { error: 'Select a property type.' });
+    if (record.price && (!/^\d+$/.test(record.price) || Number(record.price) > 1e15))
+      return sendJson(res, 400, { error: 'Enter a valid RWF price, or leave it blank.' });
+    record.price = record.price ? Number(record.price) : 0;
+  }
+  const content = await getManagedContent();
+  const items = Array.isArray(content[kind]) ? content[kind] : [];
+  const item = { id: crypto.randomUUID(), ...record };
+  content[kind] = [item, ...items];
+  content.updatedAt = new Date().toISOString();
+  await saveContent(content);
+  audit(user, kind + ':create', { id: item.id, title: item.title });
+  sendJson(res, 201, { items: content[kind], updatedAt: content.updatedAt });
+}
+
+async function removePublicCollectionItem(res, user, kind, id) {
+  const content = await getManagedContent();
+  const items = Array.isArray(content[kind]) ? content[kind] : [];
+  const item = items.find(entry => entry.id === id);
+  if (!item) return sendJson(res, 404, { error: 'Entry not found.' });
+  content[kind] = items.filter(entry => entry.id !== id);
+  content.updatedAt = new Date().toISOString();
+  await saveContent(content);
+  audit(user, kind + ':delete', { id, title: item.title });
+  sendJson(res, 200, { items: content[kind], updatedAt: content.updatedAt });
 }
 
 async function createTeamMember(res, user, body) {

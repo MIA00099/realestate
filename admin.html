@@ -54,6 +54,8 @@
         <button class="active" data-page="dashboard" type="button"><span class="nav-icon"><svg class="icon"><use href="#dashboardIcon"/></svg></span>Dashboard</button>
         <p class="nav-label">Content</p>
         <button data-page="services" type="button"><span class="nav-icon"><svg class="icon"><use href="#layersIcon"/></svg></span>Services</button>
+        <button data-page="listings" type="button">Property Listings</button>
+        <button data-page="events" type="button">Webinars & Events</button>
         <button data-page="partners" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Partners</button>
         <button data-page="team" type="button"><span class="nav-icon"><svg class="icon"><use href="#usersIcon"/></svg></span>Our Team</button>
         <p class="nav-label">Administration</p>
@@ -212,6 +214,31 @@
                 </div>
               </div>
             </article>
+          </div>
+        </section>
+
+        <section id="listingsPage" class="page" hidden>
+          <div class="intro"><div><h2>Property Listings</h2><p>Publish verified properties. You can remove outdated listings here.</p></div><a class="btn btn-secondary" href="/#listings" target="_blank" rel="noopener">View listings</a></div>
+          <div class="grid partner-admin-grid">
+            <article class="card pad"><h3>Add a property</h3><form id="listingsForm">
+              <label class="field"><span>Property title</span><input name="title" maxlength="120" required placeholder="e.g. 3-bedroom house in Kigali"></label>
+              <label class="field"><span>Location</span><input name="location" maxlength="120" placeholder="e.g. Kicukiro, Kigali"></label>
+              <label class="field"><span>Property type</span><select name="type" required><option value="house">House</option><option value="land">Land</option><option value="commercial">Commercial</option><option value="apartment">Apartment</option><option value="other">Other</option></select></label>
+              <label class="field"><span>Price (RWF, optional)</span><input name="price" type="number" min="0" max="1000000000000000" step="1" placeholder="Leave empty for contact price"></label>
+              <label class="field"><span>Property photo HTTPS URL</span><input name="image" type="url" maxlength="2048" required placeholder="https://..."></label>
+              <button id="addListingsBtn" class="btn btn-primary" type="submit">Publish property</button><p id="listingsStatus" class="form-status" role="status"></p>
+            </form></article><article class="card pad"><h3>Published properties</h3><div id="listingsAdminList" class="partner-admin-list"></div></article>
+          </div>
+        </section>
+        <section id="eventsPage" class="page" hidden>
+          <div class="intro"><div><h2>Webinars & Events</h2><p>Announce upcoming sessions. Do not publish dates until confirmed.</p></div><a class="btn btn-secondary" href="/#events" target="_blank" rel="noopener">View events</a></div>
+          <div class="grid partner-admin-grid">
+            <article class="card pad"><h3>Add an event</h3><form id="eventsForm">
+              <label class="field"><span>Event title</span><input name="title" maxlength="120" required></label>
+              <label class="field"><span>Date and time (optional)</span><input name="date" maxlength="80" placeholder="e.g. 15 Nov 2026, 2:00 PM CAT"></label>
+              <label class="field"><span>Description</span><textarea name="description" maxlength="1000" rows="5"></textarea></label>
+              <button id="addEventsBtn" class="btn btn-primary" type="submit">Publish event</button><p id="eventsStatus" class="form-status" role="status"></p>
+            </form></article><article class="card pad"><h3>Published events</h3><div id="eventsAdminList" class="partner-admin-list"></div></article>
           </div>
         </section>
 
