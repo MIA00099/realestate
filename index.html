@@ -94,6 +94,14 @@
     }
     
     .brand:hover { transform: scale(1.01); }
+    .brand .nav-logo { animation: menu-logo-pulse 5s ease-in-out infinite; transform-origin: center; }
+    @keyframes menu-logo-pulse {
+      0%, 76%, 100% { transform: scale(1); }
+      83% { transform: scale(1.065); }
+      90% { transform: scale(1); }
+      95% { transform: scale(1.035); }
+    }
+    @media (prefers-reduced-motion: reduce) { .brand .nav-logo { animation: none; } }
 
     .nav-logo {
       height: 120px;
@@ -524,6 +532,24 @@
     .team-more:focus-visible { outline: 3px solid #c8922f; }
     @media(max-width: 980px) { .team-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
     @media(max-width: 560px) { .team-grid { grid-template-columns: 1fr; } .team-card img { height: 350px; } }
+    .menu-discovery { background: #fafaf9; }
+    .menu-events { background: #fff; }
+    .menu-discovery-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-bottom:18px; }
+    .menu-discovery-toolbar label { font-weight:700; color:var(--navy); }
+    .menu-discovery-toolbar input, .menu-discovery-toolbar select { padding:14px; border-radius:12px; border:1px solid #d7dce2; background:white; min-width:180px; max-width:100%; font:inherit; }
+    .menu-discovery-toolbar input { flex:1; }
+    .menu-discovery-count { color:var(--muted); margin-bottom:22px; }
+    .menu-listings-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+    .menu-property-card { border:1px solid #e2e5e8; border-radius:22px; overflow:hidden; background:#fff; box-shadow:0 8px 20px rgba(7,29,51,.06); }
+    .menu-property-card img { width:100%; height:235px; object-fit:cover; }
+    .menu-property-info { padding:22px; }
+    .menu-property-info h3 { font-size:20px; color:var(--navy); margin-bottom:10px; }
+    .menu-property-info p { margin-bottom:10px; color:var(--muted); }
+    .menu-property-price { font-size:22px; color:#9a6025!important; font-weight:800; }
+    .menu-property-info .btn { margin-top:12px; }
+    .menu-empty { grid-column:1/-1; text-align:center; padding:48px 22px; border-radius:18px; background:#fff; color:var(--muted); border:1px solid #e4e6e9; }
+    @media(max-width:980px) { .menu-listings-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:620px) { .menu-listings-grid { grid-template-columns:1fr; } }
     .partners-section {
       background: var(--white);
       border-top: 1px solid rgba(7, 29, 51, 0.05);
@@ -790,6 +816,7 @@
             <a href="services/brokerage-transactions.html" class="dropdown-item">🤝 Brokerage & Transactions</a>
             <a href="services/property-management-operations.html" class="dropdown-item">🏢 Property Management & Operations</a>
             <a href="services/valuation-advisory.html" class="dropdown-item">📊 Valuation & Advisory</a>
+            <a href="services/property-inspection.html" class="dropdown-item">🔎 Property Inspection Services</a>
             <a href="services/development-project-services.html" class="dropdown-item">🏗️ Development & Project Services</a>
             <a href="services/architectural-planning-consulting.html" class="dropdown-item">📐 Architectural & Planning Consulting</a>
             <a href="services/construction-support.html" class="dropdown-item">🚜 Construction Support</a>
@@ -806,6 +833,8 @@
             <a href="services/agricultural-land-farming.html" class="dropdown-item">🌾 Agricultural Land & Farming</a>
           </div>
         </div>
+        <a href="#listings">Listings</a>
+        <a href="#events">Webinars & Events</a>
         <a href="#partners" data-partners-nav>Partners</a>
         <a href="#team" data-team-nav>Our Team</a>
         <a href="#why-us">Why Choose Us</a>
@@ -907,6 +936,9 @@
               <h4>Property Management & Operations</h4>
               <p>Tenant sourcing, rent collection, maintenance coordination...</p>
             </div>
+          </a>
+          <a class="core-service-item" href="services/property-inspection.html">
+            <div class="core-service-icon">🔎</div><div><h4>Property Inspection Services</h4><p>Professional site visits, condition assessments, defect observations, and clear inspection reports before important property decisions.</p></div>
           </a>
           <a class="core-service-item" href="services/valuation-advisory.html">
             <div class="core-service-icon">📊</div>
@@ -1029,6 +1061,20 @@
       </div>
     </section>
 
+    <section id="listings" class="menu-discovery">
+      <div class="container">
+        <div class="section-title"><h2>Property <span>Listings</span></h2><p>Explore available properties from MENU Real Estate Group.</p></div>
+        <div class="menu-discovery-toolbar"><label for="listingSearch">Search listings</label><input id="listingSearch" type="search" placeholder="Search by location or property name" aria-label="Search properties"><select id="listingFilter" aria-label="Filter property type"><option value="all">All property types</option><option value="house">Houses</option><option value="land">Land</option><option value="commercial">Commercial</option><option value="apartment">Apartments</option><option value="other">Other</option></select></div>
+        <p id="listingCount" class="menu-discovery-count" aria-live="polite"></p>
+        <div id="listingsGrid" class="menu-listings-grid"><p class="menu-empty">Our verified property listings are being prepared. Contact us to discuss available opportunities.</p></div>
+      </div>
+    </section>
+    <section id="events" class="menu-discovery menu-events">
+      <div class="container">
+        <div class="section-title"><h2>Webinars <span>&amp; Events</span></h2><p>Learn about property investment, ownership, and development opportunities in Rwanda.</p></div>
+        <div id="eventsGrid" class="menu-listings-grid"><p class="menu-empty">Upcoming events will be announced here. Contact us for information about our next session.</p></div>
+      </div>
+    </section>
     <section id="partners" class="partners-section">
       <div class="container">
         <div class="section-title">
