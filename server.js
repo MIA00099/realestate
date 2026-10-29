@@ -859,7 +859,9 @@ async function storeUploadedImage(res, serviceId, body) {
   }
 
   try {
+    if (supabaseEnabled()) return await uploadImageToSupabase(parsed, serviceId, body.fileName);
     if (IMGBB_API_KEY) return await uploadImageToImgBB(parsed, serviceId, body.fileName);
+    if (process.env.NODE_ENV === 'production') throw new Error('Permanent image storage is not configured.');
     return saveLocalImage(parsed, serviceId, body.fileName);
   } catch (error) {
     console.error('Image upload failed:', error);
@@ -875,6 +877,34 @@ function parseDataImage(dataUrl) {
   const ext = mime === 'image/png' ? '.png' : mime === 'image/webp' ? '.webp' : mime === 'image/gif' ? '.gif' : '.jpg';
   const base64 = match[2];
   return { mime, ext, base64, buffer: Buffer.from(base64, 'base64') };
+}
+
+async function uploadImageToSupabase(parsed, serviceId, originalFileName) {
+  const bucket = 'menu-public-images';
+  const safeName = safeFilePart(path.basename(String(originalFileName || 'image'), path.extname(String(originalFileName || 'image'))));
+  const fileKey = safeFilePart(serviceId) + '/' + crypto.randomUUID() + '-' + (safeName || 'photo') + parsed.ext;
+  const target = SUPABASE_URL + '/storage/v1/object/' + bucket + '/' + fileKey;
+  const response = await fetch(target, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: 'Bearer ' + SUPABASE_SERVICE_ROLE_KEY,
+      'Content-Type': parsed.mime,
+      'Cache-Control': '3600',
+      'x-upsert': 'false'
+    },
+    body: parsed.buffer,
+    signal: AbortSignal.timeout(20000)
+  });
+  if (!response.ok) {
+    const error = await response.text().catch(() => '');
+    throw new Error('Persistent image upload failed (' + response.status + '): ' + error.slice(0, 160));
+  }
+  return {
+    src: SUPABASE_URL + '/storage/v1/object/public/' + bucket + '/' + fileKey,
+    provider: 'supabase',
+    hostedId: fileKey
+  };
 }
 
 async function uploadImageToImgBB(parsed, serviceId, originalFileName) {
