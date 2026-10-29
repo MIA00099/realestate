@@ -22,6 +22,8 @@ const PAGES = {
   services: ['Content', 'Services'],
   partners: ['Content', 'Partners'],
   team: ['Content', 'Our Team'],
+  listings: ['Content', 'Property Listings'],
+  events: ['Content', 'Webinars & Events'],
   users: ['Administration', 'Users & Roles'],
   activity: ['Administration', 'Activity Log'],
   account: ['My account', 'Password & Security'],
@@ -96,6 +98,10 @@ function bindEvents() {
   $('#uploadForm').addEventListener('submit', uploadImage);
   $('#imageList').addEventListener('click', handleImageAction);
 
+  ['listings', 'events'].forEach(kind => {
+    $('#' + kind + 'Form').addEventListener('submit', event => addCollectionEntry(event, kind));
+    $('#' + kind + 'AdminList').addEventListener('click', event => removeCollectionEntry(event, kind));
+  });
   $('#teamForm').addEventListener('submit', addTeamMember);
   $('#teamAdminList').addEventListener('click', removeTeamMember);
   $('#partnerForm').addEventListener('submit', addPartner);
@@ -219,7 +225,8 @@ function renderShell() {
   $('#accountPermissionText').textContent = `${state.user?.permissions?.length || 0} permissions enabled.`;
   $('[data-page="partners"]').forEach(button => button.hidden = !can('partners:manage'));
   $('[data-page="team"]').forEach(button => button.hidden = !can('team:manage'));
-  $$('[data-page="users"]').forEach(button => button.hidden = !can('users:manage'));
+  $('[data-page="users"]').forEach(button => button.hidden = !can('users:manage'));
+  for (const kind of ['listings','events']) $('[data-page="'+kind+'"]').forEach(button => button.hidden = !can('content:edit'));
   $$('[data-page="activity"]').forEach(button => button.hidden = !can('audit:view'));
 }
 
@@ -234,6 +241,7 @@ async function loadContent() {
   state.content = await api('/api/content');
   state.content.partners = Array.isArray(state.content.partners) ? state.content.partners : [];
   state.content.team = Array.isArray(state.content.team) ? state.content.team : [];
+  for (const kind of ['listings','events']) state.content[kind] = Array.isArray(state.content[kind]) ? state.content[kind] : [];
   const ids = Object.keys(state.content.services || {});
   if (!state.selectedServiceId || !state.content.services[state.selectedServiceId]) {
     state.selectedServiceId = ids[0] || null;
@@ -253,6 +261,7 @@ function renderAll() {
   renderServices();
   renderPartners();
   renderTeamAdmin();
+  renderCollections();
   if (can('users:manage')) renderUsers();
   if (can('audit:view')) renderActivity();
 }
@@ -272,6 +281,7 @@ async function setPage(page, options = {}) {
   if (page === 'activity' && !can('audit:view')) return showPermission('Activity Log');
   if (page === 'partners' && !can('partners:manage')) return showPermission('Partners');
   if (page === 'team' && !can('team:manage')) return showPermission('Our Team');
+  if (['listings','events'].includes(page) && !can('content:edit')) return showPermission('Website Content');
 
   state.page = page;
   closeSidebar();
@@ -948,6 +958,53 @@ function exportContent() {
 
 function exportActivity() {
   downloadJson(`menu-activity-${new Date().toISOString().slice(0, 10)}.json`, filteredActivity());
+}
+
+function renderCollections() {
+  for (const kind of ['listings', 'events']) {
+    const entries = state.content[kind] || [];
+    $('#' + kind + 'AdminList').innerHTML = entries.map(entry => `
+      <article class="partner-admin-card" data-entry-id="${escapeAttr(entry.id)}">
+        <div class="partner-admin-copy"><strong>${escapeHtml(entry.title || '')}</strong>
+        <span>${escapeHtml(kind === 'listings' ? (entry.location || 'Location not specified') : (entry.date || 'Date to be announced'))}</span></div>
+        <button class="btn btn-danger" data-remove-entry type="button">Remove</button>
+      </article>`).join('') || emptyHtml('Nothing published yet. Use the form to add the first entry.');
+    $('#' + kind + 'Form input, #' + kind + 'Form select, #' + kind + 'Form textarea, #' + kind + 'Form button, #' + kind + 'AdminList button')
+      .forEach(node => node.disabled = !can('content:edit'));
+  }
+}
+
+async function addCollectionEntry(event, kind) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const values = Object.fromEntries(new FormData(form).entries());
+  const button = $('#add' + kind[0].toUpperCase() + kind.slice(1) + 'Btn');
+  const status = $('#' + kind + 'Status');
+  try {
+    setBusy(button, true, 'Publishing...');
+    const response = await api('/api/' + kind, { method: 'POST', body: values });
+    state.content[kind] = response.items || [];
+    form.reset();
+    renderCollections();
+    status.textContent = 'Published successfully.';
+  } catch (error) { status.textContent = error.message; }
+  finally { setBusy(button, false); }
+}
+
+async function removeCollectionEntry(event, kind) {
+  const button = event.target.closest('[data-remove-entry]');
+  if (!button) return;
+  const item = (state.content[kind] || []).find(entry => entry.id === button.closest('[data-entry-id]')?.dataset.entryId);
+  if (!item) return;
+  const allowed = await confirmAction({title:'Remove this entry?',message:'Remove ' + item.title + ' from the website?',confirmText:'Remove',danger:true});
+  if (!allowed) return;
+  try {
+    setBusy(button, true, 'Removing...');
+    const response = await api('/api/' + kind + '/' + encodeURIComponent(item.id), { method: 'DELETE' });
+    state.content[kind] = response.items || [];
+    renderCollections();
+  } catch (error) { $('#' + kind + 'Status').textContent = error.message; }
+  finally { setBusy(button, false); }
 }
 
 function renderTeamAdmin() {
