@@ -641,6 +641,11 @@
     }
     
     footer { background: #03101f; color: #cbd5e1; padding: 36px 0; }
+    .social-links { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .social-links a { display:inline-flex; width:42px; height:42px; align-items:center; justify-content:center; color:#fff; border:1px solid rgba(255,255,255,.28); border-radius:50%; transition:transform .2s ease,background .2s ease; }
+    .social-links a:hover, .social-links a:focus-visible { transform:translateY(-3px); background:rgba(200,146,47,.23); outline-offset:3px; }
+    .social-links svg { width:21px; height:21px; fill:currentColor; }
+    @media(prefers-reduced-motion:reduce) { .social-links a { transition:none; } .social-links a:hover { transform:none; } }
     .footer-flex { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
 
     .modal-overlay {
@@ -1154,6 +1159,18 @@
     <div class="container footer-flex">
       <div>© 2026 Menu Real Estate Group. All rights reserved.</div>
       <div>Where real estate begins, grows, and is cared for—forever.</div>
+      <nav class="social-links" aria-label="MENU Real Estate Group social media">
+        <a href="https://www.instagram.com/menurealestategroup/" target="_blank" rel="noopener noreferrer" aria-label="MENU Real Estate Group on Instagram" title="Instagram">
+          <svg role="img" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@menurealeastate" target="_blank" rel="noopener noreferrer" aria-label="MENU Real Estate Group on TikTok" title="TikTok">
+          <svg role="img" aria-hidden="true" viewBox="0 0 24 24"><path d="M16.6 2h-3.2v13.1a3.4 3.4 0 1 1-3.3-3.5V8.4a6.6 6.6 0 1 0 6.5 6.7V8.5a9.3 9.3 0 0 0 5.4 1.6V6.9A6.2 6.2 0 0 1 16.6 2Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/menu-real-estate-group-8873233b8/" target="_blank" rel="noopener noreferrer" aria-label="MENU Real Estate Group on LinkedIn" title="LinkedIn">
+          <svg role="img" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2ZM8 19H5V9h3v10ZM6.5 7.7a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4ZM19 19h-3v-5.1c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V19h-3V9h2.9v1.4h.1a3.2 3.2 0 0 1 2.9-1.6c3.1 0 3.8 2 3.8 4.6V19Z"/></svg>
+        </a>
+      </nav>
+
     </div>
   </footer>
 
