@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Property Listings | MENU Real Estate Group</title><meta name="description" content="Browse available MENU Real Estate Group properties in Rwanda."><link rel="icon" href="/assets/favicon.png"><style>*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#fafaf9;color:#071d33}a{text-decoration:none;color:inherit}.container{width:min(1200px,92%);margin:auto}header{position:sticky;top:0;background:white;box-shadow:0 2px 12px #071d3312;z-index:10}header .container{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:100px}header img{width:auto;height:88px;max-width:190px;object-fit:contain}header nav{display:flex;gap:20px;flex-wrap:wrap}header a:hover{color:#a56d22}section{padding:64px 0}.section-title{text-align:center;margin-bottom:34px}.section-title h2{font-size:clamp(32px,5vw,54px);margin:0 0 12px}.section-title h2 span{color:#c8922f}.section-title p{color:#68727d}.btn{background:#c8922f;color:white;display:inline-block;padding:12px 21px;border-radius:26px;font-weight:700}.btn:hover{background:#a97723;color:#fff}:root{--navy:#071d33;--muted:#68727d;--bg:#fafaf9}     .menu-discovery { background: #fafaf9; }
+    .menu-events { background: #fff; }
+    .menu-discovery-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-bottom:18px; }
+    .menu-discovery-toolbar label { font-weight:700; color:var(--navy); }
+    .menu-discovery-toolbar input, .menu-discovery-toolbar select { padding:14px; border-radius:12px; border:1px solid #d7dce2; background:white; min-width:180px; max-width:100%; font:inherit; }
+    .menu-discovery-toolbar input { flex:1; }
+    .menu-discovery-count { color:var(--muted); margin-bottom:22px; }
+    .menu-listings-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+    .menu-property-card { border:1px solid #e2e5e8; border-radius:22px; overflow:hidden; background:#fff; box-shadow:0 8px 20px rgba(7,29,51,.06); }
+    .menu-property-card img { width:100%; height:235px; object-fit:cover; }
+    .menu-property-info { padding:22px; }
+    .menu-property-info h3 { font-size:20px; color:var(--navy); margin-bottom:10px; }
+    .menu-property-info p { margin-bottom:10px; color:var(--muted); }
+    .menu-property-price { font-size:22px; color:#9a6025!important; font-weight:800; }
+    .menu-property-info .btn { margin-top:12px; }
+    .menu-empty { grid-column:1/-1; text-align:center; padding:48px 22px; border-radius:18px; background:#fff; color:var(--muted); border:1px solid #e4e6e9; }
+    @media(max-width:980px) { .menu-listings-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:620px) { .menu-listings-grid { grid-template-columns:1fr; } }
+ footer{background:#071d33;color:white;padding:28px 0;text-align:center}@media(max-width:650px){header .container{align-items:flex-start;padding:14px 0;flex-direction:column}header img{height:70px}section{padding:40px 0}}</style></head><body><header><div class="container"><a href="/"><img src="/assets/logo.jpg" alt="MENU Real Estate Group logo"></a><nav aria-label="Breadcrumb"><a href="/">Home</a><a href="/services/brokerage-transactions.html">Brokerage &amp; Transactions</a><strong>Listings</strong></nav></div></header>    <section id="listings" class="menu-discovery">
+      <div class="container">
+        <div class="section-title"><h2>Property <span>Listings</span></h2><p>Explore available properties from MENU Real Estate Group.</p></div>
+        <div class="menu-discovery-toolbar"><label for="listingSearch">Search listings</label><input id="listingSearch" type="search" placeholder="Search by location or property name" aria-label="Search properties"><select id="listingFilter" aria-label="Filter property type"><option value="all">All property types</option><option value="house">Houses</option><option value="land">Land</option><option value="commercial">Commercial</option><option value="apartment">Apartments</option><option value="other">Other</option></select></div>
+        <p id="listingCount" class="menu-discovery-count" aria-live="polite"></p>
+        <div id="listingsGrid" class="menu-listings-grid"><p class="menu-empty">Our verified property listings are being prepared. Contact us to discuss available opportunities.</p></div>
+      </div>
+    </section>
+<footer><div class="container">MENU Real Estate Group · +250 782 616 150 · <a href="/">Visit our website</a></div></footer><script src="/assets/site-content.js" defer></script></body></html>
